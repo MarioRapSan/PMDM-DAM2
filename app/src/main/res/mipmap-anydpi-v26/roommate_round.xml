@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<adaptive-icon xmlns:android="http://schemas.android.com/apk/res/android">
+    <background android:drawable="@drawable/roommate_background"/>
+    <foreground android:drawable="@mipmap/roommate_foreground"/>
+    <monochrome android:drawable="@mipmap/roommate_foreground"/>
+</adaptive-icon>
