@@ -1,5 +1,6 @@
 package es.ies.cm.dam2.pmdm.roommate;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -37,5 +38,12 @@ public class MainActivity extends AppCompatActivity {
                 Toast.makeText(MainActivity.this, "Compañeros reiniciados", Toast.LENGTH_SHORT).show();
             }
         });
+        Button boton = findViewById(R.id.btnSiguiente);
+
+        boton.setOnClickListener(v -> {
+            Intent intent = new Intent(MainActivity.this, ControlesBasicos.class);
+            startActivity(intent);
+        });
+
     }
 }

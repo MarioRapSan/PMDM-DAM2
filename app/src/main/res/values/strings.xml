@@ -1,3 +1,18 @@
 <resources>
     <string name="app_name">RoomMate</string>
+    <string name="textview">TextView</string>
+    <string name="button4">Button</string>
+    <string name="button3">Button</string>
+    <string name="atras">Atras</string>
+    <string name="siguiente">Siguiente</string>
+    <string name="nombre_del_usuario">Nombre del usuario:</string>
+    <string name="sumar">Sumar</string>
+    <string name="restar">Restar</string>
+    <string name="numero_de_compa_eros_0">Numero de compañeros: 0</string>
+    <string name="escribe_tu_nombre_aqu">Escribe tu nombre aquí</string>
+    <string name="actualizar">Actualizar</string>
+    <string name="bot_n_restar_pulsado_n_mero_de_compa_eros">"Botón restar pulsado, número de compañeros: "</string>
+    <string name="pulsa_el_bot_n">Pulsa el botón</string>
+    <string name="bot_n_pulsado">Botón Pulsado</string>
+    <string name="activar">Activar</string>
 </resources>
