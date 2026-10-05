@@ -42,9 +42,11 @@ public class ControlesBasicos extends AppCompatActivity {
         TextView txtView = findViewById(R.id.txtView);
 
         btnRestar.setOnClickListener(v -> {
-            while (companeros > 0) {
+            if (companeros > 0) {
                 companeros--;
-                txtView.setText(getString(R.string.bot_n_restar_pulsado_n_mero_de_compa_eros) + companeros);
+                txtView.setText(
+                        getString(R.string.bot_n_restar_pulsado_n_mero_de_compa_eros) + companeros
+                );
             }
         });
 
@@ -67,20 +69,27 @@ public class ControlesBasicos extends AppCompatActivity {
             startActivity(intent);
         });
         btnActualizar = findViewById(R.id.btnActualizar);
-        TextView editTxt = findViewById(R.id.editTxt);
+        TextView editTxt = findViewById(R.id.txtAlquiler);
         TextView txtViewNombreUsuario = findViewById(R.id.txtViewNombreUsuario);
         btnActualizar.setOnClickListener(v -> {
             nombre = String.valueOf(editTxt.getText());
             txtViewNombreUsuario.setText(nombre);
         });
         checkBx = findViewById(R.id.checkBx);
-        if (checkBx.isChecked()) {
-            btnActivar.setActivated(true);
-        }
+        btnActivar.setEnabled(false);
+        checkBx.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            btnActivar.setEnabled(!isChecked);
+                });
 
         TextView txtViewTonteria = findViewById(R.id.txtViewTonteria);
         btnActivar.setOnClickListener(v -> {
             txtViewTonteria.setText(R.string.bot_n_pulsado);
+        });
+        Button boton = findViewById(R.id.btnAdelante);
+
+        boton.setOnClickListener(v -> {
+            Intent intent = new Intent(ControlesBasicos.this, ControlesBasicos2.class);
+            startActivity(intent);
         });
     }
 }

@@ -6,6 +6,7 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/background"
     tools:context=".ControlesBasicos">
 
     <TextView
@@ -14,11 +15,11 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="150dp"
         android:text="@string/numero_de_compa_eros_0"
+        android:textColor="@color/text_primary"
         android:textSize="32sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
-
 
     <Button
         android:id="@+id/btnRestar"
@@ -28,6 +29,8 @@
         android:layout_marginTop="28dp"
         android:layout_marginEnd="84dp"
         android:text="@string/restar"
+        android:textColor="@color/surface"
+        android:backgroundTint="@color/primary"
         app:layout_constraintEnd_toStartOf="@id/btnSumar"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/txtView" />
@@ -38,6 +41,8 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="24dp"
         android:text="@string/sumar"
+        android:textColor="@color/surface"
+        android:backgroundTint="@color/primary"
         app:layout_constraintStart_toEndOf="@id/btnRestar"
         app:layout_constraintTop_toTopOf="@id/btnRestar" />
 
@@ -47,25 +52,27 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="40dp"
         android:text=""
+        android:textColor="@color/text_secondary"
         android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/btnRestar" />
 
-
     <EditText
-        android:id="@+id/editTxt"
+        android:id="@+id/txtAlquiler"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:minHeight="48dp"
         android:layout_marginStart="30dp"
         android:layout_marginTop="15dp"
         android:layout_marginEnd="30dp"
         android:hint="@string/escribe_tu_nombre_aqu"
         android:inputType="text"
+        android:textColor="@color/text_primary"
+        android:textColorHint="@color/text_secondary"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/txtViewNombreUsuario"/>
-
+        app:layout_constraintTop_toBottomOf="@id/txtViewNombreUsuario" />
 
     <Button
         android:id="@+id/btnAtras"
@@ -74,6 +81,8 @@
         android:layout_marginStart="25dp"
         android:layout_marginBottom="40dp"
         android:text="@string/atras"
+        android:textColor="@color/surface"
+        android:backgroundTint="@color/secondary"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
@@ -84,6 +93,8 @@
         android:layout_marginEnd="25dp"
         android:layout_marginBottom="40dp"
         android:text="@string/siguiente"
+        android:textColor="@color/surface"
+        android:backgroundTint="@color/secondary"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 
@@ -93,11 +104,28 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="290dp"
         android:text="@string/actualizar"
+        android:textColor="@color/surface"
+        android:backgroundTint="@color/primary"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/txtViewTonteria"
         app:layout_constraintVertical_bias="0.866" />
+
+    <TextView
+        android:id="@+id/txtViewTonteria"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="19dp"
+        android:layout_marginBottom="16dp"
+        android:text="@string/pulsa_el_bot_n"
+        android:textColor="@color/text_primary"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toTopOf="@+id/btnActivar"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.493"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/btnActualizar" />
 
     <Button
         android:id="@+id/btnActivar"
@@ -105,9 +133,9 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:layout_marginBottom="15dp"
-        android:clickable="false"
-        android:text="Activar"
-        app:layout_constraintBottom_toTopOf="@+id/checkBx"
+        android:text="@string/activarse"
+        android:textColor="@color/surface"
+        android:backgroundTint="@color/button_activado"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/txtViewTonteria" />
@@ -119,23 +147,12 @@
         android:layout_marginTop="7dp"
         android:layout_marginBottom="98dp"
         android:checked="true"
+        android:buttonTint="@color/primary"
         android:text="@string/activar"
+        android:textColor="@color/text_primary"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/btnActivar" />
-
-    <TextView
-        android:id="@+id/txtViewTonteria"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="19dp"
-        android:layout_marginBottom="16dp"
-        android:text="@string/pulsa_el_bot_n"
-        app:layout_constraintBottom_toTopOf="@+id/btnActivar"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.493"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btnActualizar" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

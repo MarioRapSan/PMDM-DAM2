@@ -15,4 +15,12 @@
     <string name="pulsa_el_bot_n">Pulsa el botón</string>
     <string name="bot_n_pulsado">Botón Pulsado</string>
     <string name="activar">Activar</string>
+    <string name="activarse">Activar</string>
+    <string name="introduce_tu_alquiler_aqu">Introduce tu alquiler aquí</string>
+    <string name="alquiler">Alquiler</string>
+    <string name="introduce_un_alquiler">Introduce un alquiler</string>
+    <string name="el_alquiler_debe_estar_entre_100_y_2500">El alquiler debe estar entre 100 € y 2500 €</string>
+    <string name="alquiler_v_lido">Alquiler válido</string>
+    <string name="introduce_un_alquiler2">Introduce un alquiler</string>
+    <string name="alquiler_fuera_de_rango">Alquiler fuera de rango</string>
 </resources>
