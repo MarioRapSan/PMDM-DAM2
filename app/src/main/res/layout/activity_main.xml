@@ -10,10 +10,22 @@
     tools:context=".MainActivity">
 
     <Button
+        android:id="@+id/btnInvitaciones"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="64dp"
+        android:layout_marginBottom="28dp"
+        android:backgroundTint="@color/primary"
+        android:text="@string/invitaciones"
+        android:textColor="@color/surface"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <Button
         android:id="@+id/btnCheck"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Check"
+        android:text="@string/check"
         android:textColor="@color/surface"
         android:backgroundTint="@color/primary"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -26,7 +38,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="280dp"
-        android:text="Reset"
+        android:text="@string/reset"
         android:textColor="@color/surface"
         android:backgroundTint="@color/secondary"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -40,11 +52,11 @@
         android:id="@+id/btnSiguiente"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="260dp"
-        android:layout_marginBottom="36dp"
-        android:text="Siguiente"
-        android:textColor="@color/surface"
+        android:layout_marginStart="264dp"
+        android:layout_marginBottom="28dp"
         android:backgroundTint="@color/primary"
+        android:text="@string/siguiente2"
+        android:textColor="@color/surface"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 

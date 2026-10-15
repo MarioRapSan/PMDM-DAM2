@@ -29,6 +29,15 @@
             android:name=".ControlesBasicos2"
             android:exported="false"
             android:windowSoftInputMode="adjustResize" />
+        <activity
+            android:name=".CompaneroActivity"
+            android:exported="false"
+            android:windowSoftInputMode="adjustResize" />
+        <activity
+            android:name=".ConfirmarAsistenciaActivity"
+            android:exported="false"
+            android:theme="@style/Theme.RoomMate"
+            android:windowSoftInputMode="adjustResize" />
     </application>
 
 </manifest>

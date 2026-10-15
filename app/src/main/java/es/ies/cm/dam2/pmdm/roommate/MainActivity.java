@@ -44,6 +44,12 @@ public class MainActivity extends AppCompatActivity {
             Intent intent = new Intent(MainActivity.this, ControlesBasicos.class);
             startActivity(intent);
         });
+        Button boton2 = findViewById(R.id.btnInvitaciones);
+
+        boton2.setOnClickListener(v -> {
+            Intent intent = new Intent(MainActivity.this, CompaneroActivity.class);
+            startActivity(intent);
+        });
 
     }
 }
