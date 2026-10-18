@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="24dp"
+    android:gravity="center"
+    android:background="@color/background">
+
+    <TextView
+        android:id="@+id/tvPreguntaAsistencia"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="¿Aceptas asistir a la reunión?"
+        android:textSize="22sp"
+        android:gravity="center"
+        android:layout_marginBottom="24dp"/>
+
+    <Button
+        android:id="@+id/btnAceptar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Aceptar asistencia"
+        android:backgroundTint="@color/primary"
+        android:textColor="@color/surface"/>
+
+    <Button
+        android:id="@+id/btnCancelar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Cancelar asistencia"
+        android:layout_marginTop="12dp"
+        android:backgroundTint="@color/secondary"
+        android:textColor="@color/surface"/>
+
+</LinearLayout>

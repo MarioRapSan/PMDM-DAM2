@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/background">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="24dp">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Invitación por correo"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            android:layout_marginBottom="20dp"
+            android:textColor="@color/primary"/>
+
+        <EditText
+            android:id="@+id/etDestinatario"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Correo del destinatario"
+            android:textColorHint="@color/secondary"
+            android:inputType="textEmailAddress"/>
+
+        <EditText
+            android:id="@+id/etAsunto"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Asunto del correo"
+            android:inputType="textCapSentences"
+            android:textColor="@color/primary"
+            android:textColorHint="@color/secondary"/>
+
+        <EditText
+            android:id="@+id/etMensaje"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Escribe la invitación..."
+            android:inputType="textCapSentences|textMultiLine"
+            android:minLines="5"
+            android:gravity="top|start"
+            android:textColor="@color/primary"
+            android:textColorHint="@color/secondary"/>
+
+        <Button
+            android:id="@+id/btnEnviarCorreo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Abrir correo para enviar"
+            android:layout_marginTop="20dp"
+            android:backgroundTint="@color/primary"
+            android:textColor="@color/surface"/>
+        <Button
+            android:id="@+id/btnVolver"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:text="VOLVER"
+            android:backgroundTint="@color/primary"
+            android:textColor="@color/surface" />
+
+    </LinearLayout>
+</ScrollView>
