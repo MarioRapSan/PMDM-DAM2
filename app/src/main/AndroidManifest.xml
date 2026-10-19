@@ -30,13 +30,20 @@
             android:exported="false"
             android:windowSoftInputMode="adjustResize" />
         <activity
-            android:name=".CompaneroActivity"
+            android:name=".FichaCompaneroActivity"
             android:exported="false"
             android:windowSoftInputMode="adjustResize" />
         <activity
             android:name=".ConfirmarAsistenciaActivity"
             android:exported="false"
-            android:theme="@style/Theme.RoomMate"
+            android:windowSoftInputMode="adjustResize" />
+        <activity
+            android:name=".InvitacionActivity"
+            android:exported="false"
+            android:windowSoftInputMode="adjustResize" />
+        <activity
+            android:name=".CorreoActivity"
+            android:exported="false"
             android:windowSoftInputMode="adjustResize" />
     </application>
 

@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/background"
+    android:fillViewport="true">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="20dp">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Ficha de compañeros"
+            android:textColor="@color/primary"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            android:layout_marginBottom="20dp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Selecciona un compañero" />
+
+        <Spinner
+            android:id="@+id/spinnerCompaneros"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp" />
+
+        <Button
+            android:id="@+id/btnBorrarCompanero"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Borrar compañero"
+            android:textColor="@color/surface"
+            android:backgroundTint="@color/secondary" />
+
+        <Button
+            android:id="@+id/btnMostrarInformacion"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Mostrar información"
+            android:textColor="@color/surface"
+            android:backgroundTint="@color/primary" />
+
+        <TextView
+            android:id="@+id/tvInformacion"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:padding="16dp"
+            android:background="@color/surface"
+            android:textColor="@color/primary"
+            android:textSize="16sp"
+            android:text="Selecciona un compañero y pulsa Mostrar información."
+            android:textIsSelectable="true" />
+
+        <Button
+            android:id="@+id/btnVolverAlta"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="Volver al alta"
+            android:textColor="@color/surface"
+            android:backgroundTint="@color/primary" />
+
+    </LinearLayout>
+
+</ScrollView>
