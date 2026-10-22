@@ -66,10 +66,10 @@ public class MainActivity extends AppCompatActivity {
             );
             startActivity(intent);
         });
-        Button boton2 = findViewById(R.id.btnInvitaciones);
+        Button boton2 = findViewById(R.id.btnInvitacion);
 
         boton2.setOnClickListener(v -> {
-            Intent intent = new Intent(MainActivity.this, CompaneroActivity.class);
+            Intent intent = new Intent(MainActivity.this, InvitacionActivity.class);
             startActivity(intent);
         });
 
