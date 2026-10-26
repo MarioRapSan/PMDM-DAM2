@@ -5,43 +5,52 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
+    android:padding="24dp"
+    tools:context=".ListaTareas">
 
     <Spinner
         android:id="@+id/spinnerPrioridad"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_margin="48dp"
-        android:layout_marginTop="48dp"
+        android:layout_height="56dp"
+        android:layout_marginTop="8dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <Spinner
         android:id="@+id/spinnerTareas"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_margin="48dp"
-        android:layout_marginTop="24dp"
+        android:layout_height="56dp"
+        android:layout_marginTop="16dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/spinnerPrioridad" />
+
+    <Spinner
+        android:id="@+id/spinnerCompaneros"
+        android:layout_width="0dp"
+        android:layout_height="56dp"
+        android:layout_marginTop="16dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/spinnerTareas" />
 
     <RadioGroup
         android:id="@+id/grupoRadio"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
         android:orientation="horizontal"
-        android:layout_margin="8dp"
-        app:layout_constraintTop_toBottomOf="@id/spinnerTareas"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent">
+        app:layout_constraintTop_toBottomOf="@id/spinnerCompaneros">
 
         <RadioButton
             android:id="@+id/radioPendiente"
             android:layout_width="wrap_content"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:text="@string/pendiente" />
 
         <RadioButton
@@ -56,27 +65,50 @@
         android:id="@+id/simpleListView"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:choiceMode="singleChoice"
-        android:layout_margin="8dp"
-        app:layout_constraintTop_toBottomOf="@id/grupoRadio"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
-
-    <Button
-        android:id="@+id/btnAnadir"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:textColor="@color/surface"
-        android:backgroundTint="@color/primary"
-        android:text="@string/a_adir"
-        app:layout_constraintBottom_toTopOf="@+id/simpleListView"
+        android:layout_marginTop="16dp"
+        android:layout_marginBottom="16dp"
+        android:divider="@color/border"
+        android:dividerHeight="1dp"
+        app:layout_constraintBottom_toTopOf="@id/bottomAcciones"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.272"
-        app:layout_constraintStart_toEndOf="@+id/grupoRadio"
-        app:layout_constraintTop_toBottomOf="@+id/spinnerTareas"
-        app:layout_constraintVertical_bias="0.0"
-        />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/grupoRadio"
+        tools:itemCount="4"
+        tools:listitem="@android:layout/simple_list_item_1" />
+
+    <LinearLayout
+        android:id="@+id/bottomAcciones"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:baselineAligned="false"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <Button
+            android:id="@+id/btnVolver"
+            android:layout_width="0dp"
+            android:layout_height="52dp"
+            android:layout_marginEnd="8dp"
+            android:layout_weight="1"
+            android:backgroundTint="@color/primary"
+            android:text="@string/volver"
+            android:textColor="@color/surface"
+            android:textStyle="bold" />
+
+        <Button
+            android:id="@+id/btnAnadir"
+            android:layout_width="0dp"
+            android:layout_height="52dp"
+            android:layout_marginStart="8dp"
+            android:layout_weight="1"
+            android:backgroundTint="@color/primary"
+            android:enabled="false"
+            android:text="@string/a_adir"
+            android:textColor="@color/surface"
+            android:textStyle="bold" />
+
+    </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

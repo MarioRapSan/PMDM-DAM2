@@ -80,4 +80,5 @@
     <string name="pendiente">Pendiente</string>
     <string name="completada">Completada</string>
     <string name="a_adir">Añadir</string>
+    <string name="volver">Volver</string>
 </resources>

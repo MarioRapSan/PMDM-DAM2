@@ -1,11 +1,42 @@
 package es.ies.cm.dam2.pmdm.roommate;
 
 class ListaTareaPrioridad {
-    String valor1;
-    String valor2;
 
-    public ListaTareaPrioridad(String v1, String v2) {
-        this.valor1 = v1;
-        this.valor2 = v2;
+    private final String nombre;
+    private final String prioridad;
+    private final String companero;
+    private final String estado;
+
+    public ListaTareaPrioridad(String nombre, String prioridad) {
+        this(nombre, prioridad, null, null);
+    }
+
+    public ListaTareaPrioridad(
+            String nombre,
+            String prioridad,
+            String companero,
+            String estado
+    ) {
+        this.nombre = nombre;
+        this.prioridad = prioridad;
+        this.companero = companero;
+        this.estado = estado;
+    }
+
+    public String getNombre() {
+        return nombre;
+    }
+
+    public String getPrioridad() {
+        return prioridad;
+    }
+
+    @Override
+    public String toString() {
+        if (companero == null) {
+            return nombre;
+        }
+
+        return nombre + " · " + prioridad + " · " + companero + " · " + estado;
     }
 }
