@@ -178,7 +178,7 @@
                 android:layout_height="38dp"
                 android:layout_marginTop="8dp"
                 android:backgroundTint="@color/primary"
-                android:text="Invitación"
+                android:text="@string/invitaci_n"
                 android:textColor="@color/surface" />
 
             <Button
@@ -192,23 +192,13 @@
                 android:textColor="@color/surface" />
 
             <Button
-                android:id="@+id/btnCorreo2"
+                android:id="@+id/btnLista"
                 android:layout_width="match_parent"
-                android:layout_height="38dp"
+                android:layout_height="44dp"
                 android:layout_marginTop="8dp"
-                android:layout_marginBottom="16dp"
+                android:layout_marginBottom="8dp"
                 android:backgroundTint="@color/secondary"
-                android:text="Enviar correo"
-                android:textColor="@color/surface" />
-
-            <Button
-                android:id="@+id/btnCorreo3"
-                android:layout_width="match_parent"
-                android:layout_height="11dp"
-                android:layout_marginTop="8dp"
-                android:layout_marginBottom="16dp"
-                android:backgroundTint="@color/secondary"
-                android:text="Enviar correo"
+                android:text="@string/lista_de_tareas"
                 android:textColor="@color/surface" />
 
         </LinearLayout>

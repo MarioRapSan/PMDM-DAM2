@@ -74,4 +74,9 @@
         vestibulum. Fusce dictum libero quis erat maximus, vitae volutpat diam dignissim.
     </string>
     <string name="quieres_aceptar_la_propuesta_de_juan_manuel">¿Quieres aceptar la propuesta de Juan Manuel?</string>
+    <string name="lista_de_tareas">Lista de Tareas</string>
+    <string name="invitaci_n">Invitación</string>
+    <string name="juan_manuel_te_ha_invitado_a_ser_su_compa_ero">Juan Manuel te ha invitado a ser su compañero</string>
+    <string name="pendiente">Pendiente</string>
+    <string name="completada">Completada</string>
 </resources>

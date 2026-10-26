@@ -72,6 +72,11 @@ public class MainActivity extends AppCompatActivity {
             Intent intent = new Intent(MainActivity.this, InvitacionActivity.class);
             startActivity(intent);
         });
+        Button btnLista = findViewById(R.id.btnLista);
+        btnLista.setOnClickListener(v -> {
+            Intent intent = new Intent(MainActivity.this, ListaTareas.class);
+            startActivity(intent);
+        });
 
     }
 
