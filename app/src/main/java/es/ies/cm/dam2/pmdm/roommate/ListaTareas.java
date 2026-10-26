@@ -1,21 +1,29 @@
 package es.ies.cm.dam2.pmdm.roommate;
 
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.RadioButton;
 import android.widget.Spinner;
 import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
+import java.util.AbstractMap;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+
 public class ListaTareas extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
 
         private ListView lista;
-        private Spinner spinTareas, spinCompa;
+        private Spinner spinTareas, spinPrioridad;
         private RadioButton radioPendiente, radioCompletada;
+
 
         private final String[] Tareas = {
                 "Limpiar baño",
@@ -29,6 +37,10 @@ public class ListaTareas extends AppCompatActivity implements AdapterView.OnItem
         private final String[] Companeros = {
                 "Jose", "Raul", "Winwaleo"
         };
+    List<ListaTareaPrioridad> listaT = new ArrayList<>();
+    private final String[] Prioridad = {
+            "Puede esperar", "Hacer cuanto antes", "Urgente"
+    };
 
         @Override
         protected void onCreate(Bundle savedInstanceState) {
@@ -37,7 +49,7 @@ public class ListaTareas extends AppCompatActivity implements AdapterView.OnItem
 
             lista = findViewById(R.id.simpleListView);
             spinTareas = findViewById(R.id.spinnerTareas);
-            spinCompa = findViewById(R.id.spinnerCompaneros);
+            spinPrioridad = findViewById(R.id.spinnerPrioridad);
             radioPendiente = findViewById(R.id.radioPendiente);
             radioCompletada = findViewById(R.id.radioCompletada);
 
@@ -76,19 +88,19 @@ public class ListaTareas extends AppCompatActivity implements AdapterView.OnItem
 
             spinTareas.setAdapter(adaptadorTareas);
 
-            // Adaptador del Spinner de compañeros
-            ArrayAdapter<String> adaptadorCompaneros =
+            // Adaptador del Spinner de prioridad
+            ArrayAdapter<String> adaptadorPrioridad =
                     new ArrayAdapter<>(
                             this,
                             android.R.layout.simple_spinner_item,
-                            Companeros
+                            Prioridad
                     );
 
-            adaptadorCompaneros.setDropDownViewResource(
+            adaptadorPrioridad.setDropDownViewResource(
                     android.R.layout.simple_spinner_dropdown_item
             );
 
-            spinCompa.setAdapter(adaptadorCompaneros);
+            spinPrioridad.setAdapter(adaptadorPrioridad);
 
             // Listener para el Spinner de tareas
             spinTareas.setOnItemSelectedListener(
@@ -114,8 +126,8 @@ public class ListaTareas extends AppCompatActivity implements AdapterView.OnItem
                     }
             );
 
-            // Listener para el Spinner de compañeros
-            spinCompa.setOnItemSelectedListener(
+            // Listener para el Spinner de prioridad
+            spinPrioridad.setOnItemSelectedListener(
                     new AdapterView.OnItemSelectedListener() {
                         @Override
                         public void onItemSelected(
@@ -124,10 +136,10 @@ public class ListaTareas extends AppCompatActivity implements AdapterView.OnItem
                                 int position,
                                 long id
                         ) {
-                            String companero = Companeros[position];
+                            String prioridad = Prioridad[position];
                             Toast.makeText(
                                     es.ies.cm.dam2.pmdm.roommate.ListaTareas.this,
-                                    "Compañero: " + companero,
+                                    "Prioridad: " + prioridad,
                                     Toast.LENGTH_SHORT
                             ).show();
                         }
@@ -154,6 +166,10 @@ public class ListaTareas extends AppCompatActivity implements AdapterView.OnItem
                             Toast.LENGTH_SHORT
                     ).show()
             );
+            Button btnAnadir = findViewById(R.id.btnAnadir);
+            btnAnadir.setOnClickListener(v -> {
+                ListaTareaPrioridad.add(new ListaTareaPrioridad(spinTareas.getTag(),spinPrioridad.getTag());
+            });
         }
 
     @Override
