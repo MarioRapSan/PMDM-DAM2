@@ -46,10 +46,6 @@
             android:exported="false"
             android:windowSoftInputMode="adjustResize" />
         <activity
-            android:name=".CompartirActivity"
-            android:exported="false"
-            android:windowSoftInputMode="adjustResize" />
-        <activity
             android:name=".ListaTareas"
             android:exported="false"
             android:windowSoftInputMode="adjustResize" />
@@ -57,6 +53,22 @@
             android:name=".EstadoTareasActivity"
             android:exported="false"
             android:windowSoftInputMode="adjustResize" />
+        <activity
+            android:name=".ColeccionTareasActivity"
+            android:exported="false"
+            android:windowSoftInputMode="adjustResize" />
+
+        <activity
+            android:name=".AnadirTareasActivity"
+            android:exported="false"
+            android:windowSoftInputMode="adjustResize" />
+
+        <activity
+            android:name=".DetalleTareaActivity"
+            android:exported="false"
+            android:windowSoftInputMode="adjustResize" />
+
+
     </application>
 
 </manifest>

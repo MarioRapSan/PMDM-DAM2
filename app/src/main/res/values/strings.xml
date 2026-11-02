@@ -36,7 +36,18 @@
     <string name="second_fragment_label">Second Fragment</string>
     <string name="next">Next</string>
     <string name="previous">Previous</string>
-
+    <string-array name="prioridades_tarea">
+        <item>Selecciona una prioridad</item>
+        <item>Puede esperar</item>
+        <item>Hacer cuanto antes</item>
+        <item>Urgente</item>
+    </string-array>
+    <string-array name="companeros_tarea">
+        <item>Selecciona un compañero</item>
+        <item>Jose</item>
+        <item>Raul</item>
+        <item>Winwaleo</item>
+    </string-array>
     <string name="lorem_ipsum">
         Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam in scelerisque sem. Mauris
         volutpat, dolor id interdum ullamcorper, risus dolor egestas lectus, sit amet mattis purus
@@ -81,4 +92,40 @@
     <string name="completada">Completada</string>
     <string name="a_adir">Añadir</string>
     <string name="volver">Volver</string>
+
+    <!-- Formulario para añadir tareas -->
+    <string name="anadir_tarea_titulo">Añadir tarea</string>
+    <string name="nombre">Nombre</string>
+    <string name="nombre_tarea_hint">Nombre de la tarea</string>
+    <string name="prioridad">Prioridad</string>
+    <string name="companero_anade_tarea">Compañero que añade la tarea</string>
+    <string name="tarea_hecha">Tarea hecha</string>
+    <string name="fecha">Fecha</string>
+    <string name="fecha_hint">Ej.: Lunes o 12/05/2025</string>
+    <string name="dinero_opcional">Dinero (opcional)</string>
+    <string name="dinero_hint">0</string>
+    <string name="hora">Hora</string>
+    <string name="hora_hint">Ej.: 18:30</string>
+    <string name="dificultad">Dificultad</string>
+    <string name="aceptar">Aceptar</string>
+    <string name="cancelar">Cancelar</string>
+    <string name="error_nombre">Introduce el nombre</string>
+    <string name="error_prioridad">Selecciona una prioridad</string>
+    <string name="error_companero">Selecciona un compañero</string>
+    <string name="error_fecha">Introduce la fecha</string>
+    <string name="error_dinero">Número no válido</string>
+    <string name="error_dinero_negativo">No puede ser negativo</string>
+    <string name="error_hora">Formato HH:mm, por ejemplo 18:30</string>
+    <string name="error_hora_obligatoria">Selecciona la hora</string>
+
+    <!-- Lista de tareas -->
+    <string name="tarea">Tarea</string>
+    <string name="companero">Compañero</string>
+    <string name="estado">Estado</string>
+    <string name="selecciona_tarea">Selecciona una tarea</string>
+    <string name="sin_tareas">No hay tareas añadidas</string>
+    <string name="tarea_anadida">Tarea añadida</string>
+    <string name="estado_pendiente">Estado: Pendiente</string>
+    <string name="estado_completada">Estado: Completada</string>
+    <string name="sin_estado">Sin estado</string>
 </resources>

@@ -77,8 +77,13 @@ public class MainActivity extends AppCompatActivity {
             Intent intent = new Intent(MainActivity.this, ListaTareas.class);
             startActivity(intent);
         });
-
+        Button btnColeccion = findViewById(R.id.btnColeccionTareas);
+        btnColeccion.setOnClickListener(v -> {
+            Intent intent = new Intent(MainActivity.this, ColeccionTareasActivity.class);
+            startActivity(intent);
+        });
     }
+
 
 
     private void enviarFormulario() {

@@ -200,7 +200,16 @@
                 android:backgroundTint="@color/secondary"
                 android:text="@string/lista_de_tareas"
                 android:textColor="@color/surface" />
-
+            <Button
+                android:id="@+id/btnColeccionTareas"
+                android:layout_width="match_parent"
+                android:layout_height="44dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="16dp"
+                android:backgroundTint="@color/primary"
+                android:text="Colección de tareas"
+                android:textAllCaps="false"
+                android:textColor="@color/surface" />
         </LinearLayout>
     </ScrollView>
 

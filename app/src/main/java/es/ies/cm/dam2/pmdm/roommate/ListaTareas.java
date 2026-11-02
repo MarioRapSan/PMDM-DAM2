@@ -11,16 +11,16 @@ import android.widget.RadioButton;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.graphics.Insets;
+import androidx.core.view.ViewCompat;
+import androidx.core.view.WindowInsetsCompat;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class ListaTareas extends AppCompatActivity {
-
-    private static final String TEXTO_SIN_PRIORIDAD = "Selecciona una prioridad";
-    private static final String TEXTO_SIN_TAREA = "Selecciona una tarea";
-    private static final String TEXTO_SIN_COMPANERO = "Selecciona un compañero";
 
     private ListView lista;
     private Spinner spinPrioridad;
@@ -30,20 +30,6 @@ public class ListaTareas extends AppCompatActivity {
     private RadioButton radioCompletada;
     private Button btnAnadir;
     private Button btnVolver;
-
-    private final String[] Companeros = {
-            TEXTO_SIN_COMPANERO,
-            "Jose",
-            "Raul",
-            "Winwaleo"
-    };
-
-    private final String[] Prioridades = {
-            TEXTO_SIN_PRIORIDAD,
-            "Puede esperar",
-            "Hacer cuanto antes",
-            "Urgente"
-    };
 
     private final List<ListaTareaPrioridad> catalogoTareas = new ArrayList<>();
     private final List<ListaTareaPrioridad> listaT = new ArrayList<>();
@@ -57,7 +43,9 @@ public class ListaTareas extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        EdgeToEdge.enable(this);
         setContentView(R.layout.activity_lista_tareas);
+        aplicarInsets();
 
         lista = findViewById(R.id.simpleListView);
         spinPrioridad = findViewById(R.id.spinnerPrioridad);
@@ -67,6 +55,8 @@ public class ListaTareas extends AppCompatActivity {
         radioCompletada = findViewById(R.id.radioCompletada);
         btnAnadir = findViewById(R.id.btnAnadir);
         btnVolver = findViewById(R.id.btnVolver);
+
+        radioPendiente.setChecked(true);
 
         cargarCatalogoTareas();
 
@@ -83,7 +73,6 @@ public class ListaTareas extends AppCompatActivity {
     }
 
     private void cargarCatalogoTareas() {
-        // Añade aquí más tareas si quieres que el spinner tenga más opciones.
         catalogoTareas.add(new ListaTareaPrioridad("Limpiar baño", "Puede esperar"));
         catalogoTareas.add(new ListaTareaPrioridad("Limpiar salón", "Puede esperar"));
         catalogoTareas.add(new ListaTareaPrioridad("Regar las plantas", "Puede esperar"));
@@ -103,22 +92,26 @@ public class ListaTareas extends AppCompatActivity {
     private void configurarListaTareas() {
         adaptadorLista = new ArrayAdapter<>(
                 this,
-                android.R.layout.simple_list_item_1,
+                R.layout.item_lista_tarea,
                 listaT
         );
 
         lista.setAdapter(adaptadorLista);
+        lista.setEmptyView(findViewById(R.id.tvListaVacia));
     }
 
     private void configurarSpinnerPrioridad() {
+        String[] prioridades = getResources()
+                .getStringArray(R.array.prioridades_tarea);
+
         ArrayAdapter<String> adaptador = new ArrayAdapter<>(
                 this,
-                android.R.layout.simple_spinner_item,
-                Prioridades
+                R.layout.item_spinner_texto,
+                prioridades
         );
 
         adaptador.setDropDownViewResource(
-                android.R.layout.simple_spinner_dropdown_item
+                R.layout.item_spinner_texto
         );
 
         spinPrioridad.setAdapter(adaptador);
@@ -134,7 +127,7 @@ public class ListaTareas extends AppCompatActivity {
                 if (position == 0) {
                     prioridadSeleccionada = null;
                 } else {
-                    prioridadSeleccionada = Prioridades[position];
+                    prioridadSeleccionada = prioridades[position];
                 }
 
                 actualizarSpinnerTareas();
@@ -162,7 +155,9 @@ public class ListaTareas extends AppCompatActivity {
                 if (position == 0) {
                     tareaSeleccionada = null;
                 } else {
-                    tareaSeleccionada = parent.getItemAtPosition(position).toString();
+                    tareaSeleccionada = parent
+                            .getItemAtPosition(position)
+                            .toString();
                 }
 
                 actualizarEstadoBoton();
@@ -178,7 +173,7 @@ public class ListaTareas extends AppCompatActivity {
 
     private void actualizarSpinnerTareas() {
         List<String> tareasFiltradas = new ArrayList<>();
-        tareasFiltradas.add(TEXTO_SIN_TAREA);
+        tareasFiltradas.add(getString(R.string.selecciona_tarea));
 
         if (prioridadSeleccionada != null) {
             for (ListaTareaPrioridad tarea : catalogoTareas) {
@@ -190,12 +185,12 @@ public class ListaTareas extends AppCompatActivity {
 
         ArrayAdapter<String> adaptador = new ArrayAdapter<>(
                 this,
-                android.R.layout.simple_spinner_item,
+                R.layout.item_spinner_texto,
                 tareasFiltradas
         );
 
         adaptador.setDropDownViewResource(
-                android.R.layout.simple_spinner_dropdown_item
+                R.layout.item_spinner_texto
         );
 
         spinTareas.setAdapter(adaptador);
@@ -204,14 +199,17 @@ public class ListaTareas extends AppCompatActivity {
     }
 
     private void configurarSpinnerCompaneros() {
+        String[] companeros = getResources()
+                .getStringArray(R.array.companeros_tarea);
+
         ArrayAdapter<String> adaptador = new ArrayAdapter<>(
                 this,
-                android.R.layout.simple_spinner_item,
-                Companeros
+                R.layout.item_spinner_texto,
+                companeros
         );
 
         adaptador.setDropDownViewResource(
-                android.R.layout.simple_spinner_dropdown_item
+                R.layout.item_spinner_texto
         );
 
         spinCompaneros.setAdapter(adaptador);
@@ -227,7 +225,7 @@ public class ListaTareas extends AppCompatActivity {
                 if (position == 0) {
                     companeroSeleccionado = null;
                 } else {
-                    companeroSeleccionado = Companeros[position];
+                    companeroSeleccionado = companeros[position];
                 }
 
                 actualizarEstadoBoton();
@@ -245,7 +243,7 @@ public class ListaTareas extends AppCompatActivity {
         radioPendiente.setOnClickListener(v ->
                 Toast.makeText(
                         this,
-                        "Estado: Pendiente",
+                        R.string.estado_pendiente,
                         Toast.LENGTH_SHORT
                 ).show()
         );
@@ -253,7 +251,7 @@ public class ListaTareas extends AppCompatActivity {
         radioCompletada.setOnClickListener(v ->
                 Toast.makeText(
                         this,
-                        "Estado: Completada",
+                        R.string.estado_completada,
                         Toast.LENGTH_SHORT
                 ).show()
         );
@@ -261,12 +259,14 @@ public class ListaTareas extends AppCompatActivity {
 
     private void configurarBotonAnadir() {
         btnAnadir.setOnClickListener(v -> {
-            String estado = "Sin estado";
+            String estado;
 
-            if (radioPendiente.isChecked()) {
-                estado = "Pendiente";
-            } else if (radioCompletada.isChecked()) {
-                estado = "Completada";
+            if (radioCompletada.isChecked()) {
+                estado = getString(R.string.completada);
+            } else if (radioPendiente.isChecked()) {
+                estado = getString(R.string.pendiente);
+            } else {
+                estado = getString(R.string.sin_estado);
             }
 
             listaT.add(new ListaTareaPrioridad(
@@ -281,7 +281,7 @@ public class ListaTareas extends AppCompatActivity {
 
             Toast.makeText(
                     this,
-                    "Tarea añadida",
+                    R.string.tarea_anadida,
                     Toast.LENGTH_SHORT
             ).show();
 
@@ -293,6 +293,25 @@ public class ListaTareas extends AppCompatActivity {
 
     private void configurarBotonVolver() {
         btnVolver.setOnClickListener(v -> finish());
+    }
+
+    private void aplicarInsets() {
+        View root = findViewById(R.id.main);
+        int base = (int) (24 * getResources()
+                .getDisplayMetrics().density);
+
+        ViewCompat.setOnApplyWindowInsetsListener(root, (v, insets) -> {
+            Insets bars = insets.getInsets(
+                    WindowInsetsCompat.Type.systemBars()
+            );
+            v.setPadding(
+                    base + bars.left,
+                    base + bars.top,
+                    base + bars.right,
+                    base + bars.bottom
+            );
+            return insets;
+        });
     }
 
     private void actualizarEstadoBoton() {

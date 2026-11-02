@@ -6,58 +6,120 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:fitsSystemWindows="true"
+    android:background="@color/background"
     android:padding="24dp"
     tools:context=".ListaTareas">
+
+    <TextView
+        android:id="@+id/tvTituloLista"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="@string/lista_de_tareas"
+        android:textColor="@color/primary"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/tvLabelPrioridad"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:text="@string/prioridad"
+        android:textColor="@color/primary"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tvTituloLista" />
 
     <Spinner
         android:id="@+id/spinnerPrioridad"
         android:layout_width="0dp"
         android:layout_height="56dp"
-        android:layout_marginTop="8dp"
+        android:popupBackground="@color/background"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@id/tvLabelPrioridad" />
 
-    <Spinner
-        android:id="@+id/spinnerTareas"
+    <TextView
+        android:id="@+id/tvLabelTarea"
         android:layout_width="0dp"
-        android:layout_height="56dp"
-        android:layout_marginTop="16dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:text="@string/tarea"
+        android:textColor="@color/primary"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/spinnerPrioridad" />
 
     <Spinner
-        android:id="@+id/spinnerCompaneros"
+        android:id="@+id/spinnerTareas"
         android:layout_width="0dp"
         android:layout_height="56dp"
-        android:layout_marginTop="16dp"
+        android:popupBackground="@color/background"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tvLabelTarea" />
+
+    <TextView
+        android:id="@+id/tvLabelCompanero"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:text="@string/companero"
+        android:textColor="@color/primary"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/spinnerTareas" />
+
+    <Spinner
+        android:id="@+id/spinnerCompaneros"
+        android:layout_width="0dp"
+        android:layout_height="56dp"
+        android:popupBackground="@color/background"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tvLabelCompanero" />
+
+    <TextView
+        android:id="@+id/tvLabelEstado"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:text="@string/estado"
+        android:textColor="@color/primary"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/spinnerCompaneros" />
 
     <RadioGroup
         android:id="@+id/grupoRadio"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="4dp"
         android:orientation="horizontal"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/spinnerCompaneros">
+        app:layout_constraintTop_toBottomOf="@id/tvLabelEstado">
 
         <RadioButton
             android:id="@+id/radioPendiente"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/pendiente" />
+            android:buttonTint="@color/primary"
+            android:checked="true"
+            android:text="@string/pendiente"
+            android:textColor="@color/text_primary" />
 
         <RadioButton
             android:id="@+id/radioCompletada"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/completada" />
+            android:layout_marginStart="16dp"
+            android:buttonTint="@color/primary"
+            android:text="@string/completada"
+            android:textColor="@color/text_primary" />
 
     </RadioGroup>
 
@@ -74,7 +136,21 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/grupoRadio"
         tools:itemCount="4"
-        tools:listitem="@android:layout/simple_list_item_1" />
+        tools:listitem="@layout/item_lista_tarea" />
+
+    <TextView
+        android:id="@+id/tvListaVacia"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:gravity="center"
+        android:text="@string/sin_tareas"
+        android:textColor="@color/text_secondary"
+        android:textSize="16sp"
+        android:visibility="gone"
+        app:layout_constraintBottom_toTopOf="@id/bottomAcciones"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/grupoRadio" />
 
     <LinearLayout
         android:id="@+id/bottomAcciones"
@@ -94,6 +170,7 @@
             android:layout_weight="1"
             android:backgroundTint="@color/primary"
             android:text="@string/volver"
+            android:textAllCaps="false"
             android:textColor="@color/surface"
             android:textStyle="bold" />
 
@@ -106,6 +183,7 @@
             android:backgroundTint="@color/primary"
             android:enabled="false"
             android:text="@string/a_adir"
+            android:textAllCaps="false"
             android:textColor="@color/surface"
             android:textStyle="bold" />
 
