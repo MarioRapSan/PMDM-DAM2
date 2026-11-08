@@ -44,6 +44,7 @@ public class DetalleTareaActivity extends AppCompatActivity {
         TextView companero = findViewById(R.id.tvCompaneroDetalle);
         TextView prioridad = findViewById(R.id.tvPrioridadDetalle);
         TextView fecha = findViewById(R.id.tvFechaDetalle);
+        TextView descripcion = findViewById(R.id.tvDescripcionDetalle);
         RatingBar dificultad = findViewById(R.id.rbDificultadDetalle);
         Button btnVolver = findViewById(R.id.btnVolverDetalle);
 
@@ -72,6 +73,14 @@ public class DetalleTareaActivity extends AppCompatActivity {
             textoFecha += " · " + hora;
         }
         fecha.setText("Fecha: " + textoFecha);
+
+        String textoDescripcion = tarea.getDescripcion();
+        if (textoDescripcion == null || textoDescripcion.trim().isEmpty()) {
+            textoDescripcion = getString(R.string.sin_descripcion);
+        }
+        descripcion.setText(
+                getString(R.string.descripcion_detalle) + ": " + textoDescripcion
+        );
 
         dificultad.setRating(tarea.getDificultad());
 

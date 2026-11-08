@@ -2,10 +2,14 @@ package es.ies.cm.dam2.pmdm.roommate;
 
 import java.io.Serializable;
 
+/**
+ * Datos de una tarea del piso.
+ */
 public class Tarea implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
+    private int id;
     private final String nombre;
     private final String prioridad;
     private final String dia;
@@ -15,18 +19,39 @@ public class Tarea implements Serializable {
     private final int fotoResId;
     private boolean hecha;
     private int dificultad;
+    private String descripcion;
 
     public Tarea(String nombre, String prioridad, String dia, double dinero, String hora) {
-        this(nombre, prioridad, dia, dinero, hora, "Sin asignar", 0, false);
+        this(0, nombre, prioridad, dia, dinero, hora, "Sin asignar",
+                R.drawable.ic_persona, false, 3, "");
     }
 
     public Tarea(String nombre, String prioridad, String dia, double dinero, String hora,
                  String companero, int fotoResId) {
-        this(nombre, prioridad, dia, dinero, hora, companero, fotoResId, false);
+        this(0, nombre, prioridad, dia, dinero, hora, companero,
+                fotoResId, false, 3, "");
     }
 
     public Tarea(String nombre, String prioridad, String dia, double dinero, String hora,
                  String companero, int fotoResId, boolean hecha) {
+        this(0, nombre, prioridad, dia, dinero, hora, companero,
+                fotoResId, hecha, 3, "");
+    }
+
+    public Tarea(
+            int id,
+            String nombre,
+            String prioridad,
+            String dia,
+            double dinero,
+            String hora,
+            String companero,
+            int fotoResId,
+            boolean hecha,
+            int dificultad,
+            String descripcion
+    ) {
+        this.id = id;
         this.nombre = nombre;
         this.prioridad = prioridad;
         this.dia = dia;
@@ -35,20 +60,69 @@ public class Tarea implements Serializable {
         this.companero = companero;
         this.fotoResId = fotoResId;
         this.hecha = hecha;
-        this.dificultad = 3;
+        this.dificultad = dificultad;
+        this.descripcion = descripcion == null ? "" : descripcion;
     }
 
-    public String getNombre() { return nombre; }
-    public String getPrioridad() { return prioridad; }
-    public String getDia() { return dia; }
-    public double getDinero() { return dinero; }
-    public String getHora() { return hora; }
-    public String getCompanero() { return companero; }
-    public int getFotoResId() { return fotoResId; }
-    public boolean isHecha() { return hecha; }
-    public void setHecha(boolean hecha) { this.hecha = hecha; }
-    public int getDificultad() { return dificultad; }
-    public void setDificultad(int dificultad) { this.dificultad = dificultad; }
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public String getNombre() {
+        return nombre;
+    }
+
+    public String getPrioridad() {
+        return prioridad;
+    }
+
+    public String getDia() {
+        return dia;
+    }
+
+    public double getDinero() {
+        return dinero;
+    }
+
+    public String getHora() {
+        return hora;
+    }
+
+    public String getCompanero() {
+        return companero;
+    }
+
+    public int getFotoResId() {
+        return fotoResId;
+    }
+
+    public boolean isHecha() {
+        return hecha;
+    }
+
+    public void setHecha(boolean hecha) {
+        this.hecha = hecha;
+    }
+
+    public int getDificultad() {
+        return dificultad;
+    }
+
+    public void setDificultad(int dificultad) {
+        this.dificultad = dificultad;
+    }
+
+    public String getDescripcion() {
+        return descripcion;
+    }
+
+    public void setDescripcion(String descripcion) {
+        this.descripcion = descripcion == null ? "" : descripcion;
+    }
 
     public static int dificultadPorPrioridad(String prioridad) {
         if (prioridad == null) {
@@ -70,7 +144,7 @@ public class Tarea implements Serializable {
     @Override
     public String toString() {
         return nombre + " | " + prioridad + " | " + dia + " | " + hora
-                + " | " + dinero + " € | " + companero
+                + " | " + dinero + " euros | " + companero
                 + " | Dificultad: " + dificultad
                 + " | " + (hecha ? "Hecha" : "No hecha");
     }

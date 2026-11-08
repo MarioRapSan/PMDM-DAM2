@@ -4,20 +4,28 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.RadioGroup;
 import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
 
+/**
+ * Pantalla de alta de companeros.
+ * Tambien sirve como punto de entrada a las demas pantallas.
+ */
 public class MainActivity extends AppCompatActivity {
 
     private EditText etNombre;
+    private EditText etApellidos;
     private EditText etEdad;
+    private EditText etFechaEntrada;
     private EditText etIntroduccion;
     private RadioGroup rgSexo;
-    private RadioGroup rgLgtbFriendly;
+
+    private int usuarioId = 1;
+    private String usuarioNombre = "admin";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,88 +34,103 @@ public class MainActivity extends AppCompatActivity {
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_main);
 
-        // Referencias a los campos
+        // Usuario que ha iniciado sesion. Si no llega ninguno, se usa admin.
+        usuarioId = getIntent().getIntExtra(
+                ColeccionTareasActivity.EXTRA_USUARIO_ID,
+                1
+        );
+        usuarioNombre = getIntent().getStringExtra(
+                ColeccionTareasActivity.EXTRA_USUARIO_NOMBRE
+        );
+        if (usuarioNombre == null || usuarioNombre.isEmpty()) {
+            usuarioNombre = "admin";
+        }
+
         etNombre = findViewById(R.id.etNombre);
+        etApellidos = findViewById(R.id.etApellidos);
         etEdad = findViewById(R.id.etEdad);
+        etFechaEntrada = findViewById(R.id.etFechaEntrada);
         etIntroduccion = findViewById(R.id.etIntroduccion);
         rgSexo = findViewById(R.id.rgSexo);
-        rgLgtbFriendly = findViewById(R.id.rgLgtbFriendly);
 
         Button btnCheck = findViewById(R.id.btnCheck);
         Button btnSiguiente = findViewById(R.id.btnSiguiente);
+        Button btnInvitacion = findViewById(R.id.btnInvitacion);
+        Button btnCorreo = findViewById(R.id.btnCorreo);
+        Button btnLista = findViewById(R.id.btnLista);
+        Button btnColeccion = findViewById(R.id.btnColeccionTareas);
+        Button btnBuscar = findViewById(R.id.btnBuscar);
+        Button btnCompra = findViewById(R.id.btnCompra);
 
-        // Validar y enviar los datos
+        // Guarda el companero en la base de datos.
         btnCheck.setOnClickListener(v -> enviarFormulario());
 
-        // Mantener la navegación existente
+        // Abre la ficha de los companeros guardados.
         btnSiguiente.setOnClickListener(v -> {
-            Intent intent = new Intent(
-                    MainActivity.this,
-                    FichaCompaneroActivity.class
-            );
+            Intent intent = new Intent(MainActivity.this, FichaCompaneroActivity.class);
             startActivity(intent);
         });
 
-        Button btnInvitacion = findViewById(R.id.btnInvitacion);
-        Button btnCorreo = findViewById(R.id.btnCorreo);
-
         btnInvitacion.setOnClickListener(v -> {
-            Intent intent = new Intent(
-                    MainActivity.this,
-                    InvitacionActivity.class
-            );
+            Intent intent = new Intent(MainActivity.this, InvitacionActivity.class);
             startActivity(intent);
         });
 
         btnCorreo.setOnClickListener(v -> {
-            Intent intent = new Intent(
-                    MainActivity.this,
-                    CorreoActivity.class
-            );
+            Intent intent = new Intent(MainActivity.this, CorreoActivity.class);
             startActivity(intent);
         });
-        Button boton2 = findViewById(R.id.btnInvitacion);
 
-        boton2.setOnClickListener(v -> {
-            Intent intent = new Intent(MainActivity.this, InvitacionActivity.class);
-            startActivity(intent);
-        });
-        Button btnLista = findViewById(R.id.btnLista);
         btnLista.setOnClickListener(v -> {
             Intent intent = new Intent(MainActivity.this, ListaTareas.class);
             startActivity(intent);
         });
-        Button btnColeccion = findViewById(R.id.btnColeccionTareas);
-        btnColeccion.setOnClickListener(v -> {
-            Intent intent = new Intent(MainActivity.this, ColeccionTareasActivity.class);
-            startActivity(intent);
-        });
+
+        btnColeccion.setOnClickListener(v -> abrirColeccion());
+        btnBuscar.setOnClickListener(v -> abrirBuscar());
+        btnCompra.setOnClickListener(v -> abrirCompra());
     }
 
+    private void abrirColeccion() {
+        Intent intent = new Intent(MainActivity.this, ColeccionTareasActivity.class);
+        intent.putExtra(ColeccionTareasActivity.EXTRA_USUARIO_ID, usuarioId);
+        intent.putExtra(ColeccionTareasActivity.EXTRA_USUARIO_NOMBRE, usuarioNombre);
+        startActivity(intent);
+    }
 
+    private void abrirBuscar() {
+        Intent intent = new Intent(MainActivity.this, BuscarActivity.class);
+        intent.putExtra(ColeccionTareasActivity.EXTRA_USUARIO_ID, usuarioId);
+        intent.putExtra(ColeccionTareasActivity.EXTRA_USUARIO_NOMBRE, usuarioNombre);
+        startActivity(intent);
+    }
+
+    private void abrirCompra() {
+        Intent intent = new Intent(MainActivity.this, ListaCompraActivity.class);
+        intent.putExtra(ColeccionTareasActivity.EXTRA_USUARIO_ID, usuarioId);
+        intent.putExtra(ColeccionTareasActivity.EXTRA_USUARIO_NOMBRE, usuarioNombre);
+        startActivity(intent);
+    }
 
     private void enviarFormulario() {
-
         String nombre = etNombre.getText().toString().trim();
+        String apellidos = etApellidos.getText().toString().trim();
         String edadTexto = etEdad.getText().toString().trim();
-        String introduccion =
-                etIntroduccion.getText().toString().trim();
+        String fechaEntrada = etFechaEntrada.getText().toString().trim();
+        String introduccion = etIntroduccion.getText().toString().trim();
 
         int sexoId = rgSexo.getCheckedRadioButtonId();
-        int lgtbId = rgLgtbFriendly.getCheckedRadioButtonId();
 
-        // Todos los campos obligatorios deben estar respondidos
+        // El nombre, los apellidos, la edad y el sexo son obligatorios.
         if (nombre.isEmpty()
+                || apellidos.isEmpty()
                 || edadTexto.isEmpty()
-                || sexoId == -1
-                || lgtbId == -1) {
+                || sexoId == -1) {
             mostrarError();
             return;
         }
 
-        // Comprobar que la edad es válida
         int edad;
-
         try {
             edad = Integer.parseInt(edadTexto);
         } catch (NumberFormatException e) {
@@ -120,43 +143,51 @@ public class MainActivity extends AppCompatActivity {
             return;
         }
 
-        // Obtener las respuestas seleccionadas
         RadioButton radioSexo = findViewById(sexoId);
         String sexo = radioSexo.getText().toString();
 
-        boolean lgtbFriendly = (lgtbId == R.id.rbLgtbSi);
-
-
         Companero nuevo = new Companero(
                 nombre,
-                sexo,
+                apellidos,
                 edad,
-                lgtbFriendly,
-                introduccion
+                sexo,
+                fechaEntrada,
+                introduccion,
+                "ic_persona"
         );
 
-        CompaneroRepository.agregar(nuevo);
+        RoomMateDB db = new RoomMateDB(this);
+        long id = db.insertarCompanero(nuevo);
+        db.close();
 
+        if (id == -1) {
+            Toast.makeText(
+                    this,
+                    R.string.error_guardar_companero,
+                    Toast.LENGTH_SHORT
+            ).show();
+            return;
+        }
 
         etNombre.setText("");
+        etApellidos.setText("");
         etEdad.setText("");
+        etFechaEntrada.setText("");
         etIntroduccion.setText("");
         rgSexo.clearCheck();
-        rgLgtbFriendly.clearCheck();
 
         Toast.makeText(
-                MainActivity.this,
-                "Compañero registrado. Puedes introducir otro.",
+                this,
+                R.string.companero_registrado,
                 Toast.LENGTH_SHORT
         ).show();
-
     }
+
     private void mostrarError() {
         Toast.makeText(
-                MainActivity.this,
-                "Datos incorrectos",
+                this,
+                R.string.datos_incorrectos,
                 Toast.LENGTH_SHORT
         ).show();
     }
 }
-

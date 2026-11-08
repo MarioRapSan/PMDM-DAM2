@@ -88,13 +88,45 @@
                 android:textStyle="bold" />
         </LinearLayout>
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:baselineAligned="false"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/btnBuscarTareas"
+                android:layout_width="0dp"
+                android:layout_height="48dp"
+                android:layout_marginEnd="8dp"
+                android:layout_weight="1"
+                android:backgroundTint="@color/secondary"
+                android:text="@string/buscar_tareas"
+                android:textAllCaps="false"
+                android:textColor="@color/surface"
+                android:textStyle="bold" />
+
+            <Button
+                android:id="@+id/btnListaCompra"
+                android:layout_width="0dp"
+                android:layout_height="48dp"
+                android:layout_marginStart="8dp"
+                android:layout_weight="1"
+                android:backgroundTint="@color/primary"
+                android:text="@string/lista_de_la_compra"
+                android:textAllCaps="false"
+                android:textColor="@color/surface"
+                android:textStyle="bold" />
+        </LinearLayout>
+
         <Button
             android:id="@+id/btnVolverColeccion"
             android:layout_width="match_parent"
             android:layout_height="48dp"
             android:layout_marginTop="8dp"
             android:backgroundTint="@color/secondary"
-            android:text="Volver"
+            android:text="@string/volver"
             android:textAllCaps="false"
             android:textColor="@color/surface"
             android:textStyle="bold" />

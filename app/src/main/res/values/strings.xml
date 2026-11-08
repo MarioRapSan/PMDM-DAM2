@@ -128,4 +128,90 @@
     <string name="estado_pendiente">Estado: Pendiente</string>
     <string name="estado_completada">Estado: Completada</string>
     <string name="sin_estado">Sin estado</string>
+
+    <!-- Alta de companeros -->
+    <string name="alta_companero">Alta de compañero de piso</string>
+    <string name="nombre_hint">Introduce el nombre</string>
+    <string name="apellidos">Apellidos</string>
+    <string name="apellidos_hint">Introduce los apellidos</string>
+    <string name="sexo">Sexo</string>
+    <string name="hombre">Hombre</string>
+    <string name="mujer">Mujer</string>
+    <string name="edad">Edad</string>
+    <string name="edad_hint">Edad entre 18 y 100</string>
+    <string name="fecha_entrada">Fecha de entrada al piso</string>
+    <string name="fecha_entrada_hint">Ej.: 01/09/2025</string>
+    <string name="introduccion_opcional">Introducción personal (opcional)</string>
+    <string name="introduccion_hint">Cuentanos algo sobre ti</string>
+    <string name="guardar_companero">Guardar compañero</string>
+    <string name="ver_ficha_companeros">Ver ficha de compañeros</string>
+    <string name="coleccion_de_tareas">Colección de tareas</string>
+    <string name="buscar_tareas">Buscar tareas</string>
+    <string name="lista_de_la_compra">Lista de la compra</string>
+    <string name="enviar_correo">Enviar correo</string>
+    <string name="error_guardar_companero">No se pudo guardar el compañero</string>
+    <string name="companero_registrado">Compañero registrado correctamente</string>
+    <string name="datos_incorrectos">Datos incorrectos</string>
+
+    <!-- Inicio de sesion -->
+    <string name="iniciar_sesion">Iniciar sesión</string>
+    <string name="usuario">Usuario</string>
+    <string name="usuario_hint">Escribe tu usuario</string>
+    <string name="clave">Clave</string>
+    <string name="clave_hint">Escribe tu clave</string>
+    <string name="entrar">Entrar</string>
+    <string name="ir_alta_companero">Ir al alta de compañero</string>
+    <string name="usuarios_prueba">Usuarios de prueba: admin/admin y mario/mario</string>
+    <string name="error_usuario_clave">Usuario o clave incorrectos</string>
+    <string name="error_campos_login">Introduce el usuario y la clave</string>
+
+    <!-- Busqueda de tareas -->
+    <string name="buscar_tareas_titulo">Buscar tareas</string>
+    <string name="nombre_buscar">Nombre de la tarea</string>
+    <string name="nombre_buscar_hint">Escribe parte del nombre</string>
+    <string name="modo_busqueda">Modo de búsqueda</string>
+    <string name="prioridad_busqueda">Prioridad</string>
+    <string name="buscar">Buscar</string>
+    <string name="sin_resultados">No se han encontrado tareas</string>
+
+    <!-- Lista de la compra -->
+    <string name="lista_compra_titulo">Lista de la compra</string>
+    <string name="articulo">Artículo</string>
+    <string name="anadir_a_mi_lista">Añadir a mi lista</string>
+    <string name="lista_compra_vacia">Tu lista de la compra está vacía</string>
+    <string name="articulo_anadido">Artículo añadido a la lista</string>
+    <string name="articulo_duplicado">Ese artículo ya está en tu lista</string>
+    <string name="articulo_eliminado">Artículo eliminado de la lista</string>
+    <string name="lista_compra_de">Lista de la compra de</string>
+
+    <!-- Formulario de tareas -->
+    <string name="descripcion_opcional">Descripción (opcional)</string>
+    <string name="descripcion_hint">Detalles de la tarea</string>
+    <string name="editar_tarea_titulo">Editar tarea</string>
+    <string name="guardar">Guardar</string>
+    <string name="selecciona_companero">Selecciona un compañero</string>
+    <string name="tarea_guardada">Tarea guardada</string>
+    <string name="error_guardar_tarea">No se pudo guardar la tarea</string>
+    <string name="descripcion_detalle">Descripción</string>
+    <string name="sin_descripcion">Sin descripción</string>
+
+    <!-- Menu contextual de tareas -->
+    <string name="editar">Editar</string>
+    <string name="borrar">Borrar</string>
+    <string name="tarea_borrada">Tarea borrada</string>
+    <string name="tarea_marcada_hecha">Tarea marcada como hecha</string>
+    <string name="tarea_marcada_no_hecha">Tarea marcada como no hecha</string>
+    <string name="tarea_ya_en_lista">Esa tarea ya está en la lista</string>
+
+    <string-array name="modos_busqueda">
+        <item>Empieza por</item>
+        <item>Contiene</item>
+    </string-array>
+
+    <string-array name="prioridades_busqueda">
+        <item>Todas</item>
+        <item>Puede esperar</item>
+        <item>Hacer cuanto antes</item>
+        <item>Urgente</item>
+    </string-array>
 </resources>

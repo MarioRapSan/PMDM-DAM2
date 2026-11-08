@@ -18,8 +18,14 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
+/**
+ * Pantalla de lista de tareas con filtros por prioridad, tarea y companero.
+ * Los datos se leen y se guardan en SQLite.
+ */
 public class ListaTareas extends AppCompatActivity {
 
     private ListView lista;
@@ -35,6 +41,7 @@ public class ListaTareas extends AppCompatActivity {
     private final List<ListaTareaPrioridad> listaT = new ArrayList<>();
 
     private ArrayAdapter<ListaTareaPrioridad> adaptadorLista;
+    private RoomMateDB db;
 
     private String companeroSeleccionado = null;
     private String prioridadSeleccionada = null;
@@ -46,6 +53,8 @@ public class ListaTareas extends AppCompatActivity {
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_lista_tareas);
         aplicarInsets();
+
+        db = new RoomMateDB(this);
 
         lista = findViewById(R.id.simpleListView);
         spinPrioridad = findViewById(R.id.spinnerPrioridad);
@@ -70,23 +79,61 @@ public class ListaTareas extends AppCompatActivity {
 
         actualizarSpinnerTareas();
         actualizarEstadoBoton();
+        cargarListaDesdeBD();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (db != null) {
+            cargarCatalogoTareas();
+            actualizarSpinnerTareas();
+            cargarListaDesdeBD();
+        }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (db != null) {
+            db.close();
+        }
     }
 
     private void cargarCatalogoTareas() {
-        catalogoTareas.add(new ListaTareaPrioridad("Limpiar baño", "Puede esperar"));
-        catalogoTareas.add(new ListaTareaPrioridad("Limpiar salón", "Puede esperar"));
-        catalogoTareas.add(new ListaTareaPrioridad("Regar las plantas", "Puede esperar"));
-        catalogoTareas.add(new ListaTareaPrioridad("Ordenar el armario", "Puede esperar"));
+        catalogoTareas.clear();
 
-        catalogoTareas.add(new ListaTareaPrioridad("Limpiar cocina", "Hacer cuanto antes"));
-        catalogoTareas.add(new ListaTareaPrioridad("Comprar productos de limpieza", "Hacer cuanto antes"));
-        catalogoTareas.add(new ListaTareaPrioridad("Lavar la ropa", "Hacer cuanto antes"));
-        catalogoTareas.add(new ListaTareaPrioridad("Cambiar las sábanas", "Hacer cuanto antes"));
+        List<Tarea> tareas = db.obtenerTareas();
+        Set<String> vistos = new HashSet<>();
 
-        catalogoTareas.add(new ListaTareaPrioridad("Sacar la basura", "Urgente"));
-        catalogoTareas.add(new ListaTareaPrioridad("Comprar productos de cocina", "Urgente"));
-        catalogoTareas.add(new ListaTareaPrioridad("Arreglar la persiana", "Urgente"));
-        catalogoTareas.add(new ListaTareaPrioridad("Pagar la luz", "Urgente"));
+        for (Tarea tarea : tareas) {
+            String clave = tarea.getNombre() + "|" + tarea.getPrioridad();
+            if (vistos.add(clave)) {
+                catalogoTareas.add(new ListaTareaPrioridad(
+                        tarea.getNombre(),
+                        tarea.getPrioridad()
+                ));
+            }
+        }
+    }
+
+    private void cargarListaDesdeBD() {
+        listaT.clear();
+
+        for (Tarea tarea : db.obtenerTareas()) {
+            listaT.add(new ListaTareaPrioridad(
+                    tarea.getNombre(),
+                    tarea.getPrioridad(),
+                    tarea.getCompanero(),
+                    tarea.isHecha()
+                            ? getString(R.string.completada)
+                            : getString(R.string.pendiente)
+            ));
+        }
+
+        if (adaptadorLista != null) {
+            adaptadorLista.notifyDataSetChanged();
+        }
     }
 
     private void configurarListaTareas() {
@@ -199,8 +246,17 @@ public class ListaTareas extends AppCompatActivity {
     }
 
     private void configurarSpinnerCompaneros() {
-        String[] companeros = getResources()
-                .getStringArray(R.array.companeros_tarea);
+        List<String> companeros = new ArrayList<>();
+        companeros.add(getString(R.string.selecciona_companero));
+        companeros.addAll(db.obtenerNombresCompaneros());
+
+        if (companeros.size() == 1) {
+            String[] ejemplos = getResources()
+                    .getStringArray(R.array.companeros_tarea);
+            for (int i = 1; i < ejemplos.length; i++) {
+                companeros.add(ejemplos[i]);
+            }
+        }
 
         ArrayAdapter<String> adaptador = new ArrayAdapter<>(
                 this,
@@ -225,7 +281,7 @@ public class ListaTareas extends AppCompatActivity {
                 if (position == 0) {
                     companeroSeleccionado = null;
                 } else {
-                    companeroSeleccionado = companeros[position];
+                    companeroSeleccionado = companeros.get(position);
                 }
 
                 actualizarEstadoBoton();
@@ -259,24 +315,48 @@ public class ListaTareas extends AppCompatActivity {
 
     private void configurarBotonAnadir() {
         btnAnadir.setOnClickListener(v -> {
-            String estado;
+            boolean hecha = radioCompletada.isChecked();
 
-            if (radioCompletada.isChecked()) {
-                estado = getString(R.string.completada);
-            } else if (radioPendiente.isChecked()) {
-                estado = getString(R.string.pendiente);
-            } else {
-                estado = getString(R.string.sin_estado);
+            // Evita guardar dos veces la misma tarea con el mismo companero.
+            for (Tarea tarea : db.obtenerTareas()) {
+                if (tarea.getNombre().equals(tareaSeleccionada)
+                        && tarea.getPrioridad().equals(prioridadSeleccionada)
+                        && tarea.getCompanero().equals(companeroSeleccionado)) {
+                    Toast.makeText(
+                            this,
+                            R.string.tarea_ya_en_lista,
+                            Toast.LENGTH_SHORT
+                    ).show();
+                    return;
+                }
             }
 
-            listaT.add(new ListaTareaPrioridad(
+            Tarea nueva = new Tarea(
                     tareaSeleccionada,
                     prioridadSeleccionada,
+                    "",
+                    0,
+                    "",
                     companeroSeleccionado,
-                    estado
-            ));
+                    R.drawable.ic_persona,
+                    hecha
+            );
+            nueva.setDificultad(
+                    Tarea.dificultadPorPrioridad(prioridadSeleccionada)
+            );
 
-            adaptadorLista.notifyDataSetChanged();
+            long id = db.insertarTarea(nueva);
+
+            if (id == -1) {
+                Toast.makeText(
+                        this,
+                        R.string.error_guardar_tarea,
+                        Toast.LENGTH_SHORT
+                ).show();
+                return;
+            }
+
+            cargarListaDesdeBD();
             lista.smoothScrollToPosition(listaT.size() - 1);
 
             Toast.makeText(

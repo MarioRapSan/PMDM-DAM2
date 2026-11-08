@@ -16,10 +16,8 @@
         android:padding="20dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0">
+        app:layout_constraintTop_toTopOf="parent">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -30,7 +28,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="20dp"
-                android:text="Alta de compañero de piso"
+                android:text="@string/alta_companero"
                 android:textColor="@color/primary"
                 android:textSize="24sp"
                 android:textStyle="bold" />
@@ -38,16 +36,16 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Nombre"
+                android:text="@string/nombre"
                 android:textColor="@color/primary" />
 
             <EditText
                 android:id="@+id/etNombre"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="49dp"
                 android:autofillHints="name"
                 android:backgroundTint="@color/secondary"
-                android:hint="Introduce el nombre"
+                android:hint="@string/nombre_hint"
                 android:inputType="textPersonName"
                 android:textColor="@color/primary"
                 android:textColorHint="@color/secondary" />
@@ -56,47 +54,64 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="12dp"
-                android:text="Sexo"
+                android:text="@string/apellidos"
+                android:textColor="@color/primary" />
+
+            <EditText
+                android:id="@+id/etApellidos"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:autofillHints="name"
+                android:backgroundTint="@color/secondary"
+                android:hint="@string/apellidos_hint"
+                android:inputType="textPersonName"
+                android:textColor="@color/primary"
+                android:textColorHint="@color/secondary" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:text="@string/sexo"
                 android:textColor="@color/primary" />
 
             <RadioGroup
                 android:id="@+id/rgSexo"
                 android:layout_width="match_parent"
-                android:layout_height="67dp"
-                android:orientation="vertical">
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
 
                 <RadioButton
                     android:id="@+id/rbHombre"
                     android:layout_width="wrap_content"
-                    android:layout_height="39dp"
+                    android:layout_height="wrap_content"
                     android:buttonTint="@color/primary"
-                    android:text="Hombre"
+                    android:text="@string/hombre"
                     android:textColor="@color/primary" />
 
                 <RadioButton
                     android:id="@+id/rbMujer"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
                     android:buttonTint="@color/primary"
-                    android:text="Mujer"
+                    android:text="@string/mujer"
                     android:textColor="@color/primary" />
-
-
             </RadioGroup>
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="12dp"
-                android:text="Edad"
+                android:text="@string/edad"
                 android:textColor="@color/primary" />
 
             <EditText
                 android:id="@+id/etEdad"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="51dp"
                 android:backgroundTint="@color/secondary"
-                android:hint="Edad entre 18 y 100"
+                android:hint="@string/edad_hint"
                 android:inputType="number"
                 android:maxLength="3"
                 android:textColor="@color/primary"
@@ -106,46 +121,34 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="12dp"
-                android:text="¿Eres LGTB+ friendly?"
+                android:text="@string/fecha_entrada"
                 android:textColor="@color/primary" />
 
-            <RadioGroup
-                android:id="@+id/rgLgtbFriendly"
+            <EditText
+                android:id="@+id/etFechaEntrada"
                 android:layout_width="match_parent"
-                android:layout_height="32dp"
-                android:orientation="horizontal">
-
-                <RadioButton
-                    android:id="@+id/rbLgtbSi"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:buttonTint="@color/primary"
-                    android:text="Sí"
-                    android:textColor="@color/primary" />
-
-                <RadioButton
-                    android:id="@+id/rbLgtbNo"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:buttonTint="@color/primary"
-                    android:text="No"
-                    android:textColor="@color/primary" />
-            </RadioGroup>
+                android:layout_height="59dp"
+                android:backgroundTint="@color/secondary"
+                android:hint="@string/fecha_entrada_hint"
+                android:inputType="text"
+                android:maxLines="1"
+                android:textColor="@color/primary"
+                android:textColorHint="@color/secondary" />
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="12dp"
-                android:text="Introducción personal (opcional)"
+                android:text="@string/introduccion_opcional"
                 android:textColor="@color/primary" />
 
             <EditText
                 android:id="@+id/etIntroduccion"
                 android:layout_width="match_parent"
-                android:layout_height="45dp"
+                android:layout_height="wrap_content"
                 android:backgroundTint="@color/secondary"
                 android:gravity="top|start"
-                android:hint="Cuéntanos algo sobre ti"
+                android:hint="@string/introduccion_hint"
                 android:inputType="textCapSentences|textMultiLine"
                 android:maxLines="5"
                 android:minLines="3"
@@ -156,61 +159,84 @@
             <Button
                 android:id="@+id/btnCheck"
                 android:layout_width="match_parent"
-                android:layout_height="35dp"
+                android:layout_height="52dp"
                 android:layout_marginTop="20dp"
                 android:backgroundTint="@color/primary"
-                android:text="ENVIAR"
-                android:textColor="@color/surface" />
+                android:text="@string/guardar_companero"
+                android:textAllCaps="false"
+                android:textColor="@color/surface"
+                android:textStyle="bold" />
 
             <Button
                 android:id="@+id/btnSiguiente"
                 android:layout_width="match_parent"
-                android:layout_height="39dp"
+                android:layout_height="52dp"
                 android:layout_marginTop="8dp"
-                android:layout_marginBottom="16dp"
-                android:backgroundTint="@color/primary"
-                android:text="Siguiente"
-                android:textColor="@color/surface" />
-
-            <Button
-                android:id="@+id/btnInvitacion"
-                android:layout_width="match_parent"
-                android:layout_height="38dp"
-                android:layout_marginTop="8dp"
-                android:backgroundTint="@color/primary"
-                android:text="@string/invitaci_n"
-                android:textColor="@color/surface" />
-
-            <Button
-                android:id="@+id/btnCorreo"
-                android:layout_width="match_parent"
-                android:layout_height="38dp"
-                android:layout_marginTop="8dp"
-                android:layout_marginBottom="16dp"
                 android:backgroundTint="@color/secondary"
-                android:text="Enviar correo"
+                android:text="@string/ver_ficha_companeros"
+                android:textAllCaps="false"
+                android:textColor="@color/surface" />
+
+            <Button
+                android:id="@+id/btnColeccionTareas"
+                android:layout_width="match_parent"
+                android:layout_height="52dp"
+                android:layout_marginTop="8dp"
+                android:backgroundTint="@color/primary"
+                android:text="@string/coleccion_de_tareas"
+                android:textAllCaps="false"
+                android:textColor="@color/surface" />
+
+            <Button
+                android:id="@+id/btnBuscar"
+                android:layout_width="match_parent"
+                android:layout_height="52dp"
+                android:layout_marginTop="8dp"
+                android:backgroundTint="@color/secondary"
+                android:text="@string/buscar_tareas"
+                android:textAllCaps="false"
+                android:textColor="@color/surface" />
+
+            <Button
+                android:id="@+id/btnCompra"
+                android:layout_width="match_parent"
+                android:layout_height="52dp"
+                android:layout_marginTop="8dp"
+                android:backgroundTint="@color/primary"
+                android:text="@string/lista_de_la_compra"
+                android:textAllCaps="false"
                 android:textColor="@color/surface" />
 
             <Button
                 android:id="@+id/btnLista"
                 android:layout_width="match_parent"
-                android:layout_height="44dp"
+                android:layout_height="52dp"
                 android:layout_marginTop="8dp"
-                android:layout_marginBottom="8dp"
                 android:backgroundTint="@color/secondary"
                 android:text="@string/lista_de_tareas"
+                android:textAllCaps="false"
                 android:textColor="@color/surface" />
+
             <Button
-                android:id="@+id/btnColeccionTareas"
+                android:id="@+id/btnInvitacion"
                 android:layout_width="match_parent"
-                android:layout_height="44dp"
+                android:layout_height="52dp"
+                android:layout_marginTop="8dp"
+                android:backgroundTint="@color/primary"
+                android:text="@string/invitaci_n"
+                android:textAllCaps="false"
+                android:textColor="@color/surface" />
+
+            <Button
+                android:id="@+id/btnCorreo"
+                android:layout_width="match_parent"
+                android:layout_height="52dp"
                 android:layout_marginTop="8dp"
                 android:layout_marginBottom="16dp"
-                android:backgroundTint="@color/primary"
-                android:text="Colección de tareas"
+                android:backgroundTint="@color/secondary"
+                android:text="@string/enviar_correo"
                 android:textAllCaps="false"
                 android:textColor="@color/surface" />
         </LinearLayout>
     </ScrollView>
-
 </androidx.constraintlayout.widget.ConstraintLayout>

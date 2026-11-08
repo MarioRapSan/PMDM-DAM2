@@ -2,14 +2,18 @@ package es.ies.cm.dam2.pmdm.roommate;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.view.ActionMode;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
@@ -19,7 +23,15 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Muestra las tareas guardadas en SQLite.
+ * Permite ver el detalle, cambiar el estado y usar un menu contextual
+ * para editar o borrar una tarea.
+ */
 public class ColeccionTareasActivity extends AppCompatActivity {
+
+    public static final String EXTRA_USUARIO_ID = "extra_usuario_id";
+    public static final String EXTRA_USUARIO_NOMBRE = "extra_usuario_nombre";
 
     private final List<Tarea> todasLasTareas = new ArrayList<>();
     private final List<Tarea> tareasVisibles = new ArrayList<>();
@@ -29,19 +41,42 @@ public class ColeccionTareasActivity extends AppCompatActivity {
     private RecyclerView rvTareas;
     private Button btnMostrar;
     private ActivityResultLauncher<Intent> launcher;
+    private RoomMateDB db;
+
+    private int usuarioId = 1;
+    private String usuarioNombre = "admin";
+
+    private ActionMode actionMode;
+    private Tarea tareaSeleccionada;
 
     @Override
-    @SuppressWarnings("deprecation")
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_coleccion_tareas);
         aplicarInsets();
 
+        db = new RoomMateDB(this);
+
+        usuarioId = getIntent().getIntExtra(EXTRA_USUARIO_ID, 1);
+        usuarioNombre = getIntent().getStringExtra(EXTRA_USUARIO_NOMBRE);
+        if (usuarioNombre == null || usuarioNombre.isEmpty()) {
+            usuarioNombre = "admin";
+        }
+
         rvTareas = findViewById(R.id.rvTareas);
         Button btnAnadir = findViewById(R.id.btnAnadirTarea);
         btnMostrar = findViewById(R.id.btnMostrarTareas);
         Button btnVolver = findViewById(R.id.btnVolverColeccion);
+        Button btnBuscar = findViewById(R.id.btnBuscarTareas);
+        Button btnCompra = findViewById(R.id.btnListaCompra);
+
+        TextView tvSubtitulo = findViewById(R.id.tvSubtituloColeccion);
+        tvSubtitulo.setText(
+                "Usuario: " + usuarioNombre
+                        + ". Pulsa una tarea para ver su detalle. "
+                        + "Mantén pulsada para editar o borrar."
+        );
 
         rvTareas.setLayoutManager(new LinearLayoutManager(this));
 
@@ -49,11 +84,9 @@ public class ColeccionTareasActivity extends AppCompatActivity {
                 tareasVisibles,
                 this::abrirDetalleTarea,
                 this::alCambiarEstado,
-                this::eliminarTarea
+                this::iniciarModoContextual
         );
         rvTareas.setAdapter(adaptador);
-
-        cargarTareasIniciales();
 
         launcher = registerForActivityResult(
                 new ActivityResultContracts.StartActivityForResult(),
@@ -61,36 +94,24 @@ public class ColeccionTareasActivity extends AppCompatActivity {
                     if (result.getResultCode() == RESULT_OK
                             && result.getData() != null) {
 
-                        Tarea nueva = (Tarea) result.getData()
+                        Tarea tarea = (Tarea) result.getData()
                                 .getSerializableExtra(
                                         AnadirTareasActivity.EXTRA_TAREA
                                 );
 
-                        if (nueva != null) {
-                            todasLasTareas.add(nueva);
-
-                            // Si el filtro actual oculta la nueva tarea,
-                            // cambiamos al estado de la tarea añadida.
-                            if (nueva.isHecha() != mostrarHechas) {
-                                mostrarHechas = nueva.isHecha();
-                                btnMostrar.setText(
-                                        mostrarHechas
-                                                ? "Ver no hechas"
-                                                : "Ver hechas"
-                                );
+                        if (tarea != null) {
+                            // Si la tarea guardada no se ve con el filtro actual,
+                            // se cambia al estado que corresponde.
+                            if (tarea.isHecha() != mostrarHechas) {
+                                mostrarHechas = tarea.isHecha();
+                                actualizarBotonMostrar();
                             }
 
-                            aplicarFiltro();
-
-                            if (!tareasVisibles.isEmpty()) {
-                                rvTareas.scrollToPosition(
-                                        tareasVisibles.size() - 1
-                                );
-                            }
+                            cargarTareasDesdeBD();
 
                             Toast.makeText(
                                     this,
-                                    "Tarea añadida",
+                                    R.string.tarea_guardada,
                                     Toast.LENGTH_SHORT
                             ).show();
                         }
@@ -98,24 +119,21 @@ public class ColeccionTareasActivity extends AppCompatActivity {
                 }
         );
 
-        btnMostrar.setText("Ver hechas");
+        actualizarBotonMostrar();
+
         btnMostrar.setOnClickListener(v -> {
             mostrarHechas = !mostrarHechas;
+            actualizarBotonMostrar();
             aplicarFiltro();
 
-            btnMostrar.setText(
-                    mostrarHechas ? "Ver no hechas" : "Ver hechas"
-            );
+            String mensaje = mostrarHechas
+                    ? "Mostrando tareas hechas"
+                    : "Mostrando tareas no hechas";
 
-            String mensaje;
             if (tareasVisibles.isEmpty()) {
                 mensaje = mostrarHechas
                         ? "No hay tareas hechas"
                         : "No hay tareas no hechas";
-            } else {
-                mensaje = mostrarHechas
-                        ? "Mostrando tareas hechas"
-                        : "Mostrando tareas no hechas";
             }
 
             Toast.makeText(this, mensaje, Toast.LENGTH_SHORT).show();
@@ -126,11 +144,51 @@ public class ColeccionTareasActivity extends AppCompatActivity {
                         new Intent(this, AnadirTareasActivity.class)
                 ));
 
-        if (btnVolver != null) {
-            btnVolver.setOnClickListener(v -> finish());
-        }
+        btnBuscar.setOnClickListener(v -> {
+            Intent intent = new Intent(this, BuscarActivity.class);
+            intent.putExtra(EXTRA_USUARIO_ID, usuarioId);
+            intent.putExtra(EXTRA_USUARIO_NOMBRE, usuarioNombre);
+            startActivity(intent);
+        });
 
+        btnCompra.setOnClickListener(v -> {
+            Intent intent = new Intent(this, ListaCompraActivity.class);
+            intent.putExtra(EXTRA_USUARIO_ID, usuarioId);
+            intent.putExtra(EXTRA_USUARIO_NOMBRE, usuarioNombre);
+            startActivity(intent);
+        });
+
+        btnVolver.setOnClickListener(v -> finish());
+
+        // Carga las tareas que ya estan guardadas en la base de datos.
+        cargarTareasDesdeBD();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        // Al volver de otra pantalla se refresca la lista.
+        cargarTareasDesdeBD();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (db != null) {
+            db.close();
+        }
+    }
+
+    private void cargarTareasDesdeBD() {
+        todasLasTareas.clear();
+        todasLasTareas.addAll(db.obtenerTareas());
         aplicarFiltro();
+    }
+
+    private void actualizarBotonMostrar() {
+        btnMostrar.setText(
+                mostrarHechas ? "Ver no hechas" : "Ver hechas"
+        );
     }
 
     private void abrirDetalleTarea(Tarea tarea) {
@@ -139,30 +197,82 @@ public class ColeccionTareasActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
-    private void eliminarTarea(Tarea tarea) {
-        todasLasTareas.remove(tarea);
-
-        int posicion = tareasVisibles.indexOf(tarea);
-        if (posicion >= 0) {
-            tareasVisibles.remove(posicion);
-            adaptador.notifyItemRemoved(posicion);
+    private void iniciarModoContextual(Tarea tarea) {
+        if (actionMode != null) {
+            return;
         }
+
+        tareaSeleccionada = tarea;
+
+        actionMode = startSupportActionMode(new ActionMode.Callback() {
+            @Override
+            public boolean onCreateActionMode(ActionMode mode, Menu menu) {
+                mode.getMenuInflater().inflate(
+                        R.menu.menu_tarea_contextual,
+                        menu
+                );
+                mode.setTitle(tarea.getNombre());
+                return true;
+            }
+
+            @Override
+            public boolean onPrepareActionMode(ActionMode mode, Menu menu) {
+                return false;
+            }
+
+            @Override
+            public boolean onActionItemClicked(ActionMode mode, MenuItem item) {
+                int id = item.getItemId();
+
+                if (id == R.id.action_editar_tarea) {
+                    abrirEdicionTarea(tareaSeleccionada);
+                    mode.finish();
+                    return true;
+                }
+
+                if (id == R.id.action_borrar_tarea) {
+                    borrarTarea(tareaSeleccionada);
+                    mode.finish();
+                    return true;
+                }
+
+                return false;
+            }
+
+            @Override
+            public void onDestroyActionMode(ActionMode mode) {
+                actionMode = null;
+                tareaSeleccionada = null;
+            }
+        });
+    }
+
+    private void abrirEdicionTarea(Tarea tarea) {
+        Intent intent = new Intent(this, AnadirTareasActivity.class);
+        intent.putExtra(AnadirTareasActivity.EXTRA_TAREA_EDITAR, tarea);
+        launcher.launch(intent);
+    }
+
+    private void borrarTarea(Tarea tarea) {
+        db.borrarTarea(tarea.getId());
+        cargarTareasDesdeBD();
 
         Toast.makeText(
                 this,
-                "Tarea borrada",
+                R.string.tarea_borrada,
                 Toast.LENGTH_SHORT
         ).show();
     }
 
     private void alCambiarEstado(Tarea tarea) {
-        aplicarFiltro();
+        db.actualizarHecha(tarea.getId(), tarea.isHecha());
+        cargarTareasDesdeBD();
 
         Toast.makeText(
                 this,
                 tarea.isHecha()
-                        ? "Tarea marcada como hecha"
-                        : "Tarea marcada como no hecha",
+                        ? R.string.tarea_marcada_hecha
+                        : R.string.tarea_marcada_no_hecha,
                 Toast.LENGTH_SHORT
         ).show();
     }
@@ -179,77 +289,6 @@ public class ColeccionTareasActivity extends AppCompatActivity {
         if (adaptador != null) {
             adaptador.notifyDataSetChanged();
         }
-    }
-
-    private void cargarTareasIniciales() {
-        // 26 tareas: 20 no hechas (visibles al abrir) y 6 hechas.
-
-        // Tareas hechas
-        agregar("Limpiar baño", "Puede esperar",
-                "Lunes", 0, "10:00", "Jose", true);
-        agregar("Ordenar el armario", "Puede esperar",
-                "Jueves", 0, "17:00", "Jose", true);
-        agregar("Comprar productos de limpieza", "Hacer cuanto antes",
-                "Sábado", 12.50, "12:00", "Winwaleo", true);
-        agregar("Cambiar las sábanas", "Hacer cuanto antes",
-                "Lunes", 0, "19:00", "Raul", true);
-        agregar("Comprar productos de cocina", "Urgente",
-                "Miércoles", 23.40, "13:00", "Jose", true);
-        agregar("Pagar la luz", "Urgente",
-                "Viernes", 48.75, "09:00", "Winwaleo", true);
-
-        // Tareas no hechas
-        agregar("Limpiar salón", "Puede esperar",
-                "Lunes", 0, "08:00", "Raul", false);
-        agregar("Regar las plantas", "Puede esperar",
-                "Martes", 0, "09:00", "Winwaleo", false);
-        agregar("Limpiar cocina", "Hacer cuanto antes",
-                "Miércoles", 0, "10:00", "Raul", false);
-        agregar("Lavar la ropa", "Hacer cuanto antes",
-                "Jueves", 0, "11:00", "Jose", false);
-        agregar("Sacar la basura", "Urgente",
-                "Viernes", 0, "12:00", "Winwaleo", false);
-        agregar("Arreglar la persiana", "Urgente",
-                "Sábado", 0, "13:00", "Raul", false);
-        agregar("Barrer el pasillo", "Puede esperar",
-                "Domingo", 0, "14:00", "Jose", false);
-        agregar("Fregar los platos", "Puede esperar",
-                "Lunes", 0, "15:00", "Raul", false);
-        agregar("Cambiar la bombilla", "Urgente",
-                "Martes", 0, "16:00", "Winwaleo", false);
-        agregar("Organizar la despensa", "Hacer cuanto antes",
-                "Miércoles", 0, "17:00", "Jose", false);
-        agregar("Tender la ropa", "Puede esperar",
-                "Jueves", 0, "18:00", "Raul", false);
-        agregar("Arreglar la silla", "Urgente",
-                "Viernes", 0, "19:00", "Winwaleo", false);
-        agregar("Limpiar las ventanas", "Puede esperar",
-                "Sábado", 0, "08:30", "Jose", false);
-        agregar("Hacer la cama", "Puede esperar",
-                "Domingo", 0, "09:30", "Raul", false);
-        agregar("Ordenar el escritorio", "Hacer cuanto antes",
-                "Lunes", 0, "10:30", "Winwaleo", false);
-        agregar("Limpiar el frigorífico", "Hacer cuanto antes",
-                "Martes", 0, "11:30", "Jose", false);
-        agregar("Reponer el papel higiénico", "Urgente",
-                "Miércoles", 0, "12:30", "Raul", false);
-        agregar("Barrer la terraza", "Puede esperar",
-                "Jueves", 0, "13:30", "Winwaleo", false);
-        agregar("Limpiar los zapatos", "Puede esperar",
-                "Viernes", 0, "14:30", "Jose", false);
-        agregar("Preparar la mochila", "Hacer cuanto antes",
-                "Sábado", 0, "15:30", "Raul", false);
-    }
-
-    private void agregar(String nombre, String prioridad, String dia,
-                         double dinero, String hora, String companero,
-                         boolean hecha) {
-        Tarea tarea = new Tarea(
-                nombre, prioridad, dia, dinero, hora,
-                companero, R.drawable.ic_persona, hecha
-        );
-        tarea.setDificultad(Tarea.dificultadPorPrioridad(prioridad));
-        todasLasTareas.add(tarea);
     }
 
     private void aplicarInsets() {
