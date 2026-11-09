@@ -23,6 +23,9 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.ArrayList;
 import java.util.List;
 
+import es.ies.cm.dam2.pmdm.roommate.db.RoomMateDB;
+import es.ies.cm.dam2.pmdm.roommate.db.Tarea;
+
 /**
  * Muestra las tareas guardadas en SQLite.
  * Permite ver el detalle, cambiar el estado y usar un menu contextual

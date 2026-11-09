@@ -11,6 +11,9 @@ import android.widget.Toast;
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
 
+import es.ies.cm.dam2.pmdm.roommate.db.Companero;
+import es.ies.cm.dam2.pmdm.roommate.db.RoomMateDB;
+
 /**
  * Pantalla de alta de companeros.
  * Tambien sirve como punto de entrada a las demas pantallas.
@@ -152,8 +155,7 @@ public class MainActivity extends AppCompatActivity {
                 edad,
                 sexo,
                 fechaEntrada,
-                introduccion,
-                "ic_persona"
+                introduccion
         );
 
         RoomMateDB db = new RoomMateDB(this);

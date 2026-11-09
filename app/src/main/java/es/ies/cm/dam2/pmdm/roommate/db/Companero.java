@@ -1,9 +1,11 @@
-package es.ies.cm.dam2.pmdm.roommate;
+package es.ies.cm.dam2.pmdm.roommate.db;
+
+import java.io.Serializable;
 
 /**
  * Datos de un companero de piso.
  */
-public class Companero {
+public class Companero implements Serializable {
 
     private final int id;
     private final String nombre;
@@ -12,7 +14,6 @@ public class Companero {
     private final String sexo;
     private final String fechaEntrada;
     private final String introduccion;
-    private final String fotoPerfil;
 
     public Companero(
             String nombre,
@@ -20,10 +21,9 @@ public class Companero {
             int edad,
             String sexo,
             String fechaEntrada,
-            String introduccion,
-            String fotoPerfil
+            String introduccion
     ) {
-        this(0, nombre, apellidos, edad, sexo, fechaEntrada, introduccion, fotoPerfil);
+        this(0, nombre, apellidos, edad, sexo, fechaEntrada, introduccion);
     }
 
     public Companero(
@@ -33,8 +33,7 @@ public class Companero {
             int edad,
             String sexo,
             String fechaEntrada,
-            String introduccion,
-            String fotoPerfil
+            String introduccion
     ) {
         this.id = id;
         this.nombre = nombre;
@@ -43,7 +42,6 @@ public class Companero {
         this.sexo = sexo;
         this.fechaEntrada = fechaEntrada;
         this.introduccion = introduccion;
-        this.fotoPerfil = fotoPerfil;
     }
 
     public int getId() {
@@ -74,9 +72,6 @@ public class Companero {
         return introduccion;
     }
 
-    public String getFotoPerfil() {
-        return fotoPerfil;
-    }
 
     public String getNombreCompleto() {
         if (apellidos == null || apellidos.trim().isEmpty()) {

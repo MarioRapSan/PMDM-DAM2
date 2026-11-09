@@ -12,6 +12,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.List;
 
+import es.ies.cm.dam2.pmdm.roommate.db.Tarea;
+
 public class TareaRecyclerAdapter
         extends RecyclerView.Adapter<TareaRecyclerAdapter.TareaViewHolder> {
 

@@ -13,6 +13,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import java.util.ArrayList;
 import java.util.List;
 
+import es.ies.cm.dam2.pmdm.roommate.db.Companero;
+import es.ies.cm.dam2.pmdm.roommate.db.RoomMateDB;
+
 /**
  * Muestra la ficha de los companeros guardados en la base de datos.
  */

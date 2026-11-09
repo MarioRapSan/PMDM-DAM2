@@ -22,6 +22,10 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import es.ies.cm.dam2.pmdm.roommate.db.RoomMateDB;
+import es.ies.cm.dam2.pmdm.roommate.db.Tarea;
+import es.ies.cm.dam2.pmdm.roommate.db.TareasRepository;
+
 /**
  * Pantalla de lista de tareas con filtros por prioridad, tarea y companero.
  * Los datos se leen y se guardan en SQLite.
@@ -54,7 +58,8 @@ public class ListaTareas extends AppCompatActivity {
         setContentView(R.layout.activity_lista_tareas);
         aplicarInsets();
 
-        db = new RoomMateDB(this);
+        TareasRepository repository = new TareasRepository(this);
+        repository.obtenerTareas(tareas);
 
         lista = findViewById(R.id.simpleListView);
         spinPrioridad = findViewById(R.id.spinnerPrioridad);
@@ -338,7 +343,6 @@ public class ListaTareas extends AppCompatActivity {
                     0,
                     "",
                     companeroSeleccionado,
-                    R.drawable.ic_persona,
                     hecha
             );
             nueva.setDificultad(

@@ -14,6 +14,8 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import es.ies.cm.dam2.pmdm.roommate.db.Tarea;
+
 public class DetalleTareaActivity extends AppCompatActivity {
 
     public static final String EXTRA_TAREA = "extra_tarea_detalle";
@@ -48,11 +50,6 @@ public class DetalleTareaActivity extends AppCompatActivity {
         RatingBar dificultad = findViewById(R.id.rbDificultadDetalle);
         Button btnVolver = findViewById(R.id.btnVolverDetalle);
 
-        int fotoResId = tarea.getFotoResId() == 0
-                ? R.drawable.ic_persona
-                : tarea.getFotoResId();
-        foto.setImageResource(fotoResId);
-
         nombre.setText(tarea.getNombre());
 
         String nombreCompanero = tarea.getCompanero();
@@ -62,7 +59,6 @@ public class DetalleTareaActivity extends AppCompatActivity {
         companero.setText("Añadida por: " + nombreCompanero);
 
         prioridad.setText("Prioridad: " + tarea.getPrioridad());
-
         String dia = tarea.getDia();
         String hora = tarea.getHora();
         String textoFecha = (dia == null || dia.trim().isEmpty())
