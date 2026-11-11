@@ -41,6 +41,10 @@
             android:exported="false"
             android:windowSoftInputMode="adjustResize" />
         <activity
+            android:name=".EditarCompaneroActivity"
+            android:exported="false"
+            android:windowSoftInputMode="adjustResize" />
+        <activity
             android:name=".ConfirmarAsistenciaActivity"
             android:exported="false"
             android:windowSoftInputMode="adjustResize" />
@@ -78,6 +82,14 @@
             android:windowSoftInputMode="adjustResize" />
         <activity
             android:name=".ListaCompraActivity"
+            android:exported="false"
+            android:windowSoftInputMode="adjustResize" />
+        <activity
+            android:name=".AcercaDeActivity"
+            android:exported="false"
+            android:windowSoftInputMode="adjustResize" />
+        <activity
+            android:name=".AjustesActivity"
             android:exported="false"
             android:windowSoftInputMode="adjustResize" />
     </application>

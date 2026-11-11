@@ -13,6 +13,8 @@ public class Companero {
     private final String fechaEntrada;
     private final String introduccion;
     private final String fotoPerfil;
+    private final String telefono;
+    private final String correo;
 
     public Companero(
             String nombre,
@@ -23,7 +25,43 @@ public class Companero {
             String introduccion,
             String fotoPerfil
     ) {
-        this(0, nombre, apellidos, edad, sexo, fechaEntrada, introduccion, fotoPerfil);
+        this(
+                0,
+                nombre,
+                apellidos,
+                edad,
+                sexo,
+                fechaEntrada,
+                introduccion,
+                fotoPerfil,
+                "",
+                ""
+        );
+    }
+
+    public Companero(
+            String nombre,
+            String apellidos,
+            int edad,
+            String sexo,
+            String fechaEntrada,
+            String introduccion,
+            String fotoPerfil,
+            String telefono,
+            String correo
+    ) {
+        this(
+                0,
+                nombre,
+                apellidos,
+                edad,
+                sexo,
+                fechaEntrada,
+                introduccion,
+                fotoPerfil,
+                telefono,
+                correo
+        );
     }
 
     public Companero(
@@ -36,6 +74,32 @@ public class Companero {
             String introduccion,
             String fotoPerfil
     ) {
+        this(
+                id,
+                nombre,
+                apellidos,
+                edad,
+                sexo,
+                fechaEntrada,
+                introduccion,
+                fotoPerfil,
+                "",
+                ""
+        );
+    }
+
+    public Companero(
+            int id,
+            String nombre,
+            String apellidos,
+            int edad,
+            String sexo,
+            String fechaEntrada,
+            String introduccion,
+            String fotoPerfil,
+            String telefono,
+            String correo
+    ) {
         this.id = id;
         this.nombre = nombre;
         this.apellidos = apellidos;
@@ -44,6 +108,8 @@ public class Companero {
         this.fechaEntrada = fechaEntrada;
         this.introduccion = introduccion;
         this.fotoPerfil = fotoPerfil;
+        this.telefono = telefono == null ? "" : telefono;
+        this.correo = correo == null ? "" : correo;
     }
 
     public int getId() {
@@ -76,6 +142,14 @@ public class Companero {
 
     public String getFotoPerfil() {
         return fotoPerfil;
+    }
+
+    public String getTelefono() {
+        return telefono;
+    }
+
+    public String getCorreo() {
+        return correo;
     }
 
     public String getNombreCompleto() {

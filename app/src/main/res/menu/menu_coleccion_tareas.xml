@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/action_buscar_tareas"
+        android:title="@string/buscar_tareas"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/action_lista_compra"
+        android:title="@string/lista_de_la_compra"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/action_ordenar_nombre"
+        android:title="@string/ordenar_por_nombre"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/action_acerca_de"
+        android:title="@string/acerca_de"
+        app:showAsAction="never" />
+</menu>

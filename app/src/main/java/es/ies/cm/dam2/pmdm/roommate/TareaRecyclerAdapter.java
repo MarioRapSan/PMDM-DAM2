@@ -24,7 +24,7 @@ public class TareaRecyclerAdapter
     }
 
     public interface OnTareaLongClickListener {
-        void onTareaLongClick(Tarea tarea);
+        void onTareaLongClick(View vista, Tarea tarea);
     }
 
     private final List<Tarea> tareas;
@@ -94,7 +94,7 @@ public class TareaRecyclerAdapter
 
         holder.itemView.setOnLongClickListener(v -> {
             if (longClickListener != null) {
-                longClickListener.onTareaLongClick(tarea);
+                longClickListener.onTareaLongClick(v, tarea);
                 return true;
             }
             return false;

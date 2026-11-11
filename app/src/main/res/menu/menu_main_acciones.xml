@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/action_coleccion"
+        android:title="@string/coleccion_de_tareas" />
+
+    <item
+        android:id="@+id/action_buscar"
+        android:title="@string/buscar_tareas" />
+
+    <item
+        android:id="@+id/action_compra"
+        android:title="@string/lista_de_la_compra" />
+
+    <item
+        android:id="@+id/action_lista_tareas"
+        android:title="@string/lista_de_tareas" />
+
+    <item
+        android:id="@+id/action_invitacion"
+        android:title="@string/invitaci_n" />
+
+    <item
+        android:id="@+id/action_correo"
+        android:title="@string/enviar_correo" />
+</menu>

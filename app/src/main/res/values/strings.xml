@@ -101,7 +101,7 @@
     <string name="companero_anade_tarea">Compañero que añade la tarea</string>
     <string name="tarea_hecha">Tarea hecha</string>
     <string name="fecha">Fecha</string>
-    <string name="fecha_hint">Ej.: Lunes o 12/05/2025</string>
+    <string name="fecha_hint">Ej.: 12/05/2025</string>
     <string name="dinero_opcional">Dinero (opcional)</string>
     <string name="dinero_hint">0</string>
     <string name="hora">Hora</string>
@@ -143,8 +143,32 @@
     <string name="fecha_entrada_hint">Ej.: 01/09/2025</string>
     <string name="introduccion_opcional">Introducción personal (opcional)</string>
     <string name="introduccion_hint">Cuentanos algo sobre ti</string>
+    <string name="telefono">Teléfono</string>
+    <string name="telefono_hint">Ej.: 600 123 456</string>
+    <string name="correo_electronico">Correo electrónico</string>
+    <string name="correo_hint">Ej.: nombre@correo.com</string>
+    <string name="datos_contacto">Datos de contacto</string>
+    <string name="editar_perfil">Editar perfil</string>
+    <string name="titulo_editar_perfil">Editar perfil de compañero</string>
+    <string name="guardar_cambios">Guardar cambios</string>
+    <string name="perfil_actualizado">Perfil actualizado correctamente</string>
+    <string name="error_actualizar_perfil">No se pudo actualizar el perfil</string>
+    <string name="error_companero_no_encontrado">No se ha encontrado el compañero</string>
+    <string name="error_correo">Introduce un correo electrónico válido</string>
+    <string name="error_borrar_companero">No se pudo borrar el compañero</string>
+    <string name="sin_telefono">Sin teléfono</string>
+    <string name="sin_correo">Sin correo</string>
+    <string name="foto_perfil">Foto de perfil</string>
+    <string name="seleccionar_foto">Seleccionar foto</string>
+    <string name="cambiar_foto">Cambiar foto</string>
+    <string name="error_foto_perfil">No se pudo guardar la foto</string>
     <string name="guardar_companero">Guardar compañero</string>
     <string name="ver_ficha_companeros">Ver ficha de compañeros</string>
+    <string name="datos_personales">Datos personales</string>
+    <string name="presentacion">Presentación</string>
+    <string name="acciones">Acciones</string>
+    <string name="mas_acciones">Más acciones</string>
+    <string name="mostrar_tareas">Mostrar tareas</string>
     <string name="coleccion_de_tareas">Colección de tareas</string>
     <string name="buscar_tareas">Buscar tareas</string>
     <string name="lista_de_la_compra">Lista de la compra</string>
@@ -197,8 +221,8 @@
 
     <!-- Menu contextual de tareas -->
     <string name="editar">Editar</string>
-    <string name="borrar">Borrar</string>
-    <string name="tarea_borrada">Tarea borrada</string>
+    <string name="eliminar">Eliminar</string>
+    <string name="tarea_eliminada">Tarea eliminada</string>
     <string name="tarea_marcada_hecha">Tarea marcada como hecha</string>
     <string name="tarea_marcada_no_hecha">Tarea marcada como no hecha</string>
     <string name="tarea_ya_en_lista">Esa tarea ya está en la lista</string>
@@ -214,4 +238,21 @@
         <item>Hacer cuanto antes</item>
         <item>Urgente</item>
     </string-array>
+
+    <!-- Menu de opciones y navegacion -->
+    <string name="confirmar_eliminar_tarea">Eliminar tarea</string>
+    <string name="mensaje_confirmar_eliminar_tarea">¿Seguro que quieres eliminar esta tarea?</string>
+    <string name="ordenar_por_nombre">Ordenar por nombre</string>
+    <string name="tareas_ordenadas">Tareas ordenadas por nombre</string>
+    <string name="acerca_de">Acerca de</string>
+    <string name="ajustes">Ajustes</string>
+    <string name="inicio">Inicio</string>
+    <string name="tareas">Tareas</string>
+    <string name="en_desarrollo">En desarrollo</string>
+    <string name="ajustes_en_desarrollo">Los ajustes están en desarrollo.</string>
+    <string name="acerca_de_texto">RoomMate es una aplicación para organizar las tareas y la compra de un piso compartido.</string>
+    <string name="version_app">Versión 1.0</string>
+    <string name="piso_compartido">Piso compartido</string>
+    <string name="abrir_menu">Abrir menú</string>
+    <string name="cerrar_menu">Cerrar menú</string>
 </resources>

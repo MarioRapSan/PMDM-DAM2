@@ -4,6 +4,6 @@
         android:id="@+id/action_editar_tarea"
         android:title="@string/editar" />
     <item
-        android:id="@+id/action_borrar_tarea"
-        android:title="@string/borrar" />
+        android:id="@+id/action_eliminar_tarea"
+        android:title="@string/eliminar" />
 </menu>

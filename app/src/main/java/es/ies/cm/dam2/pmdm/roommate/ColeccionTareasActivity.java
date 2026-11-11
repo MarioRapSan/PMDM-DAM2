@@ -1,5 +1,6 @@
 package es.ies.cm.dam2.pmdm.roommate;
 
+import android.app.AlertDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
@@ -10,15 +11,18 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
+import androidx.activity.OnBackPressedCallback;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.view.ActionMode;
+import androidx.appcompat.widget.PopupMenu;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.google.android.material.appbar.MaterialToolbar;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,7 +30,7 @@ import java.util.List;
 /**
  * Muestra las tareas guardadas en SQLite.
  * Permite ver el detalle, cambiar el estado y usar un menu contextual
- * para editar o borrar una tarea.
+ * para editar o eliminar una tarea.
  */
 public class ColeccionTareasActivity extends AppCompatActivity {
 
@@ -45,9 +49,7 @@ public class ColeccionTareasActivity extends AppCompatActivity {
 
     private int usuarioId = 1;
     private String usuarioNombre = "admin";
-
-    private ActionMode actionMode;
-    private Tarea tareaSeleccionada;
+    private boolean ordenAlfabetico = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,6 +57,25 @@ public class ColeccionTareasActivity extends AppCompatActivity {
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_coleccion_tareas);
         aplicarInsets();
+
+        MaterialToolbar toolbar = findViewById(R.id.toolbarColeccion);
+        setSupportActionBar(toolbar);
+
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setTitle(R.string.coleccion_de_tareas);
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        }
+
+        // El gesto o boton Atras tambien vuelve al inicio, sin cerrar la app.
+        getOnBackPressedDispatcher().addCallback(
+                this,
+                new OnBackPressedCallback(true) {
+                    @Override
+                    public void handleOnBackPressed() {
+                        volverAlInicio();
+                    }
+                }
+        );
 
         db = new RoomMateDB(this);
 
@@ -67,15 +88,12 @@ public class ColeccionTareasActivity extends AppCompatActivity {
         rvTareas = findViewById(R.id.rvTareas);
         Button btnAnadir = findViewById(R.id.btnAnadirTarea);
         btnMostrar = findViewById(R.id.btnMostrarTareas);
-        Button btnVolver = findViewById(R.id.btnVolverColeccion);
-        Button btnBuscar = findViewById(R.id.btnBuscarTareas);
-        Button btnCompra = findViewById(R.id.btnListaCompra);
 
         TextView tvSubtitulo = findViewById(R.id.tvSubtituloColeccion);
         tvSubtitulo.setText(
                 "Usuario: " + usuarioNombre
                         + ". Pulsa una tarea para ver su detalle. "
-                        + "Mantén pulsada para editar o borrar."
+                        + "Mantén pulsada para editar o eliminar."
         );
 
         rvTareas.setLayoutManager(new LinearLayoutManager(this));
@@ -84,7 +102,7 @@ public class ColeccionTareasActivity extends AppCompatActivity {
                 tareasVisibles,
                 this::abrirDetalleTarea,
                 this::alCambiarEstado,
-                this::iniciarModoContextual
+                this::mostrarMenuContextual
         );
         rvTareas.setAdapter(adaptador);
 
@@ -144,22 +162,6 @@ public class ColeccionTareasActivity extends AppCompatActivity {
                         new Intent(this, AnadirTareasActivity.class)
                 ));
 
-        btnBuscar.setOnClickListener(v -> {
-            Intent intent = new Intent(this, BuscarActivity.class);
-            intent.putExtra(EXTRA_USUARIO_ID, usuarioId);
-            intent.putExtra(EXTRA_USUARIO_NOMBRE, usuarioNombre);
-            startActivity(intent);
-        });
-
-        btnCompra.setOnClickListener(v -> {
-            Intent intent = new Intent(this, ListaCompraActivity.class);
-            intent.putExtra(EXTRA_USUARIO_ID, usuarioId);
-            intent.putExtra(EXTRA_USUARIO_NOMBRE, usuarioNombre);
-            startActivity(intent);
-        });
-
-        btnVolver.setOnClickListener(v -> finish());
-
         // Carga las tareas que ya estan guardadas en la base de datos.
         cargarTareasDesdeBD();
     }
@@ -177,6 +179,76 @@ public class ColeccionTareasActivity extends AppCompatActivity {
         if (db != null) {
             db.close();
         }
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_coleccion_tareas, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+
+        if (id == android.R.id.home) {
+            volverAlInicio();
+            return true;
+        }
+
+        if (id == R.id.action_buscar_tareas) {
+            abrirBuscar();
+            return true;
+        }
+
+        if (id == R.id.action_lista_compra) {
+            abrirListaCompra();
+            return true;
+        }
+
+        if (id == R.id.action_ordenar_nombre) {
+            ordenAlfabetico = true;
+            aplicarFiltro();
+            Toast.makeText(
+                    this,
+                    R.string.tareas_ordenadas,
+                    Toast.LENGTH_SHORT
+            ).show();
+            return true;
+        }
+
+        if (id == R.id.action_acerca_de) {
+            startActivity(new Intent(this, AcercaDeActivity.class));
+            return true;
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
+
+    private void volverAlInicio() {
+        Intent intent = new Intent(this, MainActivity.class);
+        intent.putExtra(EXTRA_USUARIO_ID, usuarioId);
+        intent.putExtra(EXTRA_USUARIO_NOMBRE, usuarioNombre);
+        intent.addFlags(
+                Intent.FLAG_ACTIVITY_CLEAR_TOP
+                        | Intent.FLAG_ACTIVITY_SINGLE_TOP
+        );
+        startActivity(intent);
+        finish();
+    }
+
+    private void abrirBuscar() {
+        Intent intent = new Intent(this, BuscarActivity.class);
+        intent.putExtra(EXTRA_USUARIO_ID, usuarioId);
+        intent.putExtra(EXTRA_USUARIO_NOMBRE, usuarioNombre);
+        startActivity(intent);
+    }
+
+    private void abrirListaCompra() {
+        Intent intent = new Intent(this, ListaCompraActivity.class);
+        intent.putExtra(EXTRA_USUARIO_ID, usuarioId);
+        intent.putExtra(EXTRA_USUARIO_NOMBRE, usuarioNombre);
+        startActivity(intent);
     }
 
     private void cargarTareasDesdeBD() {
@@ -197,54 +269,42 @@ public class ColeccionTareasActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
-    private void iniciarModoContextual(Tarea tarea) {
-        if (actionMode != null) {
-            return;
-        }
+    private void mostrarMenuContextual(View vista, Tarea tarea) {
+        PopupMenu menu = new PopupMenu(this, vista);
+        menu.getMenuInflater().inflate(
+                R.menu.menu_tarea_contextual,
+                menu.getMenu()
+        );
 
-        tareaSeleccionada = tarea;
+        menu.setOnMenuItemClickListener(item -> {
+            int id = item.getItemId();
 
-        actionMode = startSupportActionMode(new ActionMode.Callback() {
-            @Override
-            public boolean onCreateActionMode(ActionMode mode, Menu menu) {
-                mode.getMenuInflater().inflate(
-                        R.menu.menu_tarea_contextual,
-                        menu
-                );
-                mode.setTitle(tarea.getNombre());
+            if (id == R.id.action_editar_tarea) {
+                abrirEdicionTarea(tarea);
                 return true;
             }
 
-            @Override
-            public boolean onPrepareActionMode(ActionMode mode, Menu menu) {
-                return false;
+            if (id == R.id.action_eliminar_tarea) {
+                confirmarEliminarTarea(tarea);
+                return true;
             }
 
-            @Override
-            public boolean onActionItemClicked(ActionMode mode, MenuItem item) {
-                int id = item.getItemId();
-
-                if (id == R.id.action_editar_tarea) {
-                    abrirEdicionTarea(tareaSeleccionada);
-                    mode.finish();
-                    return true;
-                }
-
-                if (id == R.id.action_borrar_tarea) {
-                    borrarTarea(tareaSeleccionada);
-                    mode.finish();
-                    return true;
-                }
-
-                return false;
-            }
-
-            @Override
-            public void onDestroyActionMode(ActionMode mode) {
-                actionMode = null;
-                tareaSeleccionada = null;
-            }
+            return false;
         });
+
+        menu.show();
+    }
+
+    private void confirmarEliminarTarea(Tarea tarea) {
+        new AlertDialog.Builder(this)
+                .setTitle(R.string.confirmar_eliminar_tarea)
+                .setMessage(R.string.mensaje_confirmar_eliminar_tarea)
+                .setPositiveButton(
+                        R.string.eliminar,
+                        (dialog, which) -> borrarTarea(tarea)
+                )
+                .setNegativeButton(R.string.cancelar, null)
+                .show();
     }
 
     private void abrirEdicionTarea(Tarea tarea) {
@@ -259,7 +319,7 @@ public class ColeccionTareasActivity extends AppCompatActivity {
 
         Toast.makeText(
                 this,
-                R.string.tarea_borrada,
+                R.string.tarea_eliminada,
                 Toast.LENGTH_SHORT
         ).show();
     }
@@ -284,6 +344,12 @@ public class ColeccionTareasActivity extends AppCompatActivity {
             if (t.isHecha() == mostrarHechas) {
                 tareasVisibles.add(t);
             }
+        }
+
+        if (ordenAlfabetico) {
+            tareasVisibles.sort(
+                    (a, b) -> a.getNombre().compareToIgnoreCase(b.getNombre())
+            );
         }
 
         if (adaptador != null) {

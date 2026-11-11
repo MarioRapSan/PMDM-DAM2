@@ -1,5 +1,6 @@
 package es.ies.cm.dam2.pmdm.roommate;
 
+import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
@@ -19,7 +20,11 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
@@ -74,6 +79,7 @@ public class AnadirTareasActivity extends AppCompatActivity {
 
         rbDificultad.setRating(3);
 
+        etDia.setOnClickListener(v -> mostrarSelectorFecha());
         etHora.setOnClickListener(v -> mostrarSelectorHora());
 
         btnAceptar.setOnClickListener(v -> aceptar());
@@ -188,6 +194,45 @@ public class AnadirTareasActivity extends AppCompatActivity {
         dialogo.show();
     }
 
+    private void mostrarSelectorFecha() {
+        Calendar calendario = Calendar.getInstance();
+        String fechaActual = etDia.getText().toString().trim();
+        SimpleDateFormat formato = new SimpleDateFormat(
+                "dd/MM/yyyy",
+                Locale.getDefault()
+        );
+        formato.setLenient(false);
+
+        if (!fechaActual.isEmpty()) {
+            try {
+                Date fecha = formato.parse(fechaActual);
+                if (fecha != null) {
+                    calendario.setTime(fecha);
+                }
+            } catch (ParseException ignored) {
+                // Si la fecha no tiene el formato esperado, se usa la de hoy.
+            }
+        }
+
+        DatePickerDialog dialogo = new DatePickerDialog(
+                this,
+                (view, anio, mes, dia) -> etDia.setText(
+                        String.format(
+                                Locale.getDefault(),
+                                "%02d/%02d/%04d",
+                                dia,
+                                mes + 1,
+                                anio
+                        )
+                ),
+                calendario.get(Calendar.YEAR),
+                calendario.get(Calendar.MONTH),
+                calendario.get(Calendar.DAY_OF_MONTH)
+        );
+
+        dialogo.show();
+    }
+
     private void aceptar() {
         etNombre.setError(null);
         etDia.setError(null);
@@ -237,6 +282,11 @@ public class AnadirTareasActivity extends AppCompatActivity {
         if (hecha && !hayFecha) {
             etDia.setError(getString(R.string.error_fecha));
             etDia.requestFocus();
+            Toast.makeText(
+                    this,
+                    R.string.error_fecha,
+                    Toast.LENGTH_SHORT
+            ).show();
             return;
         }
 
@@ -253,6 +303,11 @@ public class AnadirTareasActivity extends AppCompatActivity {
             if (!hayFecha) {
                 etDia.setError(getString(R.string.error_fecha));
                 etDia.requestFocus();
+                Toast.makeText(
+                        this,
+                        R.string.error_fecha,
+                        Toast.LENGTH_SHORT
+                ).show();
             } else {
                 Toast.makeText(
                         this,

@@ -19,12 +19,30 @@
             android:textColor="@color/primary"
             android:textSize="24sp"
             android:textStyle="bold"
-            android:layout_marginBottom="20dp" />
+            android:layout_marginBottom="12dp" />
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Selecciona un compañero" />
+            android:text="@string/foto_perfil"
+            android:textColor="@color/primary" />
+
+        <ImageView
+            android:id="@+id/ivFotoFicha"
+            android:layout_width="160dp"
+            android:layout_height="160dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="8dp"
+            android:background="@drawable/bg_foto_perfil"
+            android:contentDescription="@string/foto_perfil"
+            android:padding="32dp"
+            android:scaleType="centerInside"
+            android:src="@drawable/ic_persona" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/selecciona_companero" />
 
         <Spinner
             android:id="@+id/spinnerCompaneros"
@@ -33,41 +51,43 @@
             android:layout_marginBottom="16dp" />
 
         <Button
+            android:id="@+id/btnEditarPerfil"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:layout_marginBottom="8dp"
+            android:backgroundTint="@color/primary"
+            android:text="@string/editar_perfil"
+            android:textAllCaps="false"
+            android:textColor="@color/surface" />
+
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/btnBorrarCompanero"
+            style="@style/Widget.Material3.Button.TextButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Borrar compañero"
-            android:textColor="@color/surface"
-            android:backgroundTint="@color/secondary" />
-
-        <Button
-            android:id="@+id/btnMostrarInformacion"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Mostrar información"
-            android:textColor="@color/surface"
-            android:backgroundTint="@color/primary" />
+            android:textColor="@color/error" />
 
         <TextView
             android:id="@+id/tvInformacion"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="12dp"
             android:padding="16dp"
             android:background="@color/surface"
             android:textColor="@color/primary"
             android:textSize="16sp"
-            android:text="Selecciona un compañero y pulsa Mostrar información."
+            android:text="Selecciona un compañero para ver su información."
             android:textIsSelectable="true" />
 
-        <Button
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/btnVolverAlta"
+            style="@style/Widget.Material3.Button.TextButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
+            android:layout_marginTop="8dp"
             android:text="Volver al alta"
-            android:textColor="@color/surface"
-            android:backgroundTint="@color/primary" />
+            android:textColor="@color/secondary" />
 
     </LinearLayout>
 

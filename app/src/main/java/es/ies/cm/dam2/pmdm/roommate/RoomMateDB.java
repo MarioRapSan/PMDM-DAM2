@@ -16,7 +16,7 @@ import java.util.List;
 public class RoomMateDB extends SQLiteOpenHelper {
 
     public static final String NOMBRE_BD = "roommate.db";
-    public static final int VERSION_BD = 1;
+    public static final int VERSION_BD = 2;
 
     private static final String TABLA_COMPANEROS = "companeros";
     private static final String TABLA_USUARIOS = "usuarios";
@@ -43,8 +43,43 @@ public class RoomMateDB extends SQLiteOpenHelper {
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        // La base de datos nace en la version 1.
-        // No hay versiones anteriores que actualizar por ahora.
+        // La version 2 anade los datos de contacto de cada companero.
+        if (oldVersion < 2) {
+            if (!tieneColumna(db, TABLA_COMPANEROS, "telefono")) {
+                db.execSQL(
+                        "ALTER TABLE " + TABLA_COMPANEROS +
+                                " ADD COLUMN telefono TEXT"
+                );
+            }
+
+            if (!tieneColumna(db, TABLA_COMPANEROS, "correo")) {
+                db.execSQL(
+                        "ALTER TABLE " + TABLA_COMPANEROS +
+                                " ADD COLUMN correo TEXT"
+                );
+            }
+        }
+    }
+
+    private boolean tieneColumna(
+            SQLiteDatabase db,
+            String tabla,
+            String columna
+    ) {
+        Cursor cursor = db.rawQuery("PRAGMA table_info(" + tabla + ")", null);
+        int indiceNombre = cursor.getColumnIndex("name");
+
+        try {
+            while (cursor.moveToNext()) {
+                if (columna.equals(cursor.getString(indiceNombre))) {
+                    return true;
+                }
+            }
+        } finally {
+            cursor.close();
+        }
+
+        return false;
     }
 
     private void crearTablas(SQLiteDatabase db) {
@@ -57,7 +92,9 @@ public class RoomMateDB extends SQLiteOpenHelper {
                         "sexo TEXT, " +
                         "fecha_entrada TEXT, " +
                         "introduccion TEXT, " +
-                        "foto_perfil TEXT)"
+                        "foto_perfil TEXT, " +
+                        "telefono TEXT, " +
+                        "correo TEXT)"
         );
 
         db.execSQL(
@@ -151,15 +188,18 @@ public class RoomMateDB extends SQLiteOpenHelper {
     private void insertarCompanerosIniciales(SQLiteDatabase db) {
         insertarCompaneroInicial(
                 db, "Jose", "García", 24, "Hombre",
-                "01/09/2024", "Me gusta cocinar y ver series.", "ic_persona"
+                "01/09/2024", "Me gusta cocinar y ver series.", "ic_persona",
+                "600 111 222", "jose@roommate.es"
         );
         insertarCompaneroInicial(
                 db, "Raul", "López", 27, "Hombre",
-                "01/09/2023", "Soy ordenado y suelo ayudar con la limpieza.", "ic_persona"
+                "01/09/2023", "Soy ordenado y suelo ayudar con la limpieza.", "ic_persona",
+                "600 333 444", "raul@roommate.es"
         );
         insertarCompaneroInicial(
                 db, "Winwaleo", "Martínez", 22, "Mujer",
-                "15/01/2025", "Estudio y trabajo, pero siempre saco tiempo para el piso.", "ic_persona"
+                "15/01/2025", "Estudio y trabajo, pero siempre saco tiempo para el piso.", "ic_persona",
+                "600 555 666", "winwaleo@roommate.es"
         );
     }
 
@@ -171,7 +211,9 @@ public class RoomMateDB extends SQLiteOpenHelper {
             String sexo,
             String fechaEntrada,
             String introduccion,
-            String fotoPerfil
+            String fotoPerfil,
+            String telefono,
+            String correo
     ) {
         ContentValues valores = new ContentValues();
         valores.put("nombre", nombre);
@@ -181,6 +223,8 @@ public class RoomMateDB extends SQLiteOpenHelper {
         valores.put("fecha_entrada", fechaEntrada);
         valores.put("introduccion", introduccion);
         valores.put("foto_perfil", fotoPerfil);
+        valores.put("telefono", telefono);
+        valores.put("correo", correo);
         db.insert(TABLA_COMPANEROS, null, valores);
     }
 
@@ -292,6 +336,22 @@ public class RoomMateDB extends SQLiteOpenHelper {
     }
 
     public long insertarCompanero(Companero companero) {
+        ContentValues valores = valoresDeCompanero(companero);
+        return getWritableDatabase().insert(TABLA_COMPANEROS, null, valores);
+    }
+
+    public int actualizarCompanero(Companero companero) {
+        ContentValues valores = valoresDeCompanero(companero);
+
+        return getWritableDatabase().update(
+                TABLA_COMPANEROS,
+                valores,
+                "id = ?",
+                new String[]{String.valueOf(companero.getId())}
+        );
+    }
+
+    private ContentValues valoresDeCompanero(Companero companero) {
         ContentValues valores = new ContentValues();
         valores.put("nombre", companero.getNombre());
         valores.put("apellidos", companero.getApellidos());
@@ -300,8 +360,21 @@ public class RoomMateDB extends SQLiteOpenHelper {
         valores.put("fecha_entrada", companero.getFechaEntrada());
         valores.put("introduccion", companero.getIntroduccion());
         valores.put("foto_perfil", companero.getFotoPerfil());
+        valores.put("telefono", companero.getTelefono());
+        valores.put("correo", companero.getCorreo());
+        return valores;
+    }
 
-        return getWritableDatabase().insert(TABLA_COMPANEROS, null, valores);
+    public int actualizarFotoPerfil(int id, String fotoPerfil) {
+        ContentValues valores = new ContentValues();
+        valores.put("foto_perfil", fotoPerfil);
+
+        return getWritableDatabase().update(
+                TABLA_COMPANEROS,
+                valores,
+                "id = ?",
+                new String[]{String.valueOf(id)}
+        );
     }
 
     public List<Companero> obtenerCompaneros() {
@@ -323,6 +396,26 @@ public class RoomMateDB extends SQLiteOpenHelper {
 
         cursor.close();
         return companeros;
+    }
+
+    public Companero obtenerCompanero(int id) {
+        Cursor cursor = getReadableDatabase().query(
+                TABLA_COMPANEROS,
+                null,
+                "id = ?",
+                new String[]{String.valueOf(id)},
+                null,
+                null,
+                null
+        );
+
+        Companero companero = null;
+        if (cursor.moveToFirst()) {
+            companero = leerCompanero(cursor);
+        }
+
+        cursor.close();
+        return companero;
     }
 
     public int borrarCompanero(int id) {
@@ -363,7 +456,9 @@ public class RoomMateDB extends SQLiteOpenHelper {
                 cursor.getString(cursor.getColumnIndexOrThrow("sexo")),
                 cursor.getString(cursor.getColumnIndexOrThrow("fecha_entrada")),
                 cursor.getString(cursor.getColumnIndexOrThrow("introduccion")),
-                cursor.getString(cursor.getColumnIndexOrThrow("foto_perfil"))
+                cursor.getString(cursor.getColumnIndexOrThrow("foto_perfil")),
+                cursor.getString(cursor.getColumnIndexOrThrow("telefono")),
+                cursor.getString(cursor.getColumnIndexOrThrow("correo"))
         );
     }
 
