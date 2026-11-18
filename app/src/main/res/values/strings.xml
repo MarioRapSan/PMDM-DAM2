@@ -173,6 +173,17 @@
     <string name="buscar_tareas">Buscar tareas</string>
     <string name="lista_de_la_compra">Lista de la compra</string>
     <string name="enviar_correo">Enviar correo</string>
+    <string name="registros_de_tareas">Registros de tareas</string>
+    <string name="total_registros">Total de registros: %1$d</string>
+    <string name="total_registros_cero">Total de registros: 0</string>
+    <string name="total_general">Total general: %1$d</string>
+    <string name="total_general_cero">Total general: 0</string>
+    <string name="nuevo_registro">Nuevo registro</string>
+    <string name="puntuacion">Puntuación</string>
+    <string name="ganador">Ganador</string>
+    <string name="guardar_registro">Guardar registro</string>
+    <string name="registro_guardado">Registro guardado correctamente</string>
+    <string name="error_puntuacion">Introduce una puntuación válida</string>
     <string name="error_guardar_companero">No se pudo guardar el compañero</string>
     <string name="companero_registrado">Compañero registrado correctamente</string>
     <string name="datos_incorrectos">Datos incorrectos</string>

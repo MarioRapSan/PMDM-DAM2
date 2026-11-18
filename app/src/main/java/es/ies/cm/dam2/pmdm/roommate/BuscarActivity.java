@@ -32,7 +32,7 @@ public class BuscarActivity extends AppCompatActivity {
 
     private final List<Tarea> resultados = new ArrayList<>();
     private TareaBusquedaAdapter adapter;
-    private RoomMateDB db;
+    private TareaDao tareaDao;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,7 +41,7 @@ public class BuscarActivity extends AppCompatActivity {
         setContentView(R.layout.activity_buscar);
         aplicarInsets();
 
-        db = new RoomMateDB(this);
+        tareaDao = AppDatabase.getInstance(this).tareaDao();
 
         etNombre = findViewById(R.id.etBuscarNombre);
         spinnerModo = findViewById(R.id.spinnerModoBusqueda);
@@ -85,22 +85,37 @@ public class BuscarActivity extends AppCompatActivity {
         });
     }
 
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        if (db != null) {
-            db.close();
-        }
-    }
-
     private void buscar() {
         String texto = etNombre.getText().toString().trim();
         String modo = spinnerModo.getSelectedItem().toString();
         String prioridad = spinnerPrioridad.getSelectedItem().toString();
 
-        resultados.clear();
-        resultados.addAll(db.buscarTareas(texto, modo, prioridad));
-        adapter.notifyDataSetChanged();
+        AppDatabase.ejecutar(() -> {
+            List<Tarea> encontradas = tareaDao.obtenerTodas();
+            List<Tarea> filtradas = new ArrayList<>();
+            String textoMinusculas = texto.toLowerCase();
+
+            for (Tarea tarea : encontradas) {
+                String nombre = tarea.getNombre().toLowerCase();
+                boolean coincideNombre = modo.equals("Empieza por")
+                        ? nombre.startsWith(textoMinusculas)
+                        : nombre.contains(textoMinusculas);
+                boolean coincidePrioridad = prioridad.equals("Todas")
+                        || prioridad.equals(tarea.getPrioridad());
+
+                if (coincideNombre && coincidePrioridad) {
+                    filtradas.add(tarea);
+                }
+            }
+
+            List<Tarea> resultadoFinal = filtradas;
+
+            runOnUiThread(() -> {
+                resultados.clear();
+                resultados.addAll(resultadoFinal);
+                adapter.notifyDataSetChanged();
+            });
+        });
     }
 
     private void aplicarInsets() {

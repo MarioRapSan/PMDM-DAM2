@@ -11,7 +11,8 @@ import java.util.List;
 
 /**
  * Base de datos local de la aplicacion.
- * Guarda companeros, usuarios, tareas y la lista de la compra.
+ * Guarda companeros, usuarios y la lista de la compra.
+ * Las tareas y sus registros se guardan en Room.
  */
 public class RoomMateDB extends SQLiteOpenHelper {
 
@@ -22,7 +23,6 @@ public class RoomMateDB extends SQLiteOpenHelper {
     private static final String TABLA_USUARIOS = "usuarios";
     private static final String TABLA_ITEMS_COMPRA = "items_compra";
     private static final String TABLA_LISTA_COMPRA = "lista_compra";
-    private static final String TABLA_TAREAS = "tareas";
 
     public RoomMateDB(Context context) {
         super(context, NOMBRE_BD, null, VERSION_BD);
@@ -123,21 +123,7 @@ public class RoomMateDB extends SQLiteOpenHelper {
                         "FOREIGN KEY(item_id) REFERENCES " + TABLA_ITEMS_COMPRA + "(id) " +
                         "ON DELETE CASCADE)"
         );
-
-        db.execSQL(
-                "CREATE TABLE " + TABLA_TAREAS + " (" +
-                        "id INTEGER PRIMARY KEY AUTOINCREMENT, " +
-                        "nombre TEXT NOT NULL, " +
-                        "prioridad TEXT, " +
-                        "dia TEXT, " +
-                        "dinero REAL DEFAULT 0, " +
-                        "hora TEXT, " +
-                        "companero TEXT, " +
-                        "hecha INTEGER DEFAULT 0, " +
-                        "dificultad INTEGER DEFAULT 3, " +
-                        "descripcion TEXT)"
-        );
-    }
+}
 
     private void insertarDatosIniciales(SQLiteDatabase db) {
         db.beginTransaction();
@@ -148,8 +134,6 @@ public class RoomMateDB extends SQLiteOpenHelper {
 
             insertarItemsCompra(db);
             insertarCompanerosIniciales(db);
-            insertarTareasIniciales(db);
-
             db.setTransactionSuccessful();
         } finally {
             db.endTransaction();
@@ -228,112 +212,7 @@ public class RoomMateDB extends SQLiteOpenHelper {
         db.insert(TABLA_COMPANEROS, null, valores);
     }
 
-    private void insertarTareasIniciales(SQLiteDatabase db) {
-        insertarTareaInicial(db, "Limpiar baño", "Puede esperar",
-                "Lunes", 0, "10:00", "Jose", true, 2,
-                "Limpiar el baño con lejía y dejar los útiles recogidos.");
-        insertarTareaInicial(db, "Ordenar el armario", "Puede esperar",
-                "Jueves", 0, "17:00", "Jose", true, 2,
-                "Ordenar la ropa y separar lo que ya no se usa.");
-        insertarTareaInicial(db, "Comprar productos de limpieza", "Hacer cuanto antes",
-                "Sábado", 12.50, "12:00", "Winwaleo", true, 4,
-                "Comprar lejía, jabón y bayetas.");
-        insertarTareaInicial(db, "Cambiar las sábanas", "Hacer cuanto antes",
-                "Lunes", 0, "19:00", "Raul", true, 4,
-                "Cambiar las sábanas de todas las camas.");
-        insertarTareaInicial(db, "Comprar productos de cocina", "Urgente",
-                "Miércoles", 23.40, "13:00", "Jose", true, 5,
-                "Comprar aceite, arroz y conservas.");
-        insertarTareaInicial(db, "Pagar la luz", "Urgente",
-                "Viernes", 48.75, "09:00", "Winwaleo", true, 5,
-                "Pagar el recibo de la luz antes de la fecha límite.");
-
-        insertarTareaInicial(db, "Limpiar salón", "Puede esperar",
-                "Lunes", 0, "08:00", "Raul", false, 2,
-                "Pasar la aspiradora y quitar el polvo del salón.");
-        insertarTareaInicial(db, "Regar las plantas", "Puede esperar",
-                "Martes", 0, "09:00", "Winwaleo", false, 2,
-                "Regar las plantas de la terraza y del salón.");
-        insertarTareaInicial(db, "Limpiar cocina", "Hacer cuanto antes",
-                "Miércoles", 0, "10:00", "Raul", false, 4,
-                "Limpiar la cocina, la nevera y los fogones.");
-        insertarTareaInicial(db, "Lavar la ropa", "Hacer cuanto antes",
-                "Jueves", 0, "11:00", "Jose", false, 4,
-                "Lavar la ropa acumulada y tenderla.");
-        insertarTareaInicial(db, "Sacar la basura", "Urgente",
-                "Viernes", 0, "12:00", "Winwaleo", false, 5,
-                "Sacar la basura y reciclar el plástico.");
-        insertarTareaInicial(db, "Arreglar la persiana", "Urgente",
-                "Sábado", 0, "13:00", "Raul", false, 5,
-                "Arreglar la persiana que no sube bien.");
-        insertarTareaInicial(db, "Barrer el pasillo", "Puede esperar",
-                "Domingo", 0, "14:00", "Jose", false, 2,
-                "Barrer el pasillo y limpiar los rodapiés.");
-        insertarTareaInicial(db, "Fregar los platos", "Puede esperar",
-                "Lunes", 0, "15:00", "Raul", false, 2,
-                "Fregar los platos y guardarlos.");
-        insertarTareaInicial(db, "Cambiar la bombilla", "Urgente",
-                "Martes", 0, "16:00", "Winwaleo", false, 5,
-                "Cambiar la bombilla fundida del pasillo.");
-        insertarTareaInicial(db, "Organizar la despensa", "Hacer cuanto antes",
-                "Miércoles", 0, "17:00", "Jose", false, 4,
-                "Organizar la despensa y revisar las fechas.");
-        insertarTareaInicial(db, "Tender la ropa", "Puede esperar",
-                "Jueves", 0, "18:00", "Raul", false, 2,
-                "Tender la ropa y doblarla cuando esté seca.");
-        insertarTareaInicial(db, "Arreglar la silla", "Urgente",
-                "Viernes", 0, "19:00", "Winwaleo", false, 5,
-                "Arreglar la silla que se mueve.");
-        insertarTareaInicial(db, "Limpiar las ventanas", "Puede esperar",
-                "Sábado", 0, "08:30", "Jose", false, 2,
-                "Limpiar las ventanas por dentro y por fuera.");
-        insertarTareaInicial(db, "Hacer la cama", "Puede esperar",
-                "Domingo", 0, "09:30", "Raul", false, 2,
-                "Hacer la cama y ordenar la habitación.");
-        insertarTareaInicial(db, "Ordenar el escritorio", "Hacer cuanto antes",
-                "Lunes", 0, "10:30", "Winwaleo", false, 4,
-                "Ordenar el escritorio y tirar los papeles viejos.");
-        insertarTareaInicial(db, "Limpiar el frigorífico", "Hacer cuanto antes",
-                "Martes", 0, "11:30", "Jose", false, 4,
-                "Limpiar el frigorífico y revisar la comida.");
-        insertarTareaInicial(db, "Reponer el papel higiénico", "Urgente",
-                "Miércoles", 0, "12:30", "Raul", false, 5,
-                "Reponer el papel higiénico en los baños.");
-        insertarTareaInicial(db, "Barrer la terraza", "Puede esperar",
-                "Jueves", 0, "13:30", "Winwaleo", false, 2,
-                "Barrer la terraza y recoger las hojas.");
-        insertarTareaInicial(db, "Limpiar los zapatos", "Puede esperar",
-                "Viernes", 0, "14:30", "Jose", false, 2,
-                "Limpiar los zapatos y guardarlos.");
-        insertarTareaInicial(db, "Preparar la mochila", "Hacer cuanto antes",
-                "Sábado", 0, "15:30", "Raul", false, 4,
-                "Preparar la mochila para el día siguiente.");
-    }
-
-    private void insertarTareaInicial(
-            SQLiteDatabase db,
-            String nombre,
-            String prioridad,
-            String dia,
-            double dinero,
-            String hora,
-            String companero,
-            boolean hecha,
-            int dificultad,
-            String descripcion
-    ) {
-        ContentValues valores = new ContentValues();
-        valores.put("nombre", nombre);
-        valores.put("prioridad", prioridad);
-        valores.put("dia", dia);
-        valores.put("dinero", dinero);
-        valores.put("hora", hora);
-        valores.put("companero", companero);
-        valores.put("hecha", hecha ? 1 : 0);
-        valores.put("dificultad", dificultad);
-        valores.put("descripcion", descripcion);
-        db.insert(TABLA_TAREAS, null, valores);
-    }
+    
 
     public long insertarCompanero(Companero companero) {
         ContentValues valores = valoresDeCompanero(companero);
@@ -487,40 +366,13 @@ public class RoomMateDB extends SQLiteOpenHelper {
         return null;
     }
 
-    public long insertarTarea(Tarea tarea) {
-        ContentValues valores = valoresDeTarea(tarea);
-        return getWritableDatabase().insert(TABLA_TAREAS, null, valores);
-    }
+    
 
-    public int actualizarTarea(Tarea tarea) {
-        ContentValues valores = valoresDeTarea(tarea);
-        return getWritableDatabase().update(
-                TABLA_TAREAS,
-                valores,
-                "id = ?",
-                new String[]{String.valueOf(tarea.getId())}
-        );
-    }
+    
 
-    public int actualizarHecha(int id, boolean hecha) {
-        ContentValues valores = new ContentValues();
-        valores.put("hecha", hecha ? 1 : 0);
+    
 
-        return getWritableDatabase().update(
-                TABLA_TAREAS,
-                valores,
-                "id = ?",
-                new String[]{String.valueOf(id)}
-        );
-    }
-
-    public int borrarTarea(int id) {
-        return getWritableDatabase().delete(
-                TABLA_TAREAS,
-                "id = ?",
-                new String[]{String.valueOf(id)}
-        );
-    }
+    
 
     private ContentValues valoresDeTarea(Tarea tarea) {
         ContentValues valores = new ContentValues();
@@ -536,87 +388,11 @@ public class RoomMateDB extends SQLiteOpenHelper {
         return valores;
     }
 
-    public List<Tarea> obtenerTareas() {
-        List<Tarea> tareas = new ArrayList<>();
+    
 
-        Cursor cursor = getReadableDatabase().query(
-                TABLA_TAREAS,
-                null,
-                null,
-                null,
-                null,
-                null,
-                "id ASC"
-        );
+    
 
-        while (cursor.moveToNext()) {
-            tareas.add(leerTarea(cursor));
-        }
-
-        cursor.close();
-        return tareas;
-    }
-
-    public Tarea obtenerTarea(int id) {
-        Cursor cursor = getReadableDatabase().query(
-                TABLA_TAREAS,
-                null,
-                "id = ?",
-                new String[]{String.valueOf(id)},
-                null,
-                null,
-                null
-        );
-
-        Tarea tarea = null;
-        if (cursor.moveToFirst()) {
-            tarea = leerTarea(cursor);
-        }
-
-        cursor.close();
-        return tarea;
-    }
-
-    public List<Tarea> buscarTareas(String texto, String modo, String prioridad) {
-        StringBuilder seleccion = new StringBuilder("1 = 1");
-        List<String> argumentos = new ArrayList<>();
-
-        if (texto != null && !texto.trim().isEmpty()) {
-            if (modo != null && modo.startsWith("Empieza")) {
-                seleccion.append(" AND nombre LIKE ?");
-                argumentos.add(texto + "%");
-            } else {
-                seleccion.append(" AND nombre LIKE ?");
-                argumentos.add("%" + texto + "%");
-            }
-        }
-
-        if (prioridad != null
-                && !prioridad.isEmpty()
-                && !prioridad.equals("Todas")) {
-            seleccion.append(" AND prioridad = ?");
-            argumentos.add(prioridad);
-        }
-
-        List<Tarea> tareas = new ArrayList<>();
-
-        Cursor cursor = getReadableDatabase().query(
-                TABLA_TAREAS,
-                null,
-                seleccion.toString(),
-                argumentos.toArray(new String[0]),
-                null,
-                null,
-                "nombre COLLATE NOCASE ASC"
-        );
-
-        while (cursor.moveToNext()) {
-            tareas.add(leerTarea(cursor));
-        }
-
-        cursor.close();
-        return tareas;
-    }
+    
 
     private Tarea leerTarea(Cursor cursor) {
         return new Tarea(

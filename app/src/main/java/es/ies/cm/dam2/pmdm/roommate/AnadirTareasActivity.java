@@ -372,30 +372,26 @@ public class AnadirTareasActivity extends AppCompatActivity {
                 descripcion
         );
 
-        RoomMateDB db = new RoomMateDB(this);
+        AppDatabase.ejecutar(() -> {
+            TareaDao dao = AppDatabase.getInstance(this).tareaDao();
 
-        if (tareaId == 0) {
-            long id = db.insertarTarea(tarea);
-            if (id <= 0) {
-                db.close();
-                Toast.makeText(
-                        this,
-                        R.string.error_guardar_tarea,
-                        Toast.LENGTH_SHORT
-                ).show();
-                return;
+            if (tareaId == 0) {
+                long id = dao.insertar(tarea);
+
+                if (id > 0) {
+                    tarea.setId((int) id);
+                }
+            } else {
+                dao.actualizar(tarea);
             }
-            tarea.setId((int) id);
-        } else {
-            db.actualizarTarea(tarea);
-        }
 
-        db.close();
-
-        Intent data = new Intent();
-        data.putExtra(EXTRA_TAREA, tarea);
-        setResult(RESULT_OK, data);
-        finish();
+            runOnUiThread(() -> {
+                Intent data = new Intent();
+                data.putExtra(EXTRA_TAREA, tarea);
+                setResult(RESULT_OK, data);
+                finish();
+            });
+        });
     }
 
     private void aplicarInsets() {

@@ -45,7 +45,7 @@ public class ColeccionTareasActivity extends AppCompatActivity {
     private RecyclerView rvTareas;
     private Button btnMostrar;
     private ActivityResultLauncher<Intent> launcher;
-    private RoomMateDB db;
+    private TareaDao tareaDao;
 
     private int usuarioId = 1;
     private String usuarioNombre = "admin";
@@ -77,7 +77,12 @@ public class ColeccionTareasActivity extends AppCompatActivity {
                 }
         );
 
-        db = new RoomMateDB(this);
+        tareaDao = AppDatabase.getInstance(this).tareaDao();
+        AppDatabase.inicializar(this, () -> {
+            if (!isFinishing() && !isDestroyed()) {
+                cargarTareasDesdeBD();
+            }
+        });
 
         usuarioId = getIntent().getIntExtra(EXTRA_USUARIO_ID, 1);
         usuarioNombre = getIntent().getStringExtra(EXTRA_USUARIO_NOMBRE);
@@ -174,14 +179,6 @@ public class ColeccionTareasActivity extends AppCompatActivity {
     }
 
     @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        if (db != null) {
-            db.close();
-        }
-    }
-
-    @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_coleccion_tareas, menu);
         return true;
@@ -252,9 +249,15 @@ public class ColeccionTareasActivity extends AppCompatActivity {
     }
 
     private void cargarTareasDesdeBD() {
-        todasLasTareas.clear();
-        todasLasTareas.addAll(db.obtenerTareas());
-        aplicarFiltro();
+        AppDatabase.ejecutar(() -> {
+            List<Tarea> tareas = tareaDao.obtenerTodas();
+
+            runOnUiThread(() -> {
+                todasLasTareas.clear();
+                todasLasTareas.addAll(tareas);
+                aplicarFiltro();
+            });
+        });
     }
 
     private void actualizarBotonMostrar() {
@@ -314,27 +317,35 @@ public class ColeccionTareasActivity extends AppCompatActivity {
     }
 
     private void borrarTarea(Tarea tarea) {
-        db.borrarTarea(tarea.getId());
-        cargarTareasDesdeBD();
+        AppDatabase.ejecutar(() -> {
+            tareaDao.borrar(tarea);
 
-        Toast.makeText(
-                this,
-                R.string.tarea_eliminada,
-                Toast.LENGTH_SHORT
-        ).show();
+            runOnUiThread(() -> {
+                cargarTareasDesdeBD();
+                Toast.makeText(
+                        this,
+                        R.string.tarea_eliminada,
+                        Toast.LENGTH_SHORT
+                ).show();
+            });
+        });
     }
 
     private void alCambiarEstado(Tarea tarea) {
-        db.actualizarHecha(tarea.getId(), tarea.isHecha());
-        cargarTareasDesdeBD();
+        AppDatabase.ejecutar(() -> {
+            tareaDao.actualizar(tarea);
 
-        Toast.makeText(
-                this,
-                tarea.isHecha()
-                        ? R.string.tarea_marcada_hecha
-                        : R.string.tarea_marcada_no_hecha,
-                Toast.LENGTH_SHORT
-        ).show();
+            runOnUiThread(() -> {
+                cargarTareasDesdeBD();
+                Toast.makeText(
+                        this,
+                        tarea.isHecha()
+                                ? R.string.tarea_marcada_hecha
+                                : R.string.tarea_marcada_no_hecha,
+                        Toast.LENGTH_SHORT
+                ).show();
+            });
+        });
     }
 
     private void aplicarFiltro() {

@@ -157,6 +157,11 @@ public class MainActivity extends AppCompatActivity {
             return true;
         }
 
+        if (id == R.id.action_registros_tareas) {
+            startActivity(new Intent(this, RegistroTareaActivity.class));
+            return true;
+        }
+
         if (id == R.id.action_invitacion) {
             startActivity(new Intent(this, InvitacionActivity.class));
             return true;

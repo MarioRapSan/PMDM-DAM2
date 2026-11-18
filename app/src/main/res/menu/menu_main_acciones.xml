@@ -18,6 +18,10 @@
         android:title="@string/lista_de_tareas" />
 
     <item
+        android:id="@+id/action_registros_tareas"
+        android:title="@string/registros_de_tareas" />
+
+    <item
         android:id="@+id/action_invitacion"
         android:title="@string/invitaci_n" />
 
