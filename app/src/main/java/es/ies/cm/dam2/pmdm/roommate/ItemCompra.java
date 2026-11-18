@@ -9,12 +9,14 @@ public class ItemCompra {
     private final String nombre;
     private final String categoria;
 
+    /** Producto leido de la tabla items_compra. */
     public ItemCompra(int id, String nombre, String categoria) {
         this.id = id;
         this.nombre = nombre;
         this.categoria = categoria;
     }
 
+    // Getters y setters: acceso a los atributos privados.
     public int getId() {
         return id;
     }
@@ -27,6 +29,7 @@ public class ItemCompra {
         return categoria;
     }
 
+    /** El Spinner muestra el nombre del producto. */
     @Override
     public String toString() {
         return nombre;

@@ -19,7 +19,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="20dp"
-            android:text="Detalle de la tarea"
+            android:text="@string/detalle_tarea"
             android:textColor="@color/primary"
             android:textSize="24sp"
             android:textStyle="bold" />
@@ -30,7 +30,7 @@
             android:layout_height="180dp"
             android:layout_gravity="center_horizontal"
             android:background="@drawable/bg_foto_tarea"
-            android:contentDescription="Foto del compañero"
+            android:contentDescription="@string/foto_companero"
             android:padding="24dp"
             android:scaleType="centerInside"
             android:src="@drawable/ic_persona" />
@@ -73,6 +73,15 @@
             tools:text="Fecha: Lunes · 10:00" />
 
         <TextView
+            android:id="@+id/tvCompartidaDetalle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:textColor="@color/text_secondary"
+            android:textSize="16sp"
+            tools:text="Tarea compartida por el piso" />
+
+        <TextView
             android:id="@+id/tvDescripcionDetalle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -86,7 +95,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
-            android:text="Dificultad"
+            android:text="@string/dificultad"
             android:textColor="@color/primary"
             android:textSize="16sp"
             android:textStyle="bold" />
@@ -102,16 +111,49 @@
             android:rating="3"
             android:stepSize="1" />
 
+        <!-- Registros de la tarea: entidad relacionada 1-N en Room -->
+        <TextView
+            android:id="@+id/tvRegistrosDetalle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:lineSpacingExtra="3dp"
+            android:textColor="@color/text_secondary"
+            android:textSize="15sp"
+            tools:text="Registros (1):\n16/11/2026 · 8 puntos · Jose" />
+
+        <Button
+            android:id="@+id/btnEditarDetalle"
+            android:layout_width="match_parent"
+            android:layout_height="52dp"
+            android:layout_marginTop="28dp"
+            android:backgroundTint="@color/primary"
+            android:text="@string/editar"
+            android:textAllCaps="false"
+            android:textColor="@color/on_primary"
+            android:textStyle="bold" />
+
+        <Button
+            android:id="@+id/btnRegistrosDetalle"
+            android:layout_width="match_parent"
+            android:layout_height="52dp"
+            android:layout_marginTop="8dp"
+            android:backgroundTint="@color/secondary"
+            android:text="@string/ver_registros"
+            android:textAllCaps="false"
+            android:textColor="@color/on_primary"
+            android:textStyle="bold" />
+
         <Button
             android:id="@+id/btnVolverDetalle"
             android:layout_width="match_parent"
             android:layout_height="52dp"
-            android:layout_marginTop="28dp"
+            android:layout_marginTop="8dp"
             android:layout_marginBottom="16dp"
             android:backgroundTint="@color/secondary"
-            android:text="Volver"
+            android:text="@string/volver"
             android:textAllCaps="false"
-            android:textColor="@color/surface"
+            android:textColor="@color/on_primary"
             android:textStyle="bold" />
 
     </LinearLayout>

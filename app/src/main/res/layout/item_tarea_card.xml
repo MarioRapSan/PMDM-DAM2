@@ -29,7 +29,7 @@
             android:layout_width="60dp"
             android:layout_height="60dp"
             android:background="@drawable/bg_foto_tarea"
-            android:contentDescription="Foto del compañero"
+            android:contentDescription="@string/foto_companero"
             android:padding="10dp"
             android:scaleType="centerInside"
             android:src="@drawable/ic_persona" />
@@ -59,6 +59,21 @@
                 android:textSize="13sp"
                 tools:text="Añadida por: Jose" />
 
+            <!-- Etiqueta visible solo en las tareas compartidas (Switch del formulario) -->
+            <TextView
+                android:id="@+id/tvCompartidaTarea"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:background="@color/primary"
+                android:paddingHorizontal="8dp"
+                android:paddingVertical="2dp"
+                android:text="@string/etiqueta_compartida"
+                android:textColor="@color/on_primary"
+                android:textSize="11sp"
+                android:visibility="gone"
+                tools:visibility="visible" />
+
         </LinearLayout>
 
         <CheckBox
@@ -67,7 +82,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="4dp"
             android:buttonTint="@color/primary"
-            android:contentDescription="Hecha"
+            android:contentDescription="@string/tarea_hecha"
             android:textColor="@color/text_primary"
             android:textSize="12sp" />
 

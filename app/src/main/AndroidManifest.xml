@@ -3,15 +3,22 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <application
+        android:name=".RoomMateApp"
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
+        android:localeConfig="@xml/locales_config"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.RoomMate">
 
+
+        <!-- parentActivityName indica la pantalla "padre" de cada una: es la
+             jerarquia de navegacion (a donde lleva la flecha de volver). -->
+
+        <!-- Entrada de la app -->
         <activity
             android:name=".LoginActivity"
             android:exported="true"
@@ -22,79 +29,87 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
         <activity
-            android:name=".MainActivity"
+            android:name=".RegistroUsuarioActivity"
             android:exported="false"
+            android:parentActivityName=".LoginActivity"
             android:windowSoftInputMode="adjustResize" />
 
-        <activity
-            android:name=".ControlesBasicos"
-            android:exported="false"
-            android:windowSoftInputMode="adjustResize" />
-        <activity
-            android:name=".ControlesBasicos2"
-            android:exported="false"
-            android:windowSoftInputMode="adjustResize" />
-        <activity
-            android:name=".FichaCompaneroActivity"
-            android:exported="false"
-            android:windowSoftInputMode="adjustResize" />
-        <activity
-            android:name=".EditarCompaneroActivity"
-            android:exported="false"
-            android:windowSoftInputMode="adjustResize" />
-        <activity
-            android:name=".ConfirmarAsistenciaActivity"
-            android:exported="false"
-            android:windowSoftInputMode="adjustResize" />
-        <activity
-            android:name=".InvitacionActivity"
-            android:exported="false"
-            android:windowSoftInputMode="adjustResize" />
-        <activity
-            android:name=".CorreoActivity"
-            android:exported="false"
-            android:windowSoftInputMode="adjustResize" />
-        <activity
-            android:name=".ListaTareas"
-            android:exported="false"
-            android:windowSoftInputMode="adjustResize" />
-        <activity
-            android:name=".EstadoTareasActivity"
-            android:exported="false"
-            android:windowSoftInputMode="adjustResize" />
+        <!-- Pantalla principal (coleccion de tareas con menu lateral) -->
         <activity
             android:name=".ColeccionTareasActivity"
             android:exported="false"
             android:windowSoftInputMode="adjustResize" />
-        <activity
-            android:name=".AnadirTareasActivity"
-            android:exported="false"
-            android:windowSoftInputMode="adjustResize" />
+
+        <!-- Tareas -->
         <activity
             android:name=".DetalleTareaActivity"
             android:exported="false"
+            android:parentActivityName=".ColeccionTareasActivity"
             android:windowSoftInputMode="adjustResize" />
         <activity
-            android:name=".BuscarActivity"
+            android:name=".AnadirTareasActivity"
             android:exported="false"
-            android:windowSoftInputMode="adjustResize" />
-        <activity
-            android:name=".ListaCompraActivity"
-            android:exported="false"
-            android:windowSoftInputMode="adjustResize" />
-        <activity
-            android:name=".AcercaDeActivity"
-            android:exported="false"
-            android:windowSoftInputMode="adjustResize" />
-        <activity
-            android:name=".AjustesActivity"
-            android:exported="false"
+            android:parentActivityName=".ColeccionTareasActivity"
             android:windowSoftInputMode="adjustResize" />
         <activity
             android:name=".RegistroTareaActivity"
             android:exported="false"
+            android:parentActivityName=".DetalleTareaActivity"
+            android:windowSoftInputMode="adjustResize" />
+        <activity
+            android:name=".BuscarActivity"
+            android:exported="false"
+            android:parentActivityName=".ColeccionTareasActivity"
+            android:windowSoftInputMode="adjustResize" />
+
+        <!-- Secciones del menu lateral -->
+        <activity
+            android:name=".ListaCompraActivity"
+            android:exported="false"
+            android:parentActivityName=".ColeccionTareasActivity"
+            android:windowSoftInputMode="adjustResize" />
+        <activity
+            android:name=".GastosCompartidosActivity"
+            android:exported="false"
+            android:parentActivityName=".ColeccionTareasActivity"
+            android:windowSoftInputMode="adjustResize" />
+        <activity
+            android:name=".CompanerosActivity"
+            android:exported="false"
+            android:parentActivityName=".ColeccionTareasActivity"
+            android:windowSoftInputMode="adjustResize" />
+        <activity
+            android:name=".AjustesActivity"
+            android:exported="false"
+            android:parentActivityName=".ColeccionTareasActivity"
+            android:windowSoftInputMode="adjustResize" />
+        <activity
+            android:name=".AcercaDeActivity"
+            android:exported="false"
+            android:parentActivityName=".ColeccionTareasActivity"
+            android:windowSoftInputMode="adjustResize" />
+
+        <!-- Companeros -->
+        <activity
+            android:name=".AltaCompaneroActivity"
+            android:exported="false"
+            android:parentActivityName=".CompanerosActivity"
+            android:windowSoftInputMode="adjustResize" />
+        <activity
+            android:name=".FichaCompaneroActivity"
+            android:exported="false"
+            android:parentActivityName=".CompanerosActivity"
+            android:windowSoftInputMode="adjustResize" />
+        <activity
+            android:name=".EditarCompaneroActivity"
+            android:exported="false"
+            android:parentActivityName=".FichaCompaneroActivity"
+            android:windowSoftInputMode="adjustResize" />
+        <activity
+            android:name=".CorreoActivity"
+            android:exported="false"
+            android:parentActivityName=".FichaCompaneroActivity"
             android:windowSoftInputMode="adjustResize" />
     </application>
 </manifest>

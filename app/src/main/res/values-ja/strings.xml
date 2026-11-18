@@ -1,0 +1,269 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Traduccion al japones. Tiene exactamente las mismas claves que values/strings.xml. -->
+<resources>
+
+    <!-- General -->
+    <string name="app_name">RoomMate</string>
+    <string name="aceptar">OK</string>
+    <string name="cancelar">キャンセル</string>
+    <string name="volver">戻る</string>
+    <string name="guardar">保存</string>
+    <string name="guardar_cambios">変更を保存</string>
+    <string name="editar">編集</string>
+    <string name="eliminar">削除</string>
+    <string name="buscar">検索</string>
+    <string name="todos">すべて</string>
+    <string name="sin_asignar">未割り当て</string>
+    <string name="sin_fecha">日付なし</string>
+    <string name="datos_incorrectos">データが正しくありません</string>
+    <string name="piso_compartido">シェアハウス</string>
+    <string name="hola_usuario">こんにちは、%1$sさん</string>
+
+    <!-- Inicio de sesion y registro -->
+    <string name="iniciar_sesion">ログイン</string>
+    <string name="usuario">ユーザー名</string>
+    <string name="usuario_hint">ユーザー名を入力</string>
+    <string name="clave">パスワード</string>
+    <string name="clave_hint">パスワードを入力</string>
+    <string name="clave_hint_minimo">4文字以上</string>
+    <string name="repetir_clave">パスワード（確認）</string>
+    <string name="repetir_clave_hint">もう一度パスワードを入力</string>
+    <string name="entrar">ログイン</string>
+    <string name="registrarse">新規登録</string>
+    <string name="crear_cuenta">新しいアカウントを作成</string>
+    <string name="usuarios_prueba">テストユーザー：admin/admin、mario/mario、jose/jose、raul/raul、winwaleo/winwaleo</string>
+    <string name="error_usuario_clave">ユーザー名またはパスワードが違います</string>
+    <string name="error_campos_login">ユーザー名とパスワードを入力してください</string>
+    <string name="error_usuario_vacio">ユーザー名を入力してください</string>
+    <string name="error_usuario_existe">そのユーザー名は既に使われています</string>
+    <string name="error_clave_corta">パスワードは%1$d文字以上にしてください</string>
+    <string name="error_claves_distintas">パスワードが一致しません</string>
+    <string name="cuenta_creada">アカウントを作成しました。ログインしてください</string>
+
+    <!-- Ajustes de la cuenta -->
+    <string name="ajustes">設定</string>
+    <string name="sesion_iniciada_como">%1$sとしてログイン中</string>
+    <string name="resumen_lista_compra">買い物リストの品目数：%1$d</string>
+    <string name="cambiar_clave">パスワードを変更</string>
+    <string name="clave_actual">現在のパスワード</string>
+    <string name="clave_nueva">新しいパスワード</string>
+    <string name="error_clave_vacia">現在のパスワードを入力してください</string>
+    <string name="error_clave_actual">現在のパスワードが違います</string>
+    <string name="clave_cambiada">パスワードを変更しました</string>
+    <string name="cerrar_sesion">ログアウト</string>
+    <string name="darse_de_baja">アカウントを削除</string>
+    <string name="mensaje_confirmar_baja">アカウントと買い物リストが削除されます。よろしいですか？</string>
+    <string name="cuenta_borrada">アカウントを削除しました</string>
+    <string name="apariencia">外観</string>
+    <string name="modo_oscuro">ダークモード</string>
+    <string name="cambiar_tema">テーマを切り替え</string>
+
+    <!-- Menus y navegacion -->
+    <string name="tareas">タスク</string>
+    <string name="acerca_de">アプリについて</string>
+    <string name="acerca_de_texto">RoomMate はシェアハウスの家事と買い物を管理するアプリです。</string>
+    <string name="version_app">バージョン 1.0</string>
+    <string name="abrir_menu">メニューを開く</string>
+    <string name="cerrar_menu">メニューを閉じる</string>
+    <string name="enviar_correo">メールを送信</string>
+
+    <!-- Coleccion de tareas -->
+    <string name="coleccion_de_tareas">タスクコレクション</string>
+    <string name="subtitulo_coleccion">ユーザー：%1$s。タスクをタップすると詳細、長押しで編集・削除できます。</string>
+    <string name="progreso_tareas">%2$d件中%1$d件完了（%3$d %%）</string>
+    <string name="mostrar_tareas">タスクを表示</string>
+    <string name="ver_hechas">完了を表示</string>
+    <string name="ver_pendientes">未完了を表示</string>
+    <string name="mostrando_hechas">完了したタスクを表示中</string>
+    <string name="mostrando_pendientes">未完了のタスクを表示中</string>
+    <string name="no_hay_hechas">完了したタスクはありません</string>
+    <string name="no_hay_pendientes">未完了のタスクはありません</string>
+    <string name="ordenar_por_nombre">名前順に並べ替え</string>
+    <string name="ordenar_por_dificultad">難易度順に並べ替え</string>
+    <string name="tareas_ordenadas">名前順に並べ替えました</string>
+    <string name="tareas_ordenadas_dificultad">難易度順に並べ替えました</string>
+    <string name="anadida_por">追加した人：%1$s</string>
+    <string name="etiqueta_compartida">共有</string>
+    <string name="tarea_eliminada">タスクを削除しました</string>
+    <string name="tarea_marcada_hecha">タスクを完了にしました</string>
+    <string name="tarea_marcada_no_hecha">タスクを未完了にしました</string>
+    <string name="confirmar_eliminar_tarea">タスクを削除</string>
+    <string name="mensaje_confirmar_eliminar_tarea">このタスクを削除しますか？記録も一緒に削除されます。</string>
+    <string name="pendiente">未完了</string>
+    <string name="estado_hecha">完了</string>
+
+    <!-- Formulario y ficha de tarea -->
+    <string name="anadir_tarea_titulo">タスクを追加</string>
+    <string name="editar_tarea_titulo">タスクを編集</string>
+    <string name="detalle_tarea">タスクの詳細</string>
+    <string name="ver_registros">タスクの記録を見る</string>
+    <string name="nombre">名前</string>
+    <string name="nombre_tarea_hint">タスク名</string>
+    <string name="prioridad">優先度</string>
+    <string name="companero_anade_tarea">タスクを追加するルームメイト</string>
+    <string name="tarea_hecha">完了済み</string>
+    <string name="tarea_compartida">家全体の共有タスク</string>
+    <string name="tarea_compartida_si">家全体の共有タスク</string>
+    <string name="tarea_compartida_no">個人のタスク</string>
+    <string name="fecha">日付</string>
+    <string name="fecha_hint">例：12/05/2025</string>
+    <string name="hora">時刻</string>
+    <string name="hora_hint">例：18:30</string>
+    <string name="dinero_opcional">金額（任意）</string>
+    <string name="dinero_hint">0</string>
+    <string name="dificultad">難易度</string>
+    <string name="descripcion_opcional">説明（任意）</string>
+    <string name="descripcion_hint">タスクの詳細</string>
+    <string name="sin_descripcion">説明なし</string>
+    <string name="selecciona_companero">ルームメイトを選択</string>
+    <string name="tarea_guardada">タスクを保存しました</string>
+    <string name="foto_companero">ルームメイトの写真</string>
+    <string name="prioridad_valor">優先度：%1$s</string>
+    <string name="fecha_valor">日付：%1$s</string>
+    <string name="descripcion_valor">説明：%1$s</string>
+    <string name="error_cargar_tarea">タスクを読み込めませんでした</string>
+    <string name="error_nombre">名前を入力してください</string>
+    <string name="error_prioridad">優先度を選択してください</string>
+    <string name="error_companero">ルームメイトを選択してください</string>
+    <string name="error_fecha">日付を入力してください</string>
+    <string name="error_dinero">無効な数値です</string>
+    <string name="error_dinero_negativo">マイナスにはできません</string>
+    <string name="error_hora">HH:mm 形式で入力（例：18:30）</string>
+    <string name="error_hora_obligatoria">時刻を選択してください</string>
+
+    <!-- Registros de tareas -->
+    <string name="registros_de_tareas">タスクの記録</string>
+    <string name="tarea">タスク</string>
+    <string name="companero">ルームメイト</string>
+    <string name="selecciona_tarea">タスクを選択してください</string>
+    <string name="registros_titulo">記録（%1$d件）：</string>
+    <string name="sin_registros">このタスクにはまだ記録がありません</string>
+    <string name="linea_registro">%1$s · %2$dポイント · %3$s</string>
+    <string name="total_registros">このタスクの記録：%1$d件</string>
+    <string name="total_registros_cero">このタスクの記録：0件</string>
+    <string name="total_general">記録の合計：%1$d件</string>
+    <string name="total_general_cero">記録の合計：0件</string>
+    <string name="nuevo_registro">新しい記録</string>
+    <string name="editar_registro">記録を編集</string>
+    <string name="puntuacion">ポイント</string>
+    <string name="ganador">実施した人</string>
+    <string name="guardar_registro">記録を保存</string>
+    <string name="registro_guardado">記録を保存しました</string>
+    <string name="registro_eliminado">記録を削除しました</string>
+    <string name="eliminar_registro">記録を削除</string>
+    <string name="mensaje_confirmar_eliminar_registro">この記録を削除しますか？</string>
+    <string name="error_puntuacion">有効なポイントを入力してください</string>
+
+    <!-- Busqueda -->
+    <string name="buscar_tareas">タスクを検索</string>
+    <string name="buscar_tareas_titulo">タスクを検索</string>
+    <string name="nombre_buscar">タスク名</string>
+    <string name="nombre_buscar_hint">名前の一部を入力</string>
+    <string name="modo_busqueda">検索方法</string>
+    <string name="prioridad_busqueda">優先度</string>
+    <string name="sin_resultados">タスクが見つかりません</string>
+
+    <!-- Lista de la compra (lista personal) -->
+    <string name="lista_de_la_compra">買い物リスト</string>
+    <string name="gastos_compartidos">共有費用</string>
+    <string name="gastos_compartidos_menu">共有費用（近日公開）</string>
+    <string name="proximamente">近日公開</string>
+    <string name="gastos_compartidos_descripcion">ここでは、買った商品とその金額、誰と分けるかを記録できるようになります。各ルームメイトとあなたに、それぞれの負担額が表示されます。</string>
+    <string name="lista_compra_titulo">買い物リスト</string>
+    <string name="lista_compra_de_usuario">%1$sさんの買い物リスト</string>
+    <string name="articulo">品目</string>
+    <string name="anadir_a_mi_lista">マイリストに追加</string>
+    <string name="lista_compra_vacia">買い物リストは空です</string>
+    <string name="articulo_anadido">リストに追加しました</string>
+    <string name="articulo_duplicado">その品目は既にリストにあります</string>
+    <string name="articulo_eliminado">リストから削除しました</string>
+    <string name="nuevo_producto">新しい商品</string>
+    <string name="borrar_del_catalogo">商品を削除</string>
+    <string name="nombre_producto">商品名</string>
+    <string name="nombre_producto_hint">例：ビスケット</string>
+    <string name="categoria">カテゴリー</string>
+    <string name="categoria_hint">例：食料品</string>
+    <string name="crear">作成</string>
+    <string name="error_producto_vacio">商品名を入力してください</string>
+    <string name="error_producto_existe">その商品は既にカタログにあります</string>
+    <string name="producto_creado">カタログに追加しました：%1$s</string>
+    <string name="producto_borrado">カタログから削除しました：%1$s</string>
+    <string name="mensaje_confirmar_borrar_producto">この商品はカタログと全ユーザーのリストから削除されます。続けますか？</string>
+
+    <!-- Companeros de piso -->
+    <string name="companeros">ルームメイト</string>
+    <string name="subtitulo_companeros">ルームメイトをタップすると詳細が表示されます。編集・削除できるのは自分のプロフィールだけです（長押し）。</string>
+    <string name="crear_mi_perfil">自分のプロフィールを作成</string>
+    <string name="nombre_propio">%1$s（あなた）</string>
+    <string name="solo_tu_perfil">編集・削除できるのは自分のプロフィールだけです</string>
+    <string name="ficha_companero">ルームメイトの詳細</string>
+    <string name="nombre_hint">名前を入力</string>
+    <string name="apellidos">姓</string>
+    <string name="apellidos_hint">姓を入力</string>
+    <string name="sexo">性別</string>
+    <string name="hombre">男性</string>
+    <string name="mujer">女性</string>
+    <string name="edad">年齢</string>
+    <string name="edad_hint">18〜100歳</string>
+    <string name="fecha_entrada">入居日</string>
+    <string name="fecha_entrada_hint">例：01/09/2025</string>
+    <string name="introduccion_opcional">自己紹介（任意）</string>
+    <string name="introduccion_hint">あなたについて教えてください</string>
+    <string name="sin_introduccion">自己紹介なし</string>
+    <string name="telefono">電話番号</string>
+    <string name="telefono_hint">例：600 123 456</string>
+    <string name="correo_electronico">メールアドレス</string>
+    <string name="correo_hint">例：name@mail.com</string>
+    <string name="datos_contacto">連絡先</string>
+    <string name="datos_personales">個人情報</string>
+    <string name="presentacion">自己紹介</string>
+    <string name="editar_perfil">プロフィールを編集</string>
+    <string name="titulo_editar_perfil">ルームメイトのプロフィールを編集</string>
+    <string name="perfil_actualizado">プロフィールを更新しました</string>
+    <string name="error_actualizar_perfil">プロフィールを更新できませんでした</string>
+    <string name="error_companero_no_encontrado">ルームメイトが見つかりません</string>
+    <string name="error_correo">有効なメールアドレスを入力してください</string>
+    <string name="error_borrar_companero">ルームメイトを削除できませんでした</string>
+    <string name="error_guardar_companero">ルームメイトを保存できませんでした</string>
+    <string name="companero_registrado">ルームメイトを登録しました</string>
+    <string name="companero_eliminado">ルームメイトを削除しました：%1$s</string>
+    <string name="eliminar_companero">ルームメイトを削除</string>
+    <string name="mensaje_confirmar_eliminar_companero">このルームメイトを削除しますか？</string>
+    <string name="no_hay_companeros">登録されたルームメイトはいません</string>
+    <string name="sin_telefono">電話番号なし</string>
+    <string name="sin_correo">メールなし</string>
+    <string name="foto_perfil">プロフィール写真</string>
+    <string name="seleccionar_foto">写真を選択</string>
+    <string name="cambiar_foto">写真を変更</string>
+    <string name="error_foto_perfil">写真を保存できませんでした</string>
+    <string name="guardar_companero">プロフィールを保存</string>
+    <string name="borrar_companero">ルームメイトを削除</string>
+    <string name="ficha_companero_info">名前：%1$s\n\n性別：%2$s\n\n年齢：%3$d歳\n\n入居日：%4$s\n\n電話番号：%5$s\n\nメール：%6$s\n\n自己紹介：\n%7$s</string>
+
+    <!-- Correo -->
+    <string name="invitacion_correo">メールで招待</string>
+    <string name="correo_destinatario">宛先メールアドレス</string>
+    <string name="asunto_correo">件名</string>
+    <string name="escribe_invitacion">招待文を入力…</string>
+    <string name="abrir_correo">メールアプリを開く</string>
+    <string name="error_rellena_campos">すべての項目を入力してください</string>
+    <string name="error_sin_app_correo">メールアプリがインストールされていません</string>
+
+    <!-- Arrays de los Spinner -->
+    <string-array name="prioridades_tarea">
+        <item>優先度を選択</item>
+        <item>後でよい</item>
+        <item>できるだけ早く</item>
+        <item>緊急</item>
+    </string-array>
+    <string-array name="prioridades_busqueda">
+        <item>すべて</item>
+        <item>後でよい</item>
+        <item>できるだけ早く</item>
+        <item>緊急</item>
+    </string-array>
+    <string-array name="modos_busqueda">
+        <item>前方一致</item>
+        <item>部分一致</item>
+    </string-array>
+</resources>

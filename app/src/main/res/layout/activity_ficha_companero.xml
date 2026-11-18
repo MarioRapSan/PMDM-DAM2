@@ -1,94 +1,110 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<!-- Ficha de un companero: foto, datos y acciones (correo; editar y borrar solo en el perfil propio). -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/background"
-    android:fillViewport="true">
+    android:fitsSystemWindows="true"
+    android:orientation="vertical"
+    tools:context=".FichaCompaneroActivity">
 
-    <LinearLayout
+    <com.google.android.material.appbar.MaterialToolbar
+        android:id="@+id/toolbarFichaCompanero"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:padding="20dp">
+        android:layout_height="?attr/actionBarSize"
+        android:background="@color/primary"
+        app:navigationIconTint="@color/on_primary"
+        app:title="@string/ficha_companero"
+        app:titleTextColor="@color/on_primary" />
 
-        <TextView
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:fillViewport="true">
+
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Ficha de compañeros"
-            android:textColor="@color/primary"
-            android:textSize="24sp"
-            android:textStyle="bold"
-            android:layout_marginBottom="12dp" />
+            android:orientation="vertical"
+            android:padding="24dp">
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/foto_perfil"
-            android:textColor="@color/primary" />
+            <ImageView
+                android:id="@+id/ivFotoFicha"
+                android:layout_width="140dp"
+                android:layout_height="140dp"
+                android:layout_gravity="center_horizontal"
+                android:background="@drawable/bg_foto_perfil"
+                android:contentDescription="@string/foto_perfil"
+                android:scaleType="centerCrop"
+                android:src="@drawable/ic_persona" />
 
-        <ImageView
-            android:id="@+id/ivFotoFicha"
-            android:layout_width="160dp"
-            android:layout_height="160dp"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginTop="8dp"
-            android:background="@drawable/bg_foto_perfil"
-            android:contentDescription="@string/foto_perfil"
-            android:padding="32dp"
-            android:scaleType="centerInside"
-            android:src="@drawable/ic_persona" />
+            <TextView
+                android:id="@+id/tvNombreFicha"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:gravity="center"
+                android:textColor="@color/text_primary"
+                android:textSize="22sp"
+                android:textStyle="bold"
+                tools:text="Jose García" />
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/selecciona_companero" />
+            <TextView
+                android:id="@+id/tvInformacion"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:background="@color/surface"
+                android:lineSpacingExtra="3dp"
+                android:padding="16dp"
+                android:textColor="@color/text_primary"
+                android:textSize="15sp"
+                tools:text="Sexo: Hombre" />
 
-        <Spinner
-            android:id="@+id/spinnerCompaneros"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="16dp" />
+            <!-- Editar y Borrar solo se muestran en el perfil del propio usuario -->
+            <Button
+                android:id="@+id/btnEditarPerfil"
+                android:layout_width="match_parent"
+                android:layout_height="52dp"
+                android:layout_marginTop="20dp"
+                android:backgroundTint="@color/primary"
+                android:text="@string/editar_perfil"
+                android:textAllCaps="false"
+                android:textColor="@color/on_primary"
+                android:textStyle="bold" />
 
-        <Button
-            android:id="@+id/btnEditarPerfil"
-            android:layout_width="match_parent"
-            android:layout_height="48dp"
-            android:layout_marginBottom="8dp"
-            android:backgroundTint="@color/primary"
-            android:text="@string/editar_perfil"
-            android:textAllCaps="false"
-            android:textColor="@color/surface" />
+            <Button
+                android:id="@+id/btnCorreoCompanero"
+                android:layout_width="match_parent"
+                android:layout_height="52dp"
+                android:layout_marginTop="8dp"
+                android:backgroundTint="@color/secondary"
+                android:text="@string/enviar_correo"
+                android:textAllCaps="false"
+                android:textColor="@color/on_primary" />
 
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/btnBorrarCompanero"
-            style="@style/Widget.Material3.Button.TextButton"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Borrar compañero"
-            android:textColor="@color/error" />
+            <Button
+                android:id="@+id/btnBorrarCompanero"
+                android:layout_width="match_parent"
+                android:layout_height="52dp"
+                android:layout_marginTop="8dp"
+                android:backgroundTint="@color/error"
+                android:text="@string/borrar_companero"
+                android:textAllCaps="false"
+                android:textColor="@color/on_primary" />
 
-        <TextView
-            android:id="@+id/tvInformacion"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="12dp"
-            android:padding="16dp"
-            android:background="@color/surface"
-            android:textColor="@color/primary"
-            android:textSize="16sp"
-            android:text="Selecciona un compañero para ver su información."
-            android:textIsSelectable="true" />
-
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/btnVolverAlta"
-            style="@style/Widget.Material3.Button.TextButton"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:text="Volver al alta"
-            android:textColor="@color/secondary" />
-
-    </LinearLayout>
-
-</ScrollView>
+            <Button
+                android:id="@+id/btnVolverFicha"
+                android:layout_width="match_parent"
+                android:layout_height="52dp"
+                android:layout_marginTop="8dp"
+                android:backgroundTint="@color/secondary"
+                android:text="@string/volver"
+                android:textAllCaps="false"
+                android:textColor="@color/on_primary" />
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>

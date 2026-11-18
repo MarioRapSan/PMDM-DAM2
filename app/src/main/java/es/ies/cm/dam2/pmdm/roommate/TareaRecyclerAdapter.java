@@ -12,6 +12,14 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.List;
 
+/**
+ * Adaptador propio del RecyclerView de tareas. Cada elemento es una CardView
+ * (item_tarea_card) con el nombre, quien la anadio, la etiqueta "Compartida"
+ * y un CheckBox para marcarla como hecha.
+ *
+ * Avisa a la Activity mediante tres listeners: clic corto (abrir ficha),
+ * cambio del CheckBox (guardar estado) y clic largo (menu contextual).
+ */
 public class TareaRecyclerAdapter
         extends RecyclerView.Adapter<TareaRecyclerAdapter.TareaViewHolder> {
 
@@ -32,6 +40,7 @@ public class TareaRecyclerAdapter
     private final OnEstadoCambiadoListener estadoListener;
     private final OnTareaLongClickListener longClickListener;
 
+    /** Recibe la lista de tareas y los tres listeners de la Activity. */
     public TareaRecyclerAdapter(
             @NonNull List<Tarea> tareas,
             OnTareaClickListener clickListener,
@@ -44,6 +53,7 @@ public class TareaRecyclerAdapter
         this.longClickListener = longClickListener;
     }
 
+    /** Infla la tarjeta (CardView) de una tarea. */
     @NonNull
     @Override
     public TareaViewHolder onCreateViewHolder(
@@ -55,6 +65,7 @@ public class TareaRecyclerAdapter
         return new TareaViewHolder(view);
     }
 
+    /** Rellena la tarjeta con los datos de la tarea y le asigna los clics. */
     @Override
     public void onBindViewHolder(
             @NonNull TareaViewHolder holder,
@@ -69,12 +80,16 @@ public class TareaRecyclerAdapter
 
         holder.nombre.setText(tarea.getNombre());
 
+        android.content.Context contexto = holder.itemView.getContext();
         String companero = tarea.getCompanero();
         if (companero == null || companero.trim().isEmpty()) {
-            companero = "Sin asignar";
+            companero = contexto.getString(R.string.sin_asignar);
         }
-        holder.companero.setText("Añadida por: " + companero);
+        holder.companero.setText(contexto.getString(R.string.anadida_por, companero));
+        holder.compartida.setVisibility(tarea.isCompartida() ? View.VISIBLE : View.GONE);
 
+        // Se quita el listener antes de marcar el CheckBox para que el reciclado
+        // de vistas no dispare cambios falsos en otras tareas.
         holder.check.setOnCheckedChangeListener(null);
         holder.check.setChecked(tarea.isHecha());
         holder.check.setOnCheckedChangeListener((buttonView, isChecked) -> {
@@ -101,6 +116,7 @@ public class TareaRecyclerAdapter
         });
     }
 
+    /** Numero de tareas que se muestran. */
     @Override
     public int getItemCount() {
         return tareas.size();
@@ -111,6 +127,7 @@ public class TareaRecyclerAdapter
         ImageView foto;
         TextView nombre;
         TextView companero;
+        TextView compartida;
         CheckBox check;
 
         TareaViewHolder(@NonNull View itemView) {
@@ -118,6 +135,7 @@ public class TareaRecyclerAdapter
             foto = itemView.findViewById(R.id.ivFotoTarea);
             nombre = itemView.findViewById(R.id.tvNombreTarea);
             companero = itemView.findViewById(R.id.tvCompaneroTarea);
+            compartida = itemView.findViewById(R.id.tvCompartidaTarea);
             check = itemView.findViewById(R.id.cbHechaItem);
         }
     }

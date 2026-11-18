@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!-- Edicion del perfil de un companero: foto, telefono y correo. -->
 <ScrollView
     xmlns:android="http://schemas.android.com/apk/res/android"
+    android:fitsSystemWindows="true"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/background"
@@ -57,7 +59,7 @@
             android:backgroundTint="@color/secondary"
             android:text="@string/cambiar_foto"
             android:textAllCaps="false"
-            android:textColor="@color/surface" />
+            android:textColor="@color/on_primary" />
 
         <TextView
             android:layout_width="match_parent"
@@ -111,7 +113,7 @@
             android:backgroundTint="@color/primary"
             android:text="@string/guardar_cambios"
             android:textAllCaps="false"
-            android:textColor="@color/surface"
+            android:textColor="@color/on_primary"
             android:textStyle="bold" />
 
         <Button
@@ -123,7 +125,7 @@
             android:backgroundTint="@color/secondary"
             android:text="@string/cancelar"
             android:textAllCaps="false"
-            android:textColor="@color/surface" />
+            android:textColor="@color/on_primary" />
 
     </LinearLayout>
 

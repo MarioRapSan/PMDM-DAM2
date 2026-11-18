@@ -1,0 +1,190 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Registros de tareas (entidad relacionada 1-N de Tarea en Room).
+     Los dos Spinner de arriba dependen entre si: al elegir un companero,
+     el Spinner de tareas solo muestra las tareas de ese companero. -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/background"
+    android:fitsSystemWindows="true"
+    android:orientation="vertical"
+    android:padding="16dp"
+    tools:context=".RegistroTareaActivity">
+
+    <com.google.android.material.appbar.MaterialToolbar
+        android:id="@+id/toolbarRegistros"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="@color/primary"
+        app:navigationIconTint="@color/on_primary"
+        app:title="@string/registros_de_tareas"
+        app:titleTextColor="@color/on_primary" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="@string/companero"
+            android:textColor="@color/primary"
+            android:textStyle="bold" />
+
+        <Spinner
+            android:id="@+id/spinnerCompaneroFiltro"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:backgroundTint="@color/secondary" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/tarea"
+            android:textColor="@color/primary"
+            android:textStyle="bold" />
+
+        <Spinner
+            android:id="@+id/spinnerTareasRegistro"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:backgroundTint="@color/secondary" />
+
+        <TextView
+            android:id="@+id/tvTotalRegistros"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:text="@string/total_registros_cero"
+            android:textColor="@color/secondary"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/tvTotalGeneral"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/total_general_cero"
+            android:textColor="@color/secondary" />
+
+        <TextView
+            android:id="@+id/tvSinRegistros"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="@string/sin_registros"
+            android:textColor="@color/text_secondary" />
+
+        <ListView
+            android:id="@+id/lvRegistros"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_marginTop="4dp"
+            android:layout_weight="1"
+            android:divider="@color/border"
+            android:dividerHeight="1dp" />
+    </LinearLayout>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp">
+
+        <com.google.android.material.card.MaterialCardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:cardBackgroundColor="@color/surface"
+            app:cardCornerRadius="16dp"
+            app:cardElevation="1dp"
+            app:strokeColor="@color/border"
+            app:strokeWidth="1dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="12dp">
+
+                <TextView
+                    android:id="@+id/tvTituloFormRegistro"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/nuevo_registro"
+                    android:textColor="@color/primary"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
+
+                <EditText
+                    android:id="@+id/etFechaRegistro"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:backgroundTint="@color/secondary"
+                    android:cursorVisible="false"
+                    android:focusable="false"
+                    android:hint="@string/fecha"
+                    android:importantForAutofill="no"
+                    android:inputType="none"
+                    android:textColor="@color/primary"
+                    android:textColorHint="@color/secondary" />
+
+                <EditText
+                    android:id="@+id/etPuntuacionRegistro"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:backgroundTint="@color/secondary"
+                    android:hint="@string/puntuacion"
+                    android:importantForAutofill="no"
+                    android:inputType="number"
+                    android:textColor="@color/primary"
+                    android:textColorHint="@color/secondary" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:text="@string/ganador"
+                    android:textColor="@color/primary" />
+
+                <Spinner
+                    android:id="@+id/spinnerGanador"
+                    android:layout_width="match_parent"
+                    android:layout_height="48dp"
+                    android:backgroundTint="@color/secondary" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <Button
+                        android:id="@+id/btnCancelarEdicionRegistro"
+                        android:layout_width="0dp"
+                        android:layout_height="52dp"
+                        android:layout_marginEnd="8dp"
+                        android:layout_weight="1"
+                        android:backgroundTint="@color/secondary"
+                        android:text="@string/cancelar"
+                        android:textAllCaps="false"
+                        android:textColor="@color/on_primary"
+                        android:visibility="gone" />
+
+                    <Button
+                        android:id="@+id/btnGuardarRegistro"
+                        android:layout_width="0dp"
+                        android:layout_height="52dp"
+                        android:layout_weight="1"
+                        android:backgroundTint="@color/primary"
+                        android:text="@string/guardar_registro"
+                        android:textAllCaps="false"
+                        android:textColor="@color/on_primary"
+                        android:textStyle="bold" />
+                </LinearLayout>
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
+    </ScrollView>
+</LinearLayout>

@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!-- Ajustes de la cuenta: cambiar clave, cerrar sesion y darse de baja. -->
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -15,31 +16,123 @@
         android:layout_height="?attr/actionBarSize"
         android:background="@color/primary"
         app:title="@string/ajustes"
-        app:titleTextColor="@color/surface" />
+        app:titleTextColor="@color/on_primary" />
 
-    <LinearLayout
+    <ScrollView
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
-        android:gravity="center"
-        android:orientation="vertical"
-        android:padding="24dp">
+        android:fillViewport="true">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/en_desarrollo"
-            android:textColor="@color/primary"
-            android:textSize="26sp"
-            android:textStyle="bold" />
-
-        <TextView
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="12dp"
-            android:gravity="center"
-            android:text="@string/ajustes_en_desarrollo"
-            android:textColor="@color/text_secondary"
-            android:textSize="16sp" />
-    </LinearLayout>
+            android:orientation="vertical"
+            android:padding="24dp">
+
+            <TextView
+                android:id="@+id/tvUsuarioAjustes"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@color/primary"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                tools:text="Sesión iniciada como admin" />
+
+            <TextView
+                android:id="@+id/tvResumenAjustes"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:textColor="@color/text_secondary"
+                tools:text="Artículos en tu lista de la compra: 2" />
+
+            <!-- Apariencia: cambio entre tema claro y oscuro -->
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                android:text="@string/apariencia"
+                android:textColor="@color/text_primary"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+
+            <Switch
+                android:id="@+id/swModoOscuro"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:minHeight="48dp"
+                android:text="@string/modo_oscuro"
+                android:textColor="@color/text_primary"
+                android:thumbTint="@color/primary"
+                tools:ignore="UseSwitchCompatOrMaterialXml" />
+
+            <!-- Cambio de clave (UPDATE en la tabla usuarios) -->
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                android:text="@string/cambiar_clave"
+                android:textColor="@color/text_primary"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+
+            <EditText
+                android:id="@+id/etClaveActual"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:backgroundTint="@color/secondary"
+                android:hint="@string/clave_actual"
+                android:importantForAutofill="no"
+                android:inputType="textPassword"
+                android:maxLines="1"
+                android:textColor="@color/primary"
+                android:textColorHint="@color/secondary" />
+
+            <EditText
+                android:id="@+id/etClaveNueva"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:backgroundTint="@color/secondary"
+                android:hint="@string/clave_nueva"
+                android:importantForAutofill="no"
+                android:inputType="textPassword"
+                android:maxLines="1"
+                android:textColor="@color/primary"
+                android:textColorHint="@color/secondary" />
+
+            <Button
+                android:id="@+id/btnCambiarClave"
+                android:layout_width="match_parent"
+                android:layout_height="52dp"
+                android:layout_marginTop="8dp"
+                android:backgroundTint="@color/primary"
+                android:text="@string/cambiar_clave"
+                android:textAllCaps="false"
+                android:textColor="@color/on_primary" />
+
+            <!-- Sesion y baja -->
+            <Button
+                android:id="@+id/btnCerrarSesion"
+                android:layout_width="match_parent"
+                android:layout_height="52dp"
+                android:layout_marginTop="32dp"
+                android:backgroundTint="@color/secondary"
+                android:text="@string/cerrar_sesion"
+                android:textAllCaps="false"
+                android:textColor="@color/on_primary" />
+
+            <Button
+                android:id="@+id/btnDarseDeBaja"
+                android:layout_width="match_parent"
+                android:layout_height="52dp"
+                android:layout_marginTop="8dp"
+                android:backgroundTint="@color/error"
+                android:text="@string/darse_de_baja"
+                android:textAllCaps="false"
+                android:textColor="@color/on_primary" />
+        </LinearLayout>
+    </ScrollView>
 </LinearLayout>

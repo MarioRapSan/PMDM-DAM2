@@ -85,6 +85,17 @@
                 android:text="@string/tarea_hecha"
                 android:textColor="@color/primary" />
 
+            <!-- Switch: tarea compartida por todo el piso o personal -->
+            <Switch
+                android:id="@+id/swCompartida"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text="@string/tarea_compartida"
+                android:textColor="@color/primary"
+                android:thumbTint="@color/primary"
+                tools:ignore="UseSwitchCompatOrMaterialXml" />
+
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -210,7 +221,7 @@
             android:backgroundTint="@color/secondary"
             android:text="@string/cancelar"
             android:textAllCaps="false"
-            android:textColor="@color/surface"
+            android:textColor="@color/on_primary"
             android:textStyle="bold" />
 
         <Button
@@ -222,7 +233,7 @@
             android:backgroundTint="@color/primary"
             android:text="@string/aceptar"
             android:textAllCaps="false"
-            android:textColor="@color/surface"
+            android:textColor="@color/on_primary"
             android:textStyle="bold" />
 
     </LinearLayout>

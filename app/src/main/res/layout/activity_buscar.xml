@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!-- Busqueda de tareas: texto, modo (empieza por / contiene), prioridad y lista de resultados. -->
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main"
@@ -70,7 +71,7 @@
         android:backgroundTint="@color/primary"
         android:text="@string/buscar"
         android:textAllCaps="false"
-        android:textColor="@color/surface"
+        android:textColor="@color/on_primary"
         android:textStyle="bold" />
 
     <FrameLayout
@@ -106,6 +107,6 @@
         android:backgroundTint="@color/secondary"
         android:text="@string/volver"
         android:textAllCaps="false"
-        android:textColor="@color/surface"
+        android:textColor="@color/on_primary"
         android:textStyle="bold" />
 </LinearLayout>

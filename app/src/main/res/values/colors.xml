@@ -1,4 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!-- Paleta clara (tema por defecto). La paleta oscura esta en values-night/colors.xml
+     con los mismos nombres: Android elige una u otra segun el tema activo. -->
 <resources>
 
     <color name="primary">#D97757</color>
@@ -10,12 +12,18 @@
     <color name="background">#FFF9F4</color>
     <color name="surface">#FFFFFF</color>
 
+    <!-- Texto e iconos encima de primary/secondary (botones y barras). -->
+    <color name="on_primary">#FFFFFF</color>
+
     <color name="text_primary">#2F3437</color>
     <color name="text_secondary">#70777B</color>
 
     <color name="disabled">#D6D0CB</color>
 
     <color name="border">#E4DCD6</color>
+
+    <color name="foto_fondo">#FFE0B2</color>
+    <color name="foto_borde">#F2B27A</color>
 
     <color name="success">#6FA47A</color>
     <color name="warning">#E7B65A</color>

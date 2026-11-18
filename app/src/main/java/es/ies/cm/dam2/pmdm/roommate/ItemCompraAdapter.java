@@ -19,12 +19,17 @@ public class ItemCompraAdapter extends ArrayAdapter<ItemCompra> {
     private final Context context;
     private final List<ItemCompra> items;
 
+    /** Recibe la lista de productos que se va a mostrar. */
     public ItemCompraAdapter(Context context, List<ItemCompra> items) {
         super(context, R.layout.item_lista_compra, items);
         this.context = context;
         this.items = items;
     }
 
+    /**
+     * Rellena cada fila con el nombre y la categoria del producto (reutiliza la vista si
+     * puede).
+     */
     @NonNull
     @Override
     public View getView(int position, View convertView, @NonNull ViewGroup parent) {

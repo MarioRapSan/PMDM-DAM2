@@ -34,6 +34,7 @@ public class EditarCompaneroActivity extends AppCompatActivity {
 
     private ActivityResultLauncher<String> selectorFoto;
 
+    /** Recoge el id del companero, prepara el selector de foto y carga sus datos. */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -42,6 +43,7 @@ public class EditarCompaneroActivity extends AppCompatActivity {
         db = new RoomMateDB(this);
 
         companeroId = getIntent().getIntExtra(EXTRA_COMPANERO_ID, -1);
+        int usuarioId = getIntent().getIntExtra(ColeccionTareasActivity.EXTRA_USUARIO_ID, -1);
         if (companeroId == -1) {
             Toast.makeText(
                     this,
@@ -72,20 +74,53 @@ public class EditarCompaneroActivity extends AppCompatActivity {
         btnGuardar.setOnClickListener(v -> guardarCambios());
         btnCancelar.setOnClickListener(v -> finish());
 
-        companero = db.obtenerCompanero(companeroId);
-        if (companero == null) {
-            Toast.makeText(
-                    this,
-                    R.string.error_companero_no_encontrado,
-                    Toast.LENGTH_SHORT
-            ).show();
-            finish();
-            return;
-        }
-
-        cargarDatos();
+        // Lectura del companero fuera del hilo principal. Si la pantalla se ha
+        // girado, no se sobrescriben los campos que el usuario ya habia cambiado.
+        boolean primeraVez = savedInstanceState == null;
+        AppDatabase.ejecutar(() -> {
+            Companero leido = db.obtenerCompanero(companeroId);
+            runOnUiThread(() -> {
+                // Solo el dueno del perfil puede editarlo.
+                if (leido != null && !leido.esDe(usuarioId)) {
+                    Toast.makeText(this, R.string.solo_tu_perfil, Toast.LENGTH_SHORT).show();
+                    finish();
+                    return;
+                }
+                if (leido == null) {
+                    Toast.makeText(this, R.string.error_companero_no_encontrado,
+                            Toast.LENGTH_SHORT).show();
+                    finish();
+                    return;
+                }
+                companero = leido;
+                if (primeraVez) {
+                    cargarDatos();
+                } else {
+                    String original = companero.getFotoPerfil();
+                    fotoPerfilOriginal = (original == null || original.trim().isEmpty())
+                            ? "ic_persona" : original;
+                    tvNombreCompaneroEditar.setText(companero.getNombreCompleto());
+                    FotoPerfilUtils.mostrarFotoPerfil(ivFotoEditar, fotoPerfilActual);
+                }
+            });
+        });
     }
 
+    /** Guarda la foto elegida para no perderla al girar la pantalla. */
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putString("foto_actual", fotoPerfilActual);
+    }
+
+    /** Recupera la foto elegida despues de girar la pantalla. */
+    @Override
+    protected void onRestoreInstanceState(Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
+        fotoPerfilActual = savedInstanceState.getString("foto_actual", fotoPerfilActual);
+    }
+
+    /** Cierra la conexion con la base de datos al salir de la pantalla. */
     @Override
     protected void onDestroy() {
         super.onDestroy();
@@ -94,6 +129,7 @@ public class EditarCompaneroActivity extends AppCompatActivity {
         }
     }
 
+    /** Rellena la pantalla con el nombre, el telefono, el correo y la foto del companero. */
     private void cargarDatos() {
         tvNombreCompaneroEditar.setText(companero.getNombreCompleto());
         etTelefonoEditar.setText(companero.getTelefono());
@@ -109,6 +145,7 @@ public class EditarCompaneroActivity extends AppCompatActivity {
         FotoPerfilUtils.mostrarFotoPerfil(ivFotoEditar, fotoPerfilActual);
     }
 
+    /** Copia la imagen elegida en la galeria a la carpeta de la app y la muestra. */
     private void seleccionarFoto(Uri uri) {
         if (uri == null) {
             return;
@@ -134,6 +171,7 @@ public class EditarCompaneroActivity extends AppCompatActivity {
         FotoPerfilUtils.mostrarFotoPerfil(ivFotoEditar, fotoPerfilActual);
     }
 
+    /** Valida el correo y guarda la foto y los datos de contacto (UPDATE en SQLite). */
     private void guardarCambios() {
         String telefono = etTelefonoEditar.getText().toString().trim();
         String correo = etCorreoEditar.getText().toString().trim();
@@ -162,7 +200,14 @@ public class EditarCompaneroActivity extends AppCompatActivity {
                 correo
         );
 
-        int filas = db.actualizarCompanero(actualizado);
+        AppDatabase.ejecutar(() -> {
+            int filas = db.actualizarCompanero(actualizado);
+            runOnUiThread(() -> mostrarResultadoGuardado(filas));
+        });
+    }
+
+    /** Muestra el resultado del UPDATE y vuelve a la ficha si ha ido bien. */
+    private void mostrarResultadoGuardado(int filas) {
         if (filas > 0) {
             if (fotoPerfilOriginal != null
                     && !fotoPerfilOriginal.equals(fotoPerfilActual)) {

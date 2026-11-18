@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Idiomas disponibles en la app. Con esto Android 13+ permite elegir
+     el idioma solo para RoomMate (Ajustes > Apps > RoomMate > Idioma). -->
+<locale-config xmlns:android="http://schemas.android.com/apk/res/android">
+    <locale android:name="es" />
+    <locale android:name="en" />
+    <locale android:name="ja" />
+</locale-config>

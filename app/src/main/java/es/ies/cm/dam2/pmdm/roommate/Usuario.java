@@ -9,12 +9,14 @@ public class Usuario {
     private final String nombre;
     private final String clave;
 
+    /** Usuario leido de la tabla usuarios. */
     public Usuario(int id, String nombre, String clave) {
         this.id = id;
         this.nombre = nombre;
         this.clave = clave;
     }
 
+    // Getters y setters: acceso a los atributos privados.
     public int getId() {
         return id;
     }
@@ -27,6 +29,7 @@ public class Usuario {
         return clave;
     }
 
+    /** Muestra el nombre del usuario. */
     @Override
     public String toString() {
         return nombre;

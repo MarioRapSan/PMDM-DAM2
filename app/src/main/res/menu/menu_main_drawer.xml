@@ -1,31 +1,45 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!-- Entradas del menu lateral (Navigation Drawer) de la pantalla principal. -->
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <item
-        android:id="@+id/nav_inicio"
-        android:title="@string/inicio" />
+    <group
+        android:id="@+id/grupo_secciones"
+        android:checkableBehavior="single">
 
-    <item
-        android:id="@+id/nav_tareas"
-        android:title="@string/tareas" />
+        <item
+            android:id="@+id/nav_tareas"
+            android:checked="true"
+            android:title="@string/tareas" />
 
-    <item
-        android:id="@+id/nav_buscar"
-        android:title="@string/buscar" />
+        <item
+            android:id="@+id/nav_lista_compra"
+            android:title="@string/lista_de_la_compra" />
 
-    <item
-        android:id="@+id/nav_anadir_tarea"
-        android:title="@string/anadir_tarea_titulo" />
+        <item
+            android:id="@+id/nav_gastos_compartidos"
+            android:title="@string/gastos_compartidos_menu" />
 
-    <item
-        android:id="@+id/nav_editar_perfil"
-        android:title="@string/editar_perfil" />
+        <item
+            android:id="@+id/nav_companeros"
+            android:title="@string/companeros" />
+    </group>
 
-    <item
-        android:id="@+id/nav_ajustes"
-        android:title="@string/ajustes" />
+    <group android:id="@+id/grupo_app">
 
-    <item
-        android:id="@+id/nav_acerca_de"
-        android:title="@string/acerca_de" />
+        <item
+            android:id="@+id/nav_ajustes"
+            android:title="@string/ajustes" />
+
+        <item
+            android:id="@+id/nav_cambiar_tema"
+            android:title="@string/cambiar_tema" />
+
+        <item
+            android:id="@+id/nav_acerca_de"
+            android:title="@string/acerca_de" />
+
+        <item
+            android:id="@+id/nav_cerrar_sesion"
+            android:title="@string/cerrar_sesion" />
+    </group>
 </menu>

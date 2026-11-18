@@ -1,7 +1,5 @@
 package es.ies.cm.dam2.pmdm.roommate;
 
-import android.app.DatePickerDialog;
-import android.app.TimePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -11,6 +9,7 @@ import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.RatingBar;
 import android.widget.Spinner;
+import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -20,16 +19,16 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
-import java.util.Locale;
 
 /**
- * Formulario para crear una tarea nueva o editar una existente.
+ * Formulario para crear una tarea nueva o editar una existente (alta / edicion).
+ *
+ * Usa componentes basicos (EditText, CheckBox) y avanzados (Spinner, Switch, RatingBar).
+ * La fecha y la hora se eligen con DialogFragment propios (SelectorFechaDialogFragment
+ * y SelectorHoraDialogFragment) y se guardan en la tarea. El guardado en Room se hace
+ * en un hilo secundario y, al terminar, se devuelve la tarea a la pantalla anterior.
  */
 public class AnadirTareasActivity extends AppCompatActivity {
 
@@ -39,11 +38,20 @@ public class AnadirTareasActivity extends AppCompatActivity {
     private EditText etNombre, etDia, etDinero, etHora, etDescripcion;
     private Spinner spinnerPrioridad, spinnerCompanero;
     private CheckBox cbHecha;
+    private Switch swCompartida;
     private RatingBar rbDificultad;
     private TextView tvTitulo;
 
     private int tareaId = 0;
 
+    /** Companero que hay que seleccionar cuando se cargue el Spinner. */
+    private String companeroPendiente;
+    private static final String ESTADO_COMPANERO = "companero";
+
+    /**
+     * Configura los Spinner y los selectores de fecha y hora. Si llega una tarea, pasa a modo
+     * edicion.
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -59,6 +67,7 @@ public class AnadirTareasActivity extends AppCompatActivity {
         etHora = findViewById(R.id.etHoraTarea);
         etDescripcion = findViewById(R.id.etDescripcionTarea);
         cbHecha = findViewById(R.id.cbHecha);
+        swCompartida = findViewById(R.id.swCompartida);
         rbDificultad = findViewById(R.id.rbDificultadTarea);
         tvTitulo = findViewById(R.id.tvTituloFormulario);
         Button btnAceptar = findViewById(R.id.btnAceptarTarea);
@@ -77,10 +86,30 @@ public class AnadirTareasActivity extends AppCompatActivity {
 
         configurarSpinnerCompanero();
 
-        rbDificultad.setRating(3);
+        // Valor por defecto solo al crear la pantalla (no al girar).
+        if (savedInstanceState == null) {
+            rbDificultad.setRating(3);
+        }
 
-        etDia.setOnClickListener(v -> mostrarSelectorFecha());
-        etHora.setOnClickListener(v -> mostrarSelectorHora());
+        // Fecha y hora con DialogFragment propios. El resultado llega por la
+        // Fragment Result API, que sigue funcionando aunque se gire la pantalla.
+        etDia.setOnClickListener(v ->
+                SelectorFechaDialogFragment.nuevo(etDia.getText().toString().trim())
+                        .show(getSupportFragmentManager(), "selector_fecha"));
+        etHora.setOnClickListener(v ->
+                SelectorHoraDialogFragment.nuevo(etHora.getText().toString().trim())
+                        .show(getSupportFragmentManager(), "selector_hora"));
+
+        getSupportFragmentManager().setFragmentResultListener(
+                SelectorFechaDialogFragment.REQUEST_KEY, this, (clave, resultado) -> {
+                    etDia.setText(resultado.getString(SelectorFechaDialogFragment.RESULTADO_FECHA));
+                    etDia.setError(null);
+                });
+        getSupportFragmentManager().setFragmentResultListener(
+                SelectorHoraDialogFragment.REQUEST_KEY, this, (clave, resultado) -> {
+                    etHora.setText(resultado.getString(SelectorHoraDialogFragment.RESULTADO_HORA));
+                    etHora.setError(null);
+                });
 
         btnAceptar.setOnClickListener(v -> aceptar());
         btnCancelar.setOnClickListener(v -> finish());
@@ -89,58 +118,84 @@ public class AnadirTareasActivity extends AppCompatActivity {
         Tarea tareaEditar = (Tarea) getIntent()
                 .getSerializableExtra(EXTRA_TAREA_EDITAR);
 
+        if (savedInstanceState != null) {
+            companeroPendiente = savedInstanceState.getString(ESTADO_COMPANERO);
+        } else if (tareaEditar != null) {
+            companeroPendiente = tareaEditar.getCompanero();
+        }
+
         if (tareaEditar != null) {
             tareaId = tareaEditar.getId();
             tvTitulo.setText(R.string.editar_tarea_titulo);
             btnAceptar.setText(R.string.guardar);
-            cargarTareaEnFormulario(tareaEditar);
-        }
-    }
-
-    private void configurarSpinnerCompanero() {
-        List<String> opciones = new ArrayList<>();
-        opciones.add(getString(R.string.selecciona_companero));
-
-        RoomMateDB db = new RoomMateDB(this);
-        List<String> nombres = db.obtenerNombresCompaneros();
-        db.close();
-
-        if (nombres.isEmpty()) {
-            // Si todavia no hay companeros guardados, se usan los de ejemplo.
-            String[] ejemplos = getResources()
-                    .getStringArray(R.array.companeros_tarea);
-            for (int i = 1; i < ejemplos.length; i++) {
-                opciones.add(ejemplos[i]);
+            // Solo se rellena la primera vez: si se gira la pantalla, Android
+            // restaura lo que el usuario ya habia cambiado.
+            if (savedInstanceState == null) {
+                cargarTareaEnFormulario(tareaEditar);
             }
-        } else {
-            opciones.addAll(nombres);
         }
-
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(
-                this,
-                R.layout.item_spinner_texto,
-                opciones
-        );
-        adapter.setDropDownViewResource(R.layout.item_spinner_texto);
-        spinnerCompanero.setAdapter(adapter);
     }
 
+    /**
+     * Carga los companeros de SQLite en un hilo secundario y rellena el Spinner.
+     * Cuando termina, selecciona el companero pendiente (al editar o al girar).
+     */
+    private void configurarSpinnerCompanero() {
+        AppDatabase.ejecutar(() -> {
+            RoomMateDB db = new RoomMateDB(this);
+            List<String> nombres = db.obtenerNombresCompaneros();
+            db.close();
+
+            runOnUiThread(() -> {
+                List<String> opciones = new ArrayList<>();
+                opciones.add(getString(R.string.selecciona_companero));
+                opciones.addAll(nombres);
+
+                ArrayAdapter<String> adapter = new ArrayAdapter<>(
+                        this, R.layout.item_spinner_texto, opciones);
+                adapter.setDropDownViewResource(R.layout.item_spinner_texto);
+                spinnerCompanero.setAdapter(adapter);
+
+                if (companeroPendiente != null) {
+                    seleccionarEnSpinner(spinnerCompanero, companeroPendiente);
+                }
+            });
+        });
+    }
+
+    /** Guarda el companero elegido para recuperarlo al girar la pantalla. */
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        // El Spinner de companeros se rellena despues de girar, asi que se
+        // guarda a mano el companero elegido para volver a seleccionarlo.
+        if (spinnerCompanero.getSelectedItemPosition() > 0) {
+            outState.putString(ESTADO_COMPANERO,
+                    spinnerCompanero.getSelectedItem().toString());
+        }
+    }
+
+    /** Rellena el formulario con los datos de la tarea que se va a editar. */
     private void cargarTareaEnFormulario(Tarea tarea) {
         etNombre.setText(tarea.getNombre());
         etDia.setText(tarea.getDia());
         etHora.setText(tarea.getHora());
         etDescripcion.setText(tarea.getDescripcion());
         cbHecha.setChecked(tarea.isHecha());
+        swCompartida.setChecked(tarea.isCompartida());
         rbDificultad.setRating(tarea.getDificultad());
 
         if (tarea.getDinero() > 0) {
             etDinero.setText(String.valueOf(tarea.getDinero()));
         }
 
-        seleccionarEnSpinner(spinnerPrioridad, tarea.getPrioridad());
-        seleccionarEnSpinner(spinnerCompanero, tarea.getCompanero());
+        spinnerPrioridad.setSelection(Prioridades.posicionDeValor(this, tarea.getPrioridad()));
     }
 
+    /**
+     * Selecciona en el Spinner el elemento con ese texto. Si es un companero que ya no existe,
+     * lo anade.
+     */
     @SuppressWarnings("unchecked")
     private void seleccionarEnSpinner(Spinner spinner, String valor) {
         if (valor == null) {
@@ -164,75 +219,10 @@ public class AnadirTareasActivity extends AppCompatActivity {
         }
     }
 
-    private void mostrarSelectorHora() {
-        int hora = 18;
-        int minuto = 30;
-
-        String horaActual = etHora.getText().toString().trim();
-        if (horaActual.matches("^([01]?\\d|2[0-3]):[0-5]\\d$")) {
-            String[] partes = horaActual.split(":");
-            hora = Integer.parseInt(partes[0]);
-            minuto = Integer.parseInt(partes[1]);
-        }
-
-        TimePickerDialog dialogo = new TimePickerDialog(
-                this,
-                (view, horaElegida, minutoElegido) ->
-                        etHora.setText(
-                                String.format(
-                                        Locale.getDefault(),
-                                        "%02d:%02d",
-                                        horaElegida,
-                                        minutoElegido
-                                )
-                        ),
-                hora,
-                minuto,
-                true
-        );
-
-        dialogo.show();
-    }
-
-    private void mostrarSelectorFecha() {
-        Calendar calendario = Calendar.getInstance();
-        String fechaActual = etDia.getText().toString().trim();
-        SimpleDateFormat formato = new SimpleDateFormat(
-                "dd/MM/yyyy",
-                Locale.getDefault()
-        );
-        formato.setLenient(false);
-
-        if (!fechaActual.isEmpty()) {
-            try {
-                Date fecha = formato.parse(fechaActual);
-                if (fecha != null) {
-                    calendario.setTime(fecha);
-                }
-            } catch (ParseException ignored) {
-                // Si la fecha no tiene el formato esperado, se usa la de hoy.
-            }
-        }
-
-        DatePickerDialog dialogo = new DatePickerDialog(
-                this,
-                (view, anio, mes, dia) -> etDia.setText(
-                        String.format(
-                                Locale.getDefault(),
-                                "%02d/%02d/%04d",
-                                dia,
-                                mes + 1,
-                                anio
-                        )
-                ),
-                calendario.get(Calendar.YEAR),
-                calendario.get(Calendar.MONTH),
-                calendario.get(Calendar.DAY_OF_MONTH)
-        );
-
-        dialogo.show();
-    }
-
+    /**
+     * Valida el formulario y guarda la tarea en Room: insert si es nueva, update si se esta
+     * editando.
+     */
     private void aceptar() {
         etNombre.setError(null);
         etDia.setError(null);
@@ -255,9 +245,8 @@ public class AnadirTareasActivity extends AppCompatActivity {
             ).show();
             return;
         }
-        String prioridad = spinnerPrioridad
-                .getItemAtPosition(posPrioridad)
-                .toString();
+        // Se guarda el valor fijo, no el texto traducido del Spinner.
+        String prioridad = Prioridades.valorDePosicion(this, posPrioridad);
 
         int posCompanero = spinnerCompanero.getSelectedItemPosition();
         if (posCompanero <= 0) {
@@ -318,7 +307,7 @@ public class AnadirTareasActivity extends AppCompatActivity {
             return;
         }
 
-        if (hayHora && !hora.matches("^([01]?\\d|2[0-3]):[0-5]\\d$")) {
+        if (hayHora && !hora.matches(SelectorHoraDialogFragment.PATRON_HORA)) {
             etHora.setError(getString(R.string.error_hora));
             Toast.makeText(
                     this,
@@ -371,6 +360,7 @@ public class AnadirTareasActivity extends AppCompatActivity {
                 dificultad,
                 descripcion
         );
+        tarea.setCompartida(swCompartida.isChecked());
 
         AppDatabase.ejecutar(() -> {
             TareaDao dao = AppDatabase.getInstance(this).tareaDao();
@@ -394,6 +384,7 @@ public class AnadirTareasActivity extends AppCompatActivity {
         });
     }
 
+    /** Anade al padding el espacio de las barras del sistema (modo edge-to-edge). */
     private void aplicarInsets() {
         View root = findViewById(R.id.main);
         int base = (int) (24 * getResources()

@@ -1,0 +1,277 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Creacion del perfil de companero del usuario (INSERT en SQLite). Se abre desde el listado. -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/background"
+    android:fitsSystemWindows="true"
+    android:orientation="vertical"
+    tools:context=".AltaCompaneroActivity">
+
+    <com.google.android.material.appbar.MaterialToolbar
+        android:id="@+id/toolbarAlta"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="@color/primary"
+        app:navigationIconTint="@color/on_primary"
+        app:title="@string/crear_mi_perfil"
+        app:titleTextColor="@color/on_primary" />
+
+    <ScrollView
+        android:id="@+id/scrollAlta"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:fillViewport="true"
+        android:padding="20dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/foto_perfil"
+                android:textColor="@color/primary" />
+
+            <ImageView
+                android:id="@+id/ivFotoCompanero"
+                android:layout_width="140dp"
+                android:layout_height="140dp"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="8dp"
+                android:background="@drawable/bg_foto_perfil"
+                android:contentDescription="@string/foto_perfil"
+                android:padding="28dp"
+                android:scaleType="centerInside"
+                android:src="@drawable/ic_persona" />
+
+            <Button
+                android:id="@+id/btnSeleccionarFoto"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="16dp"
+                android:backgroundTint="@color/secondary"
+                android:text="@string/seleccionar_foto"
+                android:textAllCaps="false"
+                android:textColor="@color/on_primary" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:text="@string/datos_personales"
+                android:textColor="@color/primary"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/nombre"
+                android:textColor="@color/primary" />
+
+            <EditText
+                android:id="@+id/etNombre"
+                android:layout_width="match_parent"
+                android:layout_height="49dp"
+                android:autofillHints="name"
+                android:backgroundTint="@color/secondary"
+                android:hint="@string/nombre_hint"
+                android:inputType="textPersonName"
+                android:textColor="@color/primary"
+                android:textColorHint="@color/secondary" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:text="@string/apellidos"
+                android:textColor="@color/primary" />
+
+            <EditText
+                android:id="@+id/etApellidos"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:autofillHints="name"
+                android:backgroundTint="@color/secondary"
+                android:hint="@string/apellidos_hint"
+                android:inputType="textPersonName"
+                android:textColor="@color/primary"
+                android:textColorHint="@color/secondary" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:text="@string/sexo"
+                android:textColor="@color/primary" />
+
+            <RadioGroup
+                android:id="@+id/rgSexo"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <RadioButton
+                    android:id="@+id/rbHombre"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:buttonTint="@color/primary"
+                    android:text="@string/hombre"
+                    android:textColor="@color/primary" />
+
+                <RadioButton
+                    android:id="@+id/rbMujer"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:buttonTint="@color/primary"
+                    android:text="@string/mujer"
+                    android:textColor="@color/primary" />
+            </RadioGroup>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:text="@string/edad"
+                android:textColor="@color/primary" />
+
+            <EditText
+                android:id="@+id/etEdad"
+                android:layout_width="match_parent"
+                android:layout_height="51dp"
+                android:backgroundTint="@color/secondary"
+                android:hint="@string/edad_hint"
+                android:inputType="number"
+                android:maxLength="3"
+                android:textColor="@color/primary"
+                android:textColorHint="@color/secondary" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:text="@string/fecha_entrada"
+                android:textColor="@color/primary" />
+
+            <EditText
+                android:id="@+id/etFechaEntrada"
+                android:layout_width="match_parent"
+                android:layout_height="59dp"
+                android:backgroundTint="@color/secondary"
+                android:cursorVisible="false"
+                android:focusable="false"
+                android:hint="@string/fecha_entrada_hint"
+                android:importantForAutofill="no"
+                android:inputType="none"
+                android:maxLines="1"
+                android:textColor="@color/primary"
+                android:textColorHint="@color/secondary" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:layout_marginBottom="8dp"
+                android:text="@string/datos_contacto"
+                android:textColor="@color/primary"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/telefono"
+                android:textColor="@color/primary" />
+
+            <EditText
+                android:id="@+id/etTelefono"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:autofillHints="phone"
+                android:backgroundTint="@color/secondary"
+                android:hint="@string/telefono_hint"
+                android:inputType="phone"
+                android:textColor="@color/primary"
+                android:textColorHint="@color/secondary" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:text="@string/correo_electronico"
+                android:textColor="@color/primary" />
+
+            <EditText
+                android:id="@+id/etCorreo"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:autofillHints="emailAddress"
+                android:backgroundTint="@color/secondary"
+                android:hint="@string/correo_hint"
+                android:inputType="textEmailAddress"
+                android:textColor="@color/primary"
+                android:textColorHint="@color/secondary" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:layout_marginBottom="8dp"
+                android:text="@string/presentacion"
+                android:textColor="@color/primary"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/introduccion_opcional"
+                android:textColor="@color/primary" />
+
+            <EditText
+                android:id="@+id/etIntroduccion"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:backgroundTint="@color/secondary"
+                android:gravity="top|start"
+                android:hint="@string/introduccion_hint"
+                android:inputType="textCapSentences|textMultiLine"
+                android:maxLines="5"
+                android:minLines="3"
+                android:padding="12dp"
+                android:textColor="@color/primary"
+                android:textColorHint="@color/secondary" />
+
+            <Button
+                android:id="@+id/btnCheck"
+                android:layout_width="match_parent"
+                android:layout_height="52dp"
+                android:layout_marginTop="20dp"
+                android:backgroundTint="@color/primary"
+                android:text="@string/guardar_companero"
+                android:textAllCaps="false"
+                android:textColor="@color/on_primary"
+                android:textStyle="bold" />
+
+            <Button
+                android:id="@+id/btnCancelarAlta"
+                android:layout_width="match_parent"
+                android:layout_height="52dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="16dp"
+                android:backgroundTint="@color/secondary"
+                android:text="@string/cancelar"
+                android:textAllCaps="false"
+                android:textColor="@color/on_primary" />
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>

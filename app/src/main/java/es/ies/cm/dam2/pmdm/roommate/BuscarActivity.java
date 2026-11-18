@@ -20,7 +20,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Busca tareas por nombre y prioridad.
+ * Busqueda de tareas por nombre ("empieza por" o "contiene") y por prioridad.
+ * Lee las tareas de Room en un hilo secundario, las filtra y muestra el
+ * resultado en un ListView. Al pulsar un resultado se abre su ficha.
  */
 public class BuscarActivity extends AppCompatActivity {
 
@@ -34,6 +36,7 @@ public class BuscarActivity extends AppCompatActivity {
     private TareaBusquedaAdapter adapter;
     private TareaDao tareaDao;
 
+    /** Prepara los Spinner de modo y prioridad, la lista de resultados y los botones. */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -80,15 +83,19 @@ public class BuscarActivity extends AppCompatActivity {
         lista.setOnItemClickListener((parent, view, position, id) -> {
             Tarea tarea = resultados.get(position);
             Intent intent = new Intent(this, DetalleTareaActivity.class);
-            intent.putExtra(DetalleTareaActivity.EXTRA_TAREA, tarea);
+            intent.putExtra(DetalleTareaActivity.EXTRA_TAREA_ID, tarea.getId());
             startActivity(intent);
         });
     }
 
+    /** Filtra las tareas por nombre y prioridad en un hilo secundario y muestra los resultados. */
     private void buscar() {
         String texto = etNombre.getText().toString().trim();
-        String modo = spinnerModo.getSelectedItem().toString();
-        String prioridad = spinnerPrioridad.getSelectedItem().toString();
+        // Se trabaja con posiciones, no con textos, para que funcione en cualquier idioma.
+        // Modo: 0 = empieza por, 1 = contiene. Prioridad: 0 = todas.
+        boolean empiezaPor = spinnerModo.getSelectedItemPosition() == 0;
+        int posPrioridad = spinnerPrioridad.getSelectedItemPosition();
+        String prioridad = Prioridades.valorDePosicion(this, posPrioridad);
 
         AppDatabase.ejecutar(() -> {
             List<Tarea> encontradas = tareaDao.obtenerTodas();
@@ -97,10 +104,10 @@ public class BuscarActivity extends AppCompatActivity {
 
             for (Tarea tarea : encontradas) {
                 String nombre = tarea.getNombre().toLowerCase();
-                boolean coincideNombre = modo.equals("Empieza por")
+                boolean coincideNombre = empiezaPor
                         ? nombre.startsWith(textoMinusculas)
                         : nombre.contains(textoMinusculas);
-                boolean coincidePrioridad = prioridad.equals("Todas")
+                boolean coincidePrioridad = posPrioridad == 0
                         || prioridad.equals(tarea.getPrioridad());
 
                 if (coincideNombre && coincidePrioridad) {
@@ -118,6 +125,7 @@ public class BuscarActivity extends AppCompatActivity {
         });
     }
 
+    /** Anade al padding el espacio de las barras del sistema (modo edge-to-edge). */
     private void aplicarInsets() {
         View root = findViewById(R.id.main);
         int base = (int) (24 * getResources()

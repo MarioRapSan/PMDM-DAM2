@@ -1,6 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!-- Menu de opciones de la coleccion de tareas (barra superior). -->
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/action_anadir_tarea"
+        android:title="@string/anadir_tarea_titulo"
+        app:showAsAction="never" />
 
     <item
         android:id="@+id/action_buscar_tareas"
@@ -15,6 +21,11 @@
     <item
         android:id="@+id/action_ordenar_nombre"
         android:title="@string/ordenar_por_nombre"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/action_ordenar_dificultad"
+        android:title="@string/ordenar_por_dificultad"
         app:showAsAction="never" />
 
     <item

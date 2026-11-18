@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!-- Pantalla de inicio de sesion (entrada de la app) con acceso al registro. -->
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main"
@@ -76,18 +77,18 @@
             android:backgroundTint="@color/primary"
             android:text="@string/entrar"
             android:textAllCaps="false"
-            android:textColor="@color/surface"
+            android:textColor="@color/on_primary"
             android:textStyle="bold" />
 
         <Button
-            android:id="@+id/btnIrAlta"
+            android:id="@+id/btnRegistrarse"
             android:layout_width="match_parent"
             android:layout_height="52dp"
             android:layout_marginTop="8dp"
             android:backgroundTint="@color/secondary"
-            android:text="@string/ir_alta_companero"
+            android:text="@string/registrarse"
             android:textAllCaps="false"
-            android:textColor="@color/surface" />
+            android:textColor="@color/on_primary" />
 
         <TextView
             android:layout_width="match_parent"

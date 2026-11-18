@@ -2,263 +2,196 @@ package es.ies.cm.dam2.pmdm.roommate;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import java.util.ArrayList;
-import java.util.List;
+import com.google.android.material.appbar.MaterialToolbar;
 
 /**
- * Muestra la ficha de los companeros guardados en la base de datos.
+ * Ficha de un companero de piso.
+ *
+ * Recibe el id del companero y lo lee de SQLite cada vez que se muestra
+ * (onResume), asi despues de editarlo nunca ensena datos viejos.
+ * Desde aqui se le puede enviar un correo (con su direccion ya escrita).
+ * Editar y Borrar solo aparecen si es el perfil del usuario que ha iniciado
+ * sesion: cada uno solo puede modificar su propio perfil.
  */
 public class FichaCompaneroActivity extends AppCompatActivity {
 
-    private Spinner spinnerCompaneros;
-    private TextView tvInformacion;
-    private ImageView ivFotoFicha;
-    private ArrayAdapter<Companero> adapter;
-    private final List<Companero> companeros = new ArrayList<>();
-    private RoomMateDB db;
+    /** Extra con el id del companero que se va a mostrar. */
+    public static final String EXTRA_COMPANERO_ID = "extra_companero_id_ficha";
 
+    private static final String CLAVE_CONFIRMAR_BORRADO = "confirmar_borrado_ficha";
+
+    private int companeroId;
+
+    /** Usuario que ha iniciado sesion. */
+    private int usuarioId;
+    private Companero companero;
+
+    private ImageView ivFoto;
+    private TextView tvNombre;
+    private TextView tvInformacion;
+    private Button btnEditar;
+    private Button btnBorrar;
+
+    /** Recoge el id del companero y prepara la barra superior y los botones. */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_ficha_companero);
 
-        db = new RoomMateDB(this);
-
-        spinnerCompaneros = findViewById(R.id.spinnerCompaneros);
-        tvInformacion = findViewById(R.id.tvInformacion);
-        ivFotoFicha = findViewById(R.id.ivFotoFicha);
-
-        Button btnBorrar = findViewById(R.id.btnBorrarCompanero);
-        Button btnEditarPerfil = findViewById(R.id.btnEditarPerfil);
-        Button btnVolver = findViewById(R.id.btnVolverAlta);
-
-        btnEditarPerfil.setOnClickListener(v -> abrirEditarPerfil());
-
-        adapter = new ArrayAdapter<>(
-                this,
-                R.layout.item_spinner_texto,
-                companeros
-        );
-        adapter.setDropDownViewResource(R.layout.item_spinner_texto);
-        spinnerCompaneros.setAdapter(adapter);
-
-        spinnerCompaneros.setOnItemSelectedListener(
-                new AdapterView.OnItemSelectedListener() {
-                    @Override
-                    public void onItemSelected(
-                            AdapterView<?> parent,
-                            View view,
-                            int position,
-                            long id
-                    ) {
-                        mostrarInformacion();
-                    }
-
-                    @Override
-                    public void onNothingSelected(AdapterView<?> parent) {
-                        FotoPerfilUtils.mostrarFotoPerfil(ivFotoFicha, null);
-                    }
-                }
-        );
-
-        btnBorrar.setOnClickListener(v -> borrarCompanero());
-        btnVolver.setOnClickListener(v -> {
-            Intent intent = new Intent(
-                    FichaCompaneroActivity.this,
-                    MainActivity.class
-            );
-            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-            startActivity(intent);
+        companeroId = getIntent().getIntExtra(EXTRA_COMPANERO_ID, -1);
+        usuarioId = getIntent().getIntExtra(ColeccionTareasActivity.EXTRA_USUARIO_ID, -1);
+        if (companeroId == -1) {
+            Toast.makeText(this, R.string.error_companero_no_encontrado, Toast.LENGTH_SHORT).show();
             finish();
+            return;
+        }
+
+        MaterialToolbar toolbar = findViewById(R.id.toolbarFichaCompanero);
+        setSupportActionBar(toolbar);
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setTitle(R.string.ficha_companero);
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        }
+
+        ivFoto = findViewById(R.id.ivFotoFicha);
+        tvNombre = findViewById(R.id.tvNombreFicha);
+        tvInformacion = findViewById(R.id.tvInformacion);
+
+        btnEditar = findViewById(R.id.btnEditarPerfil);
+        Button btnCorreo = findViewById(R.id.btnCorreoCompanero);
+        btnBorrar = findViewById(R.id.btnBorrarCompanero);
+        Button btnVolver = findViewById(R.id.btnVolverFicha);
+
+        btnEditar.setOnClickListener(v -> {
+            Intent intent = new Intent(this, EditarCompaneroActivity.class);
+            intent.putExtra(EditarCompaneroActivity.EXTRA_COMPANERO_ID, companeroId);
+            intent.putExtra(ColeccionTareasActivity.EXTRA_USUARIO_ID, usuarioId);
+            startActivity(intent);
         });
+
+        // Correo con la direccion del companero ya escrita (si la tiene).
+        btnCorreo.setOnClickListener(v -> {
+            if (companero != null) {
+                Intent intent = new Intent(this, CorreoActivity.class);
+                intent.putExtra(CorreoActivity.EXTRA_DESTINATARIO, companero.getCorreo());
+                startActivity(intent);
+            }
+        });
+
+        // Borrar pide confirmacion con el DialogFragment propio.
+        btnBorrar.setOnClickListener(v -> ConfirmacionDialogFragment.nuevo(
+                CLAVE_CONFIRMAR_BORRADO,
+                R.string.eliminar_companero,
+                R.string.mensaje_confirmar_eliminar_companero,
+                R.string.eliminar
+        ).show(getSupportFragmentManager(), "dialogo_borrar_companero"));
+
+        getSupportFragmentManager().setFragmentResultListener(
+                CLAVE_CONFIRMAR_BORRADO, this, (clave, resultado) -> {
+                    if (resultado.getBoolean(ConfirmacionDialogFragment.RESULTADO_CONFIRMADO)) {
+                        borrarCompanero();
+                    }
+                });
+
+        btnVolver.setOnClickListener(v -> finish());
     }
 
+    /** Se recarga al volver (por ejemplo, despues de editar) para no mostrar datos viejos. */
     @Override
     protected void onResume() {
         super.onResume();
-        cargarCompaneros();
+        cargarCompanero();
     }
 
+    /** La flecha de la barra superior vuelve al listado de companeros. */
     @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        if (db != null) {
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == android.R.id.home) {
+            finish();
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    /** Lee el companero de SQLite en un hilo secundario y lo muestra. */
+    private void cargarCompanero() {
+        AppDatabase.ejecutar(() -> {
+            RoomMateDB db = new RoomMateDB(this);
+            Companero leido = db.obtenerCompanero(companeroId);
             db.close();
-        }
+
+            runOnUiThread(() -> {
+                if (leido == null) {
+                    // Se ha borrado mientras tanto: se vuelve al listado.
+                    finish();
+                    return;
+                }
+                companero = leido;
+                mostrarInformacion();
+            });
+        });
     }
 
-    private void cargarCompaneros() {
-        int idSeleccionado = -1;
-        int posicionActual = spinnerCompaneros.getSelectedItemPosition();
-
-        if (posicionActual >= 0 && posicionActual < companeros.size()) {
-            idSeleccionado = companeros.get(posicionActual).getId();
-        }
-
-        companeros.clear();
-        companeros.addAll(db.obtenerCompaneros());
-        adapter.notifyDataSetChanged();
-        actualizarEstado();
-
-        if (companeros.isEmpty()) {
-            tvInformacion.setText("No hay compañeros registrados.");
-            FotoPerfilUtils.mostrarFotoPerfil(ivFotoFicha, null);
-            return;
-        }
-
-        boolean seleccionado = false;
-        if (idSeleccionado != -1) {
-            seleccionado = seleccionarCompaneroPorId(idSeleccionado);
-        }
-
-        if (!seleccionado) {
-            spinnerCompaneros.setSelection(0);
-        }
-
-        mostrarFotoSeleccionada();
-        mostrarInformacion();
-    }
-
+    /** Pinta la foto, el nombre y el resto de datos del companero. */
     private void mostrarInformacion() {
-        int posicion = spinnerCompaneros.getSelectedItemPosition();
+        // Solo el dueno del perfil puede editarlo o borrarlo.
+        int visibilidad = companero.esDe(usuarioId) ? View.VISIBLE : View.GONE;
+        btnEditar.setVisibility(visibilidad);
+        btnBorrar.setVisibility(visibilidad);
 
-        if (posicion < 0 || posicion >= companeros.size()) {
-            Toast.makeText(
-                    this,
-                    "No hay compañeros registrados",
-                    Toast.LENGTH_SHORT
-            ).show();
-            return;
-        }
+        FotoPerfilUtils.mostrarFotoPerfil(ivFoto, companero.getFotoPerfil());
+        tvNombre.setText(companero.getNombreCompleto());
 
-        Companero c = companeros.get(posicion);
-        FotoPerfilUtils.mostrarFotoPerfil(ivFotoFicha, c.getFotoPerfil());
+        String fecha = valorOTexto(companero.getFechaEntrada(), R.string.sin_fecha);
+        String telefono = valorOTexto(companero.getTelefono(), R.string.sin_telefono);
+        String correo = valorOTexto(companero.getCorreo(), R.string.sin_correo);
+        String introduccion = valorOTexto(companero.getIntroduccion(), R.string.sin_introduccion);
 
-        String fecha = c.getFechaEntrada();
-        if (fecha == null || fecha.trim().isEmpty()) {
-            fecha = "Sin fecha";
-        }
-
-        String telefono = c.getTelefono();
-        if (telefono == null || telefono.trim().isEmpty()) {
-            telefono = getString(R.string.sin_telefono);
-        }
-
-        String correo = c.getCorreo();
-        if (correo == null || correo.trim().isEmpty()) {
-            correo = getString(R.string.sin_correo);
-        }
-
-        String introduccion = c.getIntroduccion();
-        if (introduccion == null || introduccion.trim().isEmpty()) {
-            introduccion = "Sin introducción personal";
-        }
-
-        String informacion =
-                "Nombre: " + c.getNombre() + " " + c.getApellidos() + "\n\n"
-                        + "Sexo: " + c.getSexo() + "\n\n"
-                        + "Edad: " + c.getEdad() + " años\n\n"
-                        + "Fecha de entrada: " + fecha + "\n\n"
-                        + getString(R.string.telefono) + ": " + telefono + "\n\n"
-                        + getString(R.string.correo_electronico) + ": " + correo + "\n\n"
-                        + "Introducción personal:\n" + introduccion;
-
-        tvInformacion.setText(informacion);
+        // Plantilla con todos los datos en strings.xml (traducible).
+        tvInformacion.setText(getString(R.string.ficha_companero_info,
+                companero.getNombreCompleto(),
+                companero.getSexo(),
+                companero.getEdad(),
+                fecha,
+                telefono,
+                correo,
+                introduccion));
     }
 
-    private void mostrarFotoSeleccionada() {
-        int posicion = spinnerCompaneros.getSelectedItemPosition();
-
-        if (posicion >= 0 && posicion < companeros.size()) {
-            FotoPerfilUtils.mostrarFotoPerfil(
-                    ivFotoFicha,
-                    companeros.get(posicion).getFotoPerfil()
-            );
-        } else {
-            FotoPerfilUtils.mostrarFotoPerfil(ivFotoFicha, null);
-        }
+    /** Devuelve el valor, o el texto indicado si esta vacio. */
+    private String valorOTexto(String valor, int textoSiVacio) {
+        return (valor == null || valor.trim().isEmpty()) ? getString(textoSiVacio) : valor;
     }
 
-    private void abrirEditarPerfil() {
-        int posicion = spinnerCompaneros.getSelectedItemPosition();
-        if (posicion < 0 || posicion >= companeros.size()) {
-            Toast.makeText(
-                    this,
-                    "No hay compañeros registrados",
-                    Toast.LENGTH_SHORT
-            ).show();
-            return;
-        }
-
-        Companero companero = companeros.get(posicion);
-        Intent intent = new Intent(this, EditarCompaneroActivity.class);
-        intent.putExtra(
-                EditarCompaneroActivity.EXTRA_COMPANERO_ID,
-                companero.getId()
-        );
-        startActivity(intent);
-    }
-
-    private boolean seleccionarCompaneroPorId(int id) {
-        for (int i = 0; i < companeros.size(); i++) {
-            if (companeros.get(i).getId() == id) {
-                spinnerCompaneros.setSelection(i);
-                return true;
-            }
-        }
-
-        return false;
-    }
-
+    /** Borra el companero (ya confirmado) y su foto, y vuelve al listado. */
     private void borrarCompanero() {
-        int posicion = spinnerCompaneros.getSelectedItemPosition();
+        AppDatabase.ejecutar(() -> {
+            RoomMateDB db = new RoomMateDB(this);
+            int borrados = db.borrarCompanero(companeroId);
+            db.close();
 
-        if (posicion < 0 || posicion >= companeros.size()) {
-            Toast.makeText(
-                    this,
-                    "No hay compañeros para borrar",
-                    Toast.LENGTH_SHORT
-            ).show();
-            return;
-        }
-
-        Companero companero = companeros.get(posicion);
-        int borrados = db.borrarCompanero(companero.getId());
-
-        if (borrados > 0) {
-            FotoPerfilUtils.borrarFotoPerfil(companero.getFotoPerfil());
-            tvInformacion.setText(
-                    "Selecciona un compañero y pulsa Mostrar información."
-            );
-            cargarCompaneros();
-
-            Toast.makeText(
-                    this,
-                    "Compañero eliminado: " + companero.getNombreCompleto(),
-                    Toast.LENGTH_SHORT
-            ).show();
-        } else {
-            Toast.makeText(
-                    this,
-                    R.string.error_borrar_companero,
-                    Toast.LENGTH_SHORT
-            ).show();
-        }
-    }
-
-    private void actualizarEstado() {
-        boolean hayCompaneros = !companeros.isEmpty();
-        spinnerCompaneros.setEnabled(hayCompaneros);
+            runOnUiThread(() -> {
+                if (borrados > 0) {
+                    if (companero != null) {
+                        FotoPerfilUtils.borrarFotoPerfil(companero.getFotoPerfil());
+                        Toast.makeText(this,
+                                getString(R.string.companero_eliminado, companero.getNombreCompleto()),
+                                Toast.LENGTH_SHORT).show();
+                    }
+                    finish();
+                } else {
+                    Toast.makeText(this, R.string.error_borrar_companero, Toast.LENGTH_SHORT).show();
+                }
+            });
+        });
     }
 }

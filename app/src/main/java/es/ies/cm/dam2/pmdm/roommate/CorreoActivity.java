@@ -10,8 +10,16 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+/**
+ * Envia una invitacion por correo usando un Intent implicito (ACTION_SENDTO).
+ * Comprueba que los campos estan rellenos y que hay una app de correo instalada.
+ */
 public class CorreoActivity extends AppCompatActivity {
 
+    /** Extra opcional con el correo del destinatario. */
+    public static final String EXTRA_DESTINATARIO = "extra_destinatario";
+
+    /** Valida los campos y abre la app de correo con el destinatario, el asunto y el mensaje. */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -20,6 +28,12 @@ public class CorreoActivity extends AppCompatActivity {
         EditText etDestinatario = findViewById(R.id.etDestinatario);
         EditText etAsunto = findViewById(R.id.etAsunto);
         EditText etMensaje = findViewById(R.id.etMensaje);
+
+        // Si se abre desde la ficha de un companero, su correo ya viene escrito.
+        String destinatarioRecibido = getIntent().getStringExtra(EXTRA_DESTINATARIO);
+        if (savedInstanceState == null && destinatarioRecibido != null) {
+            etDestinatario.setText(destinatarioRecibido);
+        }
 
         Button btnEnviarCorreo = findViewById(R.id.btnEnviarCorreo);
 
@@ -40,7 +54,7 @@ public class CorreoActivity extends AppCompatActivity {
 
                 Toast.makeText(
                         this,
-                        "Rellena todos los campos",
+                        R.string.error_rellena_campos,
                         Toast.LENGTH_SHORT
                 ).show();
                 return;
@@ -61,7 +75,7 @@ public class CorreoActivity extends AppCompatActivity {
             } else {
                 Toast.makeText(
                         this,
-                        "No hay ninguna aplicación de correo instalada",
+                        R.string.error_sin_app_correo,
                         Toast.LENGTH_LONG
                 ).show();
             }

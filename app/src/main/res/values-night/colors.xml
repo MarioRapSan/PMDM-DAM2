@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Paleta del modo oscuro. Mismos nombres que values/colors.xml:
+     fondos oscuros, textos claros y el naranja algo mas suave para no deslumbrar. -->
+<resources>
+
+    <color name="primary">#CF7556</color>
+    <color name="primary_dark">#F2A98F</color>
+    <color name="primary_light">#3A2A24</color>
+
+    <color name="secondary">#5F7B91</color>
+
+    <color name="background">#161311</color>
+    <color name="surface">#24201D</color>
+
+    <color name="on_primary">#FFFFFF</color>
+
+    <color name="text_primary">#EEE7E2</color>
+    <color name="text_secondary">#ABA29C</color>
+
+    <color name="disabled">#4A4440</color>
+
+    <color name="border">#3A3431</color>
+
+    <color name="foto_fondo">#4A3428</color>
+    <color name="foto_borde">#8A5A3C</color>
+
+    <color name="success">#7DBA89</color>
+    <color name="warning">#E9C06E</color>
+    <color name="error">#E07A7A</color>
+
+</resources>

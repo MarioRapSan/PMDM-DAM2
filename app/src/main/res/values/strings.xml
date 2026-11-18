@@ -1,114 +1,127 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Todos los textos visibles de la app. La traduccion al ingles esta en values-en/strings.xml. -->
 <resources>
-    <string name="app_name">RoomMate</string>
-    <string name="textview">TextView</string>
-    <string name="button4">Button</string>
-    <string name="button3">Button</string>
-    <string name="atras">Atras</string>
-    <string name="siguiente">Siguiente</string>
-    <string name="nombre_del_usuario">Nombre del usuario:</string>
-    <string name="sumar">Sumar</string>
-    <string name="restar">Restar</string>
-    <string name="numero_de_compa_eros_0">Numero de compañeros: 0</string>
-    <string name="escribe_tu_nombre_aqu">Escribe tu nombre aquí</string>
-    <string name="actualizar">Actualizar</string>
-    <string name="bot_n_restar_pulsado_n_mero_de_compa_eros">"Botón restar pulsado, número de compañeros: "</string>
-    <string name="pulsa_el_bot_n">Pulsa el botón</string>
-    <string name="bot_n_pulsado">Botón Pulsado</string>
-    <string name="activar">Activar</string>
-    <string name="activarse">Activar</string>
-    <string name="introduce_tu_alquiler_aqu">Introduce tu alquiler aquí</string>
-    <string name="alquiler">Alquiler</string>
-    <string name="introduce_un_alquiler">Introduce un alquiler</string>
-    <string name="el_alquiler_debe_estar_entre_100_y_2500">El alquiler debe estar entre 100 € y 2500 €</string>
-    <string name="alquiler_v_lido">Alquiler válido</string>
-    <string name="introduce_un_alquiler2">Introduce un alquiler</string>
-    <string name="alquiler_fuera_de_rango">Alquiler fuera de rango</string>
-    <string name="invitaciones">Invitaciones</string>
-    <string name="check">Check</string>
-    <string name="reset">Reset</string>
-    <string name="siguiente2">Siguiente</string>
-    <string name="reset2">Reset</string>
-    <string name="introduce_aqu_tu_nombre">Introduce aquí tu nombre</string>
-    <string name="confirmar_rechazar">Confirmar/Rechazar</string>
-    <string name="introduce_aqu_tu_nombre2">Introduce aquí tu nombre</string>
-    <!-- Strings used for fragments for navigation -->
-    <string name="first_fragment_label">First Fragment</string>
-    <string name="second_fragment_label">Second Fragment</string>
-    <string name="next">Next</string>
-    <string name="previous">Previous</string>
-    <string-array name="prioridades_tarea">
-        <item>Selecciona una prioridad</item>
-        <item>Puede esperar</item>
-        <item>Hacer cuanto antes</item>
-        <item>Urgente</item>
-    </string-array>
-    <string-array name="companeros_tarea">
-        <item>Selecciona un compañero</item>
-        <item>Jose</item>
-        <item>Raul</item>
-        <item>Winwaleo</item>
-    </string-array>
-    <string name="lorem_ipsum">
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam in scelerisque sem. Mauris
-        volutpat, dolor id interdum ullamcorper, risus dolor egestas lectus, sit amet mattis purus
-        dui nec risus. Maecenas non sodales nisi, vel dictum dolor. Class aptent taciti sociosqu ad
-        litora torquent per conubia nostra, per inceptos himenaeos. Suspendisse blandit eleifend
-        diam, vel rutrum tellus vulputate quis. Aliquam eget libero aliquet, imperdiet nisl a,
-        ornare ex. Sed rhoncus est ut libero porta lobortis. Fusce in dictum tellus.\n\n
-        Suspendisse interdum ornare ante. Aliquam nec cursus lorem. Morbi id magna felis. Vivamus
-        egestas, est a condimentum egestas, turpis nisl iaculis ipsum, in dictum tellus dolor sed
-        neque. Morbi tellus erat, dapibus ut sem a, iaculis tincidunt dui. Interdum et malesuada
-        fames ac ante ipsum primis in faucibus. Curabitur et eros porttitor, ultricies urna vitae,
-        molestie nibh. Phasellus at commodo eros, non aliquet metus. Sed maximus nisl nec dolor
-        bibendum, vel congue leo egestas.\n\n
-        Sed interdum tortor nibh, in sagittis risus mollis quis. Curabitur mi odio, condimentum sit
-        amet auctor at, mollis non turpis. Nullam pretium libero vestibulum, finibus orci vel,
-        molestie quam. Fusce blandit tincidunt nulla, quis sollicitudin libero facilisis et. Integer
-        interdum nunc ligula, et fermentum metus hendrerit id. Vestibulum lectus felis, dictum at
-        lacinia sit amet, tristique id quam. Cras eu consequat dui. Suspendisse sodales nunc ligula,
-        in lobortis sem porta sed. Integer id ultrices magna, in luctus elit. Sed a pellentesque
-        est.\n\n
-        Aenean nunc velit, lacinia sed dolor sed, ultrices viverra nulla. Etiam a venenatis nibh.
-        Morbi laoreet, tortor sed facilisis varius, nibh orci rhoncus nulla, id elementum leo dui
-        non lorem. Nam mollis ipsum quis auctor varius. Quisque elementum eu libero sed commodo. In
-        eros nisl, imperdiet vel imperdiet et, scelerisque a mauris. Pellentesque varius ex nunc,
-        quis imperdiet eros placerat ac. Duis finibus orci et est auctor tincidunt. Sed non viverra
-        ipsum. Nunc quis augue egestas, cursus lorem at, molestie sem. Morbi a consectetur ipsum, a
-        placerat diam. Etiam vulputate dignissim convallis. Integer faucibus mauris sit amet finibus
-        convallis.\n\n
-        Phasellus in aliquet mi. Pellentesque habitant morbi tristique senectus et netus et
-        malesuada fames ac turpis egestas. In volutpat arcu ut felis sagittis, in finibus massa
-        gravida. Pellentesque id tellus orci. Integer dictum, lorem sed efficitur ullamcorper,
-        libero justo consectetur ipsum, in mollis nisl ex sed nisl. Donec maximus ullamcorper
-        sodales. Praesent bibendum rhoncus tellus nec feugiat. In a ornare nulla. Donec rhoncus
-        libero vel nunc consequat, quis tincidunt nisl eleifend. Cras bibendum enim a justo luctus
-        vestibulum. Fusce dictum libero quis erat maximus, vitae volutpat diam dignissim.
-    </string>
-    <string name="quieres_aceptar_la_propuesta_de_juan_manuel">¿Quieres aceptar la propuesta de Juan Manuel?</string>
-    <string name="lista_de_tareas">Lista de Tareas</string>
-    <string name="invitaci_n">Invitación</string>
-    <string name="juan_manuel_te_ha_invitado_a_ser_su_compa_ero">Juan Manuel te ha invitado a ser su compañero</string>
-    <string name="pendiente">Pendiente</string>
-    <string name="completada">Completada</string>
-    <string name="a_adir">Añadir</string>
-    <string name="volver">Volver</string>
 
-    <!-- Formulario para añadir tareas -->
+    <!-- General -->
+    <string name="app_name">RoomMate</string>
+    <string name="aceptar">Aceptar</string>
+    <string name="cancelar">Cancelar</string>
+    <string name="volver">Volver</string>
+    <string name="guardar">Guardar</string>
+    <string name="guardar_cambios">Guardar cambios</string>
+    <string name="editar">Editar</string>
+    <string name="eliminar">Eliminar</string>
+    <string name="buscar">Buscar</string>
+    <string name="todos">Todos</string>
+    <string name="sin_asignar">Sin asignar</string>
+    <string name="sin_fecha">Sin fecha</string>
+    <string name="datos_incorrectos">Datos incorrectos</string>
+    <string name="piso_compartido">Piso compartido</string>
+    <string name="hola_usuario">Hola, %1$s</string>
+
+    <!-- Inicio de sesion y registro -->
+    <string name="iniciar_sesion">Iniciar sesión</string>
+    <string name="usuario">Usuario</string>
+    <string name="usuario_hint">Escribe tu usuario</string>
+    <string name="clave">Clave</string>
+    <string name="clave_hint">Escribe tu clave</string>
+    <string name="clave_hint_minimo">Mínimo 4 caracteres</string>
+    <string name="repetir_clave">Repetir clave</string>
+    <string name="repetir_clave_hint">Vuelve a escribir la clave</string>
+    <string name="entrar">Entrar</string>
+    <string name="registrarse">Registrarse</string>
+    <string name="crear_cuenta">Crear una cuenta nueva</string>
+    <string name="usuarios_prueba">Usuarios de prueba: admin/admin, mario/mario, jose/jose, raul/raul y winwaleo/winwaleo</string>
+    <string name="error_usuario_clave">Usuario o clave incorrectos</string>
+    <string name="error_campos_login">Introduce el usuario y la clave</string>
+    <string name="error_usuario_vacio">Introduce un nombre de usuario</string>
+    <string name="error_usuario_existe">Ese usuario ya existe</string>
+    <string name="error_clave_corta">La clave debe tener al menos %1$d caracteres</string>
+    <string name="error_claves_distintas">Las claves no coinciden</string>
+    <string name="cuenta_creada">Cuenta creada. Ya puedes iniciar sesión</string>
+
+    <!-- Ajustes de la cuenta -->
+    <string name="ajustes">Ajustes</string>
+    <string name="sesion_iniciada_como">Sesión iniciada como %1$s</string>
+    <string name="resumen_lista_compra">Artículos en tu lista de la compra: %1$d</string>
+    <string name="cambiar_clave">Cambiar clave</string>
+    <string name="clave_actual">Clave actual</string>
+    <string name="clave_nueva">Clave nueva</string>
+    <string name="error_clave_vacia">Introduce la clave actual</string>
+    <string name="error_clave_actual">La clave actual no es correcta</string>
+    <string name="clave_cambiada">Clave cambiada correctamente</string>
+    <string name="cerrar_sesion">Cerrar sesión</string>
+    <string name="darse_de_baja">Darme de baja</string>
+    <string name="mensaje_confirmar_baja">Se borrará tu cuenta y tu lista de la compra. ¿Seguro que quieres darte de baja?</string>
+    <string name="cuenta_borrada">Tu cuenta se ha borrado</string>
+    <string name="apariencia">Apariencia</string>
+    <string name="modo_oscuro">Modo oscuro</string>
+    <string name="cambiar_tema">Cambiar tema</string>
+
+    <!-- Menus y navegacion -->
+    <string name="tareas">Tareas</string>
+    <string name="acerca_de">Acerca de</string>
+    <string name="acerca_de_texto">RoomMate es una aplicación para organizar las tareas y la compra de un piso compartido.</string>
+    <string name="version_app">Versión 1.0</string>
+    <string name="abrir_menu">Abrir menú</string>
+    <string name="cerrar_menu">Cerrar menú</string>
+    <string name="enviar_correo">Enviar correo</string>
+
+    <!-- Coleccion de tareas -->
+    <string name="coleccion_de_tareas">Colección de tareas</string>
+    <string name="subtitulo_coleccion">Usuario: %1$s. Pulsa una tarea para ver su ficha y mantenla pulsada para editarla o eliminarla.</string>
+    <string name="progreso_tareas">%1$d de %2$d tareas hechas (%3$d %%)</string>
+    <string name="mostrar_tareas">Mostrar tareas</string>
+    <string name="ver_hechas">Ver hechas</string>
+    <string name="ver_pendientes">Ver pendientes</string>
+    <string name="mostrando_hechas">Mostrando tareas hechas</string>
+    <string name="mostrando_pendientes">Mostrando tareas pendientes</string>
+    <string name="no_hay_hechas">No hay tareas hechas</string>
+    <string name="no_hay_pendientes">No hay tareas pendientes</string>
+    <string name="ordenar_por_nombre">Ordenar por nombre</string>
+    <string name="ordenar_por_dificultad">Ordenar por dificultad</string>
+    <string name="tareas_ordenadas">Tareas ordenadas por nombre</string>
+    <string name="tareas_ordenadas_dificultad">Tareas ordenadas por dificultad</string>
+    <string name="anadida_por">Añadida por: %1$s</string>
+    <string name="etiqueta_compartida">COMPARTIDA</string>
+    <string name="tarea_eliminada">Tarea eliminada</string>
+    <string name="tarea_marcada_hecha">Tarea marcada como hecha</string>
+    <string name="tarea_marcada_no_hecha">Tarea marcada como no hecha</string>
+    <string name="confirmar_eliminar_tarea">Eliminar tarea</string>
+    <string name="mensaje_confirmar_eliminar_tarea">¿Seguro que quieres eliminar esta tarea? También se borrarán sus registros.</string>
+    <string name="pendiente">Pendiente</string>
+    <string name="estado_hecha">Hecha</string>
+
+    <!-- Formulario y ficha de tarea -->
     <string name="anadir_tarea_titulo">Añadir tarea</string>
+    <string name="editar_tarea_titulo">Editar tarea</string>
+    <string name="detalle_tarea">Detalle de la tarea</string>
+    <string name="ver_registros">Ver registros de la tarea</string>
     <string name="nombre">Nombre</string>
     <string name="nombre_tarea_hint">Nombre de la tarea</string>
     <string name="prioridad">Prioridad</string>
     <string name="companero_anade_tarea">Compañero que añade la tarea</string>
     <string name="tarea_hecha">Tarea hecha</string>
+    <string name="tarea_compartida">Tarea compartida por el piso</string>
+    <string name="tarea_compartida_si">Tarea compartida por todo el piso</string>
+    <string name="tarea_compartida_no">Tarea personal</string>
     <string name="fecha">Fecha</string>
     <string name="fecha_hint">Ej.: 12/05/2025</string>
-    <string name="dinero_opcional">Dinero (opcional)</string>
-    <string name="dinero_hint">0</string>
     <string name="hora">Hora</string>
     <string name="hora_hint">Ej.: 18:30</string>
+    <string name="dinero_opcional">Dinero (opcional)</string>
+    <string name="dinero_hint">0</string>
     <string name="dificultad">Dificultad</string>
-    <string name="aceptar">Aceptar</string>
-    <string name="cancelar">Cancelar</string>
+    <string name="descripcion_opcional">Descripción (opcional)</string>
+    <string name="descripcion_hint">Detalles de la tarea</string>
+    <string name="sin_descripcion">Sin descripción</string>
+    <string name="selecciona_companero">Selecciona un compañero</string>
+    <string name="tarea_guardada">Tarea guardada</string>
+    <string name="foto_companero">Foto del compañero</string>
+    <string name="prioridad_valor">Prioridad: %1$s</string>
+    <string name="fecha_valor">Fecha: %1$s</string>
+    <string name="descripcion_valor">Descripción: %1$s</string>
+    <string name="error_cargar_tarea">No se ha podido cargar la tarea</string>
     <string name="error_nombre">Introduce el nombre</string>
     <string name="error_prioridad">Selecciona una prioridad</string>
     <string name="error_companero">Selecciona un compañero</string>
@@ -118,19 +131,72 @@
     <string name="error_hora">Formato HH:mm, por ejemplo 18:30</string>
     <string name="error_hora_obligatoria">Selecciona la hora</string>
 
-    <!-- Lista de tareas -->
+    <!-- Registros de tareas -->
+    <string name="registros_de_tareas">Registros de tareas</string>
     <string name="tarea">Tarea</string>
     <string name="companero">Compañero</string>
-    <string name="estado">Estado</string>
     <string name="selecciona_tarea">Selecciona una tarea</string>
-    <string name="sin_tareas">No hay tareas añadidas</string>
-    <string name="tarea_anadida">Tarea añadida</string>
-    <string name="estado_pendiente">Estado: Pendiente</string>
-    <string name="estado_completada">Estado: Completada</string>
-    <string name="sin_estado">Sin estado</string>
+    <string name="registros_titulo">Registros (%1$d):</string>
+    <string name="sin_registros">Esta tarea todavía no tiene registros</string>
+    <string name="linea_registro">%1$s · %2$d puntos · %3$s</string>
+    <string name="total_registros">Registros de esta tarea: %1$d</string>
+    <string name="total_registros_cero">Registros de esta tarea: 0</string>
+    <string name="total_general">Total de registros: %1$d</string>
+    <string name="total_general_cero">Total de registros: 0</string>
+    <string name="nuevo_registro">Nuevo registro</string>
+    <string name="editar_registro">Editar registro</string>
+    <string name="puntuacion">Puntos</string>
+    <string name="ganador">Realizada por</string>
+    <string name="guardar_registro">Guardar registro</string>
+    <string name="registro_guardado">Registro guardado correctamente</string>
+    <string name="registro_eliminado">Registro eliminado</string>
+    <string name="eliminar_registro">Eliminar registro</string>
+    <string name="mensaje_confirmar_eliminar_registro">¿Seguro que quieres eliminar este registro?</string>
+    <string name="error_puntuacion">Introduce una puntuación válida</string>
 
-    <!-- Alta de companeros -->
-    <string name="alta_companero">Alta de compañero de piso</string>
+    <!-- Busqueda -->
+    <string name="buscar_tareas">Buscar tareas</string>
+    <string name="buscar_tareas_titulo">Buscar tareas</string>
+    <string name="nombre_buscar">Nombre de la tarea</string>
+    <string name="nombre_buscar_hint">Escribe parte del nombre</string>
+    <string name="modo_busqueda">Modo de búsqueda</string>
+    <string name="prioridad_busqueda">Prioridad</string>
+    <string name="sin_resultados">No se han encontrado tareas</string>
+
+    <!-- Lista de la compra (lista personal) -->
+    <string name="lista_de_la_compra">Lista de la compra</string>
+    <string name="gastos_compartidos">Gastos Compartidos</string>
+    <string name="gastos_compartidos_menu">Gastos Compartidos (próximamente)</string>
+    <string name="proximamente">Próximamente</string>
+    <string name="gastos_compartidos_descripcion">Aquí podrás apuntar los productos que has comprado, lo que te han costado y entre quién se reparten. A cada compañero, y a ti, os aparecerá la cantidad que os toca poner.</string>
+    <string name="lista_compra_titulo">Lista de la compra</string>
+    <string name="lista_compra_de_usuario">Lista de la compra de %1$s</string>
+    <string name="articulo">Artículo</string>
+    <string name="anadir_a_mi_lista">Añadir a mi lista</string>
+    <string name="lista_compra_vacia">Tu lista de la compra está vacía</string>
+    <string name="articulo_anadido">Artículo añadido a la lista</string>
+    <string name="articulo_duplicado">Ese artículo ya está en tu lista</string>
+    <string name="articulo_eliminado">Artículo eliminado de la lista</string>
+    <string name="nuevo_producto">Nuevo producto</string>
+    <string name="borrar_del_catalogo">Borrar producto</string>
+    <string name="nombre_producto">Nombre del producto</string>
+    <string name="nombre_producto_hint">Ej.: Galletas</string>
+    <string name="categoria">Categoría</string>
+    <string name="categoria_hint">Ej.: Despensa</string>
+    <string name="crear">Crear</string>
+    <string name="error_producto_vacio">Escribe el nombre del producto</string>
+    <string name="error_producto_existe">Ese producto ya está en el catálogo</string>
+    <string name="producto_creado">Producto añadido al catálogo: %1$s</string>
+    <string name="producto_borrado">Producto borrado del catálogo: %1$s</string>
+    <string name="mensaje_confirmar_borrar_producto">Se borrará el producto del catálogo y de las listas de todos los usuarios. ¿Continuar?</string>
+
+    <!-- Companeros de piso -->
+    <string name="companeros">Compañeros</string>
+    <string name="subtitulo_companeros">Pulsa un compañero para ver su ficha. Solo puedes editar o borrar tu propio perfil (mantenlo pulsado).</string>
+    <string name="crear_mi_perfil">Crear mi perfil</string>
+    <string name="nombre_propio">%1$s (tú)</string>
+    <string name="solo_tu_perfil">Solo puedes editar o borrar tu propio perfil</string>
+    <string name="ficha_companero">Ficha del compañero</string>
     <string name="nombre_hint">Introduce el nombre</string>
     <string name="apellidos">Apellidos</string>
     <string name="apellidos_hint">Introduce los apellidos</string>
@@ -142,128 +208,72 @@
     <string name="fecha_entrada">Fecha de entrada al piso</string>
     <string name="fecha_entrada_hint">Ej.: 01/09/2025</string>
     <string name="introduccion_opcional">Introducción personal (opcional)</string>
-    <string name="introduccion_hint">Cuentanos algo sobre ti</string>
+    <string name="introduccion_hint">Cuéntanos algo sobre ti</string>
+    <string name="sin_introduccion">Sin introducción personal</string>
     <string name="telefono">Teléfono</string>
     <string name="telefono_hint">Ej.: 600 123 456</string>
     <string name="correo_electronico">Correo electrónico</string>
     <string name="correo_hint">Ej.: nombre@correo.com</string>
     <string name="datos_contacto">Datos de contacto</string>
+    <string name="datos_personales">Datos personales</string>
+    <string name="presentacion">Presentación</string>
     <string name="editar_perfil">Editar perfil</string>
     <string name="titulo_editar_perfil">Editar perfil de compañero</string>
-    <string name="guardar_cambios">Guardar cambios</string>
     <string name="perfil_actualizado">Perfil actualizado correctamente</string>
     <string name="error_actualizar_perfil">No se pudo actualizar el perfil</string>
     <string name="error_companero_no_encontrado">No se ha encontrado el compañero</string>
     <string name="error_correo">Introduce un correo electrónico válido</string>
     <string name="error_borrar_companero">No se pudo borrar el compañero</string>
+    <string name="error_guardar_companero">No se pudo guardar el compañero</string>
+    <string name="companero_registrado">Compañero registrado correctamente</string>
+    <string name="companero_eliminado">Compañero eliminado: %1$s</string>
+    <string name="eliminar_companero">Eliminar compañero</string>
+    <string name="mensaje_confirmar_eliminar_companero">¿Seguro que quieres eliminar este compañero?</string>
+    <string name="no_hay_companeros">No hay compañeros registrados</string>
     <string name="sin_telefono">Sin teléfono</string>
     <string name="sin_correo">Sin correo</string>
     <string name="foto_perfil">Foto de perfil</string>
     <string name="seleccionar_foto">Seleccionar foto</string>
     <string name="cambiar_foto">Cambiar foto</string>
     <string name="error_foto_perfil">No se pudo guardar la foto</string>
-    <string name="guardar_companero">Guardar compañero</string>
-    <string name="ver_ficha_companeros">Ver ficha de compañeros</string>
-    <string name="datos_personales">Datos personales</string>
-    <string name="presentacion">Presentación</string>
-    <string name="acciones">Acciones</string>
-    <string name="mas_acciones">Más acciones</string>
-    <string name="mostrar_tareas">Mostrar tareas</string>
-    <string name="coleccion_de_tareas">Colección de tareas</string>
-    <string name="buscar_tareas">Buscar tareas</string>
-    <string name="lista_de_la_compra">Lista de la compra</string>
-    <string name="enviar_correo">Enviar correo</string>
-    <string name="registros_de_tareas">Registros de tareas</string>
-    <string name="total_registros">Total de registros: %1$d</string>
-    <string name="total_registros_cero">Total de registros: 0</string>
-    <string name="total_general">Total general: %1$d</string>
-    <string name="total_general_cero">Total general: 0</string>
-    <string name="nuevo_registro">Nuevo registro</string>
-    <string name="puntuacion">Puntuación</string>
-    <string name="ganador">Ganador</string>
-    <string name="guardar_registro">Guardar registro</string>
-    <string name="registro_guardado">Registro guardado correctamente</string>
-    <string name="error_puntuacion">Introduce una puntuación válida</string>
-    <string name="error_guardar_companero">No se pudo guardar el compañero</string>
-    <string name="companero_registrado">Compañero registrado correctamente</string>
-    <string name="datos_incorrectos">Datos incorrectos</string>
+    <string name="guardar_companero">Guardar mi perfil</string>
+    <string name="borrar_companero">Borrar compañero</string>
+    <string name="ficha_companero_info">Nombre: %1$s\n\nSexo: %2$s\n\nEdad: %3$d años\n\nFecha de entrada: %4$s\n\nTeléfono: %5$s\n\nCorreo electrónico: %6$s\n\nIntroducción personal:\n%7$s</string>
 
-    <!-- Inicio de sesion -->
-    <string name="iniciar_sesion">Iniciar sesión</string>
-    <string name="usuario">Usuario</string>
-    <string name="usuario_hint">Escribe tu usuario</string>
-    <string name="clave">Clave</string>
-    <string name="clave_hint">Escribe tu clave</string>
-    <string name="entrar">Entrar</string>
-    <string name="ir_alta_companero">Ir al alta de compañero</string>
-    <string name="usuarios_prueba">Usuarios de prueba: admin/admin y mario/mario</string>
-    <string name="error_usuario_clave">Usuario o clave incorrectos</string>
-    <string name="error_campos_login">Introduce el usuario y la clave</string>
+    <!-- Correo -->
+    <string name="invitacion_correo">Invitación por correo</string>
+    <string name="correo_destinatario">Correo del destinatario</string>
+    <string name="asunto_correo">Asunto del correo</string>
+    <string name="escribe_invitacion">Escribe la invitación…</string>
+    <string name="abrir_correo">Abrir correo para enviar</string>
+    <string name="error_rellena_campos">Rellena todos los campos</string>
+    <string name="error_sin_app_correo">No hay ninguna aplicación de correo instalada</string>
 
-    <!-- Busqueda de tareas -->
-    <string name="buscar_tareas_titulo">Buscar tareas</string>
-    <string name="nombre_buscar">Nombre de la tarea</string>
-    <string name="nombre_buscar_hint">Escribe parte del nombre</string>
-    <string name="modo_busqueda">Modo de búsqueda</string>
-    <string name="prioridad_busqueda">Prioridad</string>
-    <string name="buscar">Buscar</string>
-    <string name="sin_resultados">No se han encontrado tareas</string>
-
-    <!-- Lista de la compra -->
-    <string name="lista_compra_titulo">Lista de la compra</string>
-    <string name="articulo">Artículo</string>
-    <string name="anadir_a_mi_lista">Añadir a mi lista</string>
-    <string name="lista_compra_vacia">Tu lista de la compra está vacía</string>
-    <string name="articulo_anadido">Artículo añadido a la lista</string>
-    <string name="articulo_duplicado">Ese artículo ya está en tu lista</string>
-    <string name="articulo_eliminado">Artículo eliminado de la lista</string>
-    <string name="lista_compra_de">Lista de la compra de</string>
-
-    <!-- Formulario de tareas -->
-    <string name="descripcion_opcional">Descripción (opcional)</string>
-    <string name="descripcion_hint">Detalles de la tarea</string>
-    <string name="editar_tarea_titulo">Editar tarea</string>
-    <string name="guardar">Guardar</string>
-    <string name="selecciona_companero">Selecciona un compañero</string>
-    <string name="tarea_guardada">Tarea guardada</string>
-    <string name="error_guardar_tarea">No se pudo guardar la tarea</string>
-    <string name="descripcion_detalle">Descripción</string>
-    <string name="sin_descripcion">Sin descripción</string>
-
-    <!-- Menu contextual de tareas -->
-    <string name="editar">Editar</string>
-    <string name="eliminar">Eliminar</string>
-    <string name="tarea_eliminada">Tarea eliminada</string>
-    <string name="tarea_marcada_hecha">Tarea marcada como hecha</string>
-    <string name="tarea_marcada_no_hecha">Tarea marcada como no hecha</string>
-    <string name="tarea_ya_en_lista">Esa tarea ya está en la lista</string>
-
-    <string-array name="modos_busqueda">
-        <item>Empieza por</item>
-        <item>Contiene</item>
+    <!-- Arrays de los Spinner -->
+    <string-array name="prioridades_tarea">
+        <item>Selecciona una prioridad</item>
+        <item>Puede esperar</item>
+        <item>Hacer cuanto antes</item>
+        <item>Urgente</item>
     </string-array>
-
     <string-array name="prioridades_busqueda">
         <item>Todas</item>
         <item>Puede esperar</item>
         <item>Hacer cuanto antes</item>
         <item>Urgente</item>
     </string-array>
+    <string-array name="modos_busqueda">
+        <item>Empieza por</item>
+        <item>Contiene</item>
+    </string-array>
 
-    <!-- Menu de opciones y navegacion -->
-    <string name="confirmar_eliminar_tarea">Eliminar tarea</string>
-    <string name="mensaje_confirmar_eliminar_tarea">¿Seguro que quieres eliminar esta tarea?</string>
-    <string name="ordenar_por_nombre">Ordenar por nombre</string>
-    <string name="tareas_ordenadas">Tareas ordenadas por nombre</string>
-    <string name="acerca_de">Acerca de</string>
-    <string name="ajustes">Ajustes</string>
-    <string name="inicio">Inicio</string>
-    <string name="tareas">Tareas</string>
-    <string name="en_desarrollo">En desarrollo</string>
-    <string name="ajustes_en_desarrollo">Los ajustes están en desarrollo.</string>
-    <string name="acerca_de_texto">RoomMate es una aplicación para organizar las tareas y la compra de un piso compartido.</string>
-    <string name="version_app">Versión 1.0</string>
-    <string name="piso_compartido">Piso compartido</string>
-    <string name="abrir_menu">Abrir menú</string>
-    <string name="cerrar_menu">Cerrar menú</string>
+    <!-- Valores que se guardan en la base de datos para la prioridad.
+         No se traducen: asi los datos no dependen del idioma del movil
+         (ver la clase Prioridades). Mismo orden que prioridades_tarea. -->
+    <string-array name="prioridades_valores" translatable="false">
+        <item></item>
+        <item>Puede esperar</item>
+        <item>Hacer cuanto antes</item>
+        <item>Urgente</item>
+    </string-array>
 </resources>

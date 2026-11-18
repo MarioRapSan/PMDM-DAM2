@@ -19,12 +19,14 @@ public class TareaBusquedaAdapter extends ArrayAdapter<Tarea> {
     private final Context context;
     private final List<Tarea> tareas;
 
+    /** Recibe la lista de resultados que se va a mostrar. */
     public TareaBusquedaAdapter(Context context, List<Tarea> tareas) {
         super(context, R.layout.item_busqueda_tarea, tareas);
         this.context = context;
         this.tareas = tareas;
     }
 
+    /** Rellena cada fila con el nombre, la prioridad traducida, el companero y el estado. */
     @NonNull
     @Override
     public View getView(int position, View convertView, @NonNull ViewGroup parent) {
@@ -42,9 +44,10 @@ public class TareaBusquedaAdapter extends ArrayAdapter<Tarea> {
 
         nombre.setText(tarea.getNombre());
 
-        String estado = tarea.isHecha() ? "Hecha" : "Pendiente";
+        String estado = context.getString(
+                tarea.isHecha() ? R.string.estado_hecha : R.string.pendiente);
         detalle.setText(
-                tarea.getPrioridad() + " · "
+                Prioridades.etiqueta(context, tarea.getPrioridad()) + " · "
                         + tarea.getCompanero() + " · " + estado
         );
 

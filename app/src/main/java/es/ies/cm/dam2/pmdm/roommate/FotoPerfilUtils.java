@@ -19,6 +19,7 @@ public final class FotoPerfilUtils {
     private static final String CARPETA_FOTOS = "fotos_companeros";
     private static final String FOTO_POR_DEFECTO = "ic_persona";
 
+    /** Clase de utilidades: solo tiene metodos estaticos, no se crean objetos. */
     private FotoPerfilUtils() {
     }
 
@@ -116,13 +117,18 @@ public final class FotoPerfilUtils {
         }
     }
 
+    /** Muestra el icono generico de persona cuando no hay foto. */
     private static void mostrarFotoPorDefecto(ImageView imageView) {
-        int padding = dp(imageView, 28);
+        // El hueco alrededor del icono es proporcional al tamano de la vista
+        // (20 %), asi se ve bien tanto en la ficha grande como en las tarjetas.
+        int ancho = imageView.getLayoutParams() != null ? imageView.getLayoutParams().width : 0;
+        int padding = ancho > 0 ? ancho / 5 : dp(imageView, 28);
         imageView.setImageResource(R.drawable.ic_persona);
         imageView.setPadding(padding, padding, padding, padding);
         imageView.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
     }
 
+    /** Carga la imagen reducida al tamano de la vista, para no gastar memoria de mas. */
     private static Bitmap cargarBitmap(Context context, File archivo) {
         BitmapFactory.Options opciones = new BitmapFactory.Options();
         opciones.inJustDecodeBounds = true;
@@ -145,6 +151,7 @@ public final class FotoPerfilUtils {
         return BitmapFactory.decodeFile(archivo.getAbsolutePath(), opciones);
     }
 
+    /** Convierte un valor en dp a pixeles segun la densidad de la pantalla. */
     private static int dp(ImageView imageView, int valor) {
         return (int) (valor * imageView
                 .getResources()

@@ -12,6 +12,7 @@ import com.google.android.material.appbar.MaterialToolbar;
  */
 public class AcercaDeActivity extends AppCompatActivity {
 
+    /** Muestra la barra superior con la flecha de volver y la informacion de la app. */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -26,6 +27,7 @@ public class AcercaDeActivity extends AppCompatActivity {
         }
     }
 
+    /** La flecha de la barra superior cierra la pantalla y vuelve a la anterior. */
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == android.R.id.home) {
